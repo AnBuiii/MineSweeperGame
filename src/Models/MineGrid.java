@@ -1,5 +1,5 @@
 package Models;
 
-public class Grid {
+public class MineGrid {
     private int size;
 }
