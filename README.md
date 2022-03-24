@@ -13,7 +13,7 @@
   Game dò min
   ## Mô tả <a name = "info"></a>
   ## Công nghệ sử dụng <a name = "info"></a>
-  Language: Java
-  GUI: Swing
+  Language: Java\
+  GUI: Swing\
   Design pattern: MVC 
   
