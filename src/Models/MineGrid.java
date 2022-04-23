@@ -3,9 +3,9 @@ package Models;
 import java.util.Random;
 
 public class MineGrid {
-    public static final int NUM_ROWS = 10;
+    public static final int NUM_ROWS = 8;
     public static final int NUM_COLUMNS = 10;
-    public static final int NUM_MINES = 1;
+    public static final int NUM_MINES = 10;
 
     private Cell[][] cell;
 
@@ -50,11 +50,11 @@ public class MineGrid {
         return rd.nextInt(range);
     }
 
-    public Cell[][] getListSquare() {
+    public Cell[][] getListCell() {
         return cell;
     }
 
-    public boolean play(int x, int y) {
+    public boolean reveal(int x, int y) {
         if (!cell[x][y].isRevealed()) {
             cell[x][y].setRevealed(true);
             if (cell[x][y].isMine()) {
@@ -67,7 +67,7 @@ public class MineGrid {
                     for (int n = -1; n <= 1; n++) {
                         if (y + n < 0) { n++; }
                         if (y + n > NUM_COLUMNS - 1) { break; }
-                        play(x + m, y + n);
+                        reveal(x + m, y + n);
                     }
                 }
             }
@@ -85,7 +85,7 @@ public class MineGrid {
         }
     }
 
-    public void showAllSquares() {
+    public void revealAllCell() {
         for (int i = 0; i < cell.length; i++) {
             for (int j = 0; j < cell[0].length; j++) {
                 cell[i][j].setRevealed(true);

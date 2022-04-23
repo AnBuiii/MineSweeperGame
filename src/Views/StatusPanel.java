@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StatusPanel extends JPanel implements IPanel {
-    private JLabel lbNumCellClosed;
+    private JLabel lbNumCellUnrevealed;
     private JLabel lbNotify;
     private JButton btnRestart;
     private IListener listener;
@@ -29,11 +29,11 @@ public class StatusPanel extends JPanel implements IPanel {
     public void addView() {
         Font font = new Font("VNI", Font.PLAIN, 20);
 
-        lbNumCellClosed = new JLabel();
-        lbNumCellClosed.setFont(font);
-        lbNumCellClosed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
-        lbNumCellClosed.setBounds(10, 10, 250, 40);
-        add(lbNumCellClosed);
+        lbNumCellUnrevealed = new JLabel();
+        lbNumCellUnrevealed.setFont(font);
+        lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
+        lbNumCellUnrevealed.setBounds(10, 10, 250, 40);
+        add(lbNumCellUnrevealed);
 
         lbNotify = new JLabel();
         lbNotify.setFont(font);
@@ -53,7 +53,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listener.restart();
-                lbNumCellClosed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
+                lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
                 lbNotify.setText("");
             }
         });
@@ -63,12 +63,12 @@ public class StatusPanel extends JPanel implements IPanel {
         listener = event;
     }
 
-    public void updateStatus(int numSquareClosed) {
-        lbNumCellClosed.setText("Số ô chưa mở: " + numSquareClosed);
-        if (numSquareClosed == MineGrid.NUM_MINES) {
+    public void updateStatus(int numSquareUnrevealed) {
+        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
+        if (numSquareUnrevealed == MineGrid.NUM_MINES) {
             lbNotify.setText("THẮNG");
             lbNotify.setForeground(Color.blue);
-        } else if (numSquareClosed == 0) {
+        } else if (numSquareUnrevealed == 0) {
             lbNotify.setText("THUA");
             lbNotify.setForeground(Color.red);
         }

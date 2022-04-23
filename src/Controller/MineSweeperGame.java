@@ -14,8 +14,8 @@ import java.awt.event.WindowListener;
 
 public class MineSweeperGame extends JFrame implements IPanel, IListener {
     private static final String TITLE = "MineSweeper";
-    public static final int WINDOW_WIDTH = 730;
-    public static final int WINDOW_HEIGHT = 600;
+    public static final int WINDOW_WIDTH = 600;
+    public static final int WINDOW_HEIGHT = 560;
     private MineGridPanel mineGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
@@ -31,8 +31,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
     public void init() {
         setTitle(TITLE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setUndecorated(true);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         try {
@@ -45,12 +46,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
     @Override
     public void addView() {
         statusPanel = new StatusPanel();
-        statusPanel.setBounds(10, 0, 700, 60);
+        statusPanel.setBounds(0, 0, 600, 80);
         add(statusPanel);
         statusPanel.addListener(this);
 
         mineGridPanel = new MineGridPanel();
-        mineGridPanel.setBounds(10, 60, 700, 500);
+        mineGridPanel.setBounds(0, 80, 600, 480);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
     }
@@ -71,14 +72,14 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
     }
 
     @Override
-    public Cell[][] getListSquare() {
-        return mineGrid.getListSquare();
+    public Cell[][] getListCell() {
+        return mineGrid.getListCell();
     }
 
     @Override
     public void reveal(int x, int y) {
-        boolean check = mineGrid.play(x, y);
-        if (!check) { mineGrid.showAllSquares(); }
+        boolean check = mineGrid.reveal(x, y);
+        if (!check) { mineGrid.revealAllCell(); }
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
