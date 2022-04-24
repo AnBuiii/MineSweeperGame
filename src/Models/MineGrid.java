@@ -16,7 +16,6 @@ public class MineGrid {
                 cell[i][j] = new Cell();
             }
         }
-
         for (int i = 0; i < NUM_MINES; i++) {
             int x = genRan(NUM_ROWS);
             int y = genRan(NUM_COLUMNS);

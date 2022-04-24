@@ -16,6 +16,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
     private static final String TITLE = "MineSweeper";
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 560;
+    public static final int STATUS_PANEL_HEIHGT = 80;
     private MineGridPanel mineGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
@@ -46,12 +47,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
     @Override
     public void addView() {
         statusPanel = new StatusPanel();
-        statusPanel.setBounds(0, 0, 600, 80);
+        statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIHGT);
         add(statusPanel);
         statusPanel.addListener(this);
 
         mineGridPanel = new MineGridPanel();
-        mineGridPanel.setBounds(0, 80, 600, 480);
+        mineGridPanel.setBounds(0, 80, WINDOW_WIDTH, WINDOW_HEIGHT-STATUS_PANEL_HEIHGT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
     }
