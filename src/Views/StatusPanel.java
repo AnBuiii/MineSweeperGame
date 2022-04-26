@@ -1,6 +1,7 @@
 package Views;
 
-import Controller.IListener;
+import Interfaces.IGamePlayListener;
+import Interfaces.IPanel;
 import Models.MineGrid;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private JLabel lbNumCellUnrevealed;
     private JLabel lbNotify;
     private JButton btnRestart;
-    private IListener listener;
+    private IGamePlayListener listener;
 
     public StatusPanel() {
         init();
@@ -59,7 +60,7 @@ public class StatusPanel extends JPanel implements IPanel {
         });
     }
 
-    public void addListener(IListener event) {
+    public void addListener(IGamePlayListener event) {
         listener = event;
     }
 

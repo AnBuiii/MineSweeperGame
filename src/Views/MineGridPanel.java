@@ -1,7 +1,8 @@
 package Views;
 
-import Controller.IListener;
+import Interfaces.IGamePlayListener;
 import Controller.MineSweeperGame;
+import Interfaces.IPanel;
 import Models.Cell;
 import Models.MineGrid;
 
@@ -13,7 +14,7 @@ import java.awt.event.MouseEvent;
 
 public class MineGridPanel extends JPanel implements IPanel {
     private Label[][] lbCell;
-    private IListener listener;
+    private IGamePlayListener listener;
     private int numCellUnRevealed;
 
     public MineGridPanel() {
@@ -29,7 +30,6 @@ public class MineGridPanel extends JPanel implements IPanel {
 
     @Override
     public void addView() {
-        Border border = BorderFactory.createLineBorder(Color.gray, 0);
         lbCell = new Label[MineGrid.NUM_ROWS][MineGrid.NUM_COLUMNS];
         for (int i = 0; i < lbCell.length; i++) {
             for (int j = 0; j < lbCell[0].length; j++) {
@@ -68,7 +68,7 @@ public class MineGridPanel extends JPanel implements IPanel {
         }
     }
 
-    public void addListener(IListener event) {
+    public void addListener(IGamePlayListener event) {
         listener = event;
     }
 
@@ -95,25 +95,11 @@ public class MineGridPanel extends JPanel implements IPanel {
                         lbCell[i][j].setText("\uD83D\uDEA9"); // 'flag'
                         lbCell[i][j].setForeground(Color.red);
                     }
-                    // numrow numcolumn
-//                    if(i > 0 && j > 0) {
-//                        if (!listCell[i-1][j].isRevealed() && !listCell[i][j-1].isRevealed() && listCell[i-1][j-1].isRevealed()){
-//                            JPanel label = new JPanel();
-//                            label.setSize(5,5);
-//                            label.setBackground(Color.red);
-//                            lbCell[i][j].add(label);
-//                        }
-//                    }
-//                    JPanel corner = new JPanel();
-//                    //corner.setBounds(10,10,5,5);
-//                    corner.setSize(5,5);
-//                    corner.setAlignmentY(BOTTOM_ALIGNMENT);
-//                    corner.setBackground(Color.red);
-//                    lbCell[i][j].add(corner);
                 }
                 else {
                     if (listCell[i][j].isMine()) {
                         lbCell[i][j].setText("\uD83D\uDCA3"); // 'bomb'
+
                     } else {
                         int numMineAround = listCell[i][j].getNumMineAround();
                         if (numMineAround == 0) {
@@ -151,7 +137,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                     if(i < MineGrid.NUM_ROWS -1 && j > 0) if( b == 0 && c == 0 && !listCell[i+1][j-1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(0, (MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIHGT) / MineGrid.NUM_ROWS - 3,3,3 );
+                        corner.setBounds(0, (MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIGHT) / MineGrid.NUM_ROWS - 3,3,3 );
                         lbCell[i][j].add(corner);
                     }
                     if(i > 0 && j < MineGrid.NUM_COLUMNS -1 ) if( a == 0 && d == 0 && !listCell[i-1][j+1].isRevealed()){
@@ -163,12 +149,9 @@ public class MineGridPanel extends JPanel implements IPanel {
                     if(i< MineGrid.NUM_ROWS -1  && j < MineGrid.NUM_COLUMNS -1 ) if(c == 0 && d == 0 && !listCell[i+1][j+1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(MineSweeperGame.WINDOW_WIDTH/MineGrid.NUM_COLUMNS -3,(MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIHGT) / MineGrid.NUM_ROWS - 3,3,3);
+                        corner.setBounds(MineSweeperGame.WINDOW_WIDTH/MineGrid.NUM_COLUMNS -3,(MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIGHT) / MineGrid.NUM_ROWS - 3,3,3);
                         lbCell[i][j].add(corner);
                     }
-
-
-
 
                     if((i + j) % 2 == 0) lbCell[i][j].setBackground(new Color(210,184,154));
                     else lbCell[i][j].setBackground(new Color(223,194,161));
@@ -181,6 +164,19 @@ public class MineGridPanel extends JPanel implements IPanel {
     private class Label extends JLabel {
         private int x;
         private int y;
+    }
+    public class ShapePanel extends JLabel
+    {
+
+        public void paintComponent (Graphics g)
+        {
+            super.paintComponent(g);
+            g.setColor(Color.green);
+            g.drawOval(0,0, 20, 20);
+            g.setColor(Color.red);
+            g.fillOval(0, 0, 15, 15);
+        }
+
     }
 
     public int getNumCellUnRevealed() {

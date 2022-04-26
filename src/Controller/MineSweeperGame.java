@@ -1,9 +1,10 @@
 package Controller;
 
 
+import Interfaces.IGamePlayListener;
 import Models.Cell;
 import Models.MineGrid;
-import Views.IPanel;
+import Interfaces.IPanel;
 import Views.MineGridPanel;
 import Views.StatusPanel;
 
@@ -12,17 +13,24 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class MineSweeperGame extends JFrame implements IPanel, IListener {
+public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener {
+
     private static final String TITLE = "MineSweeper";
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 560;
-    public static final int STATUS_PANEL_HEIHGT = 80;
+    public static final int STATUS_PANEL_HEIGHT = 80;
+    public static int num_rows;
+    public static int num_columns;
+    public static int num_bombs;
     private MineGridPanel mineGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
 
-    public MineSweeperGame() {
-        mineGrid = new MineGrid();
+    public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
+        mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
+        this.num_rows = num_rows;
+        this.num_columns = num_columns;
+        this.num_bombs = num_bombs;
         init();
         addView();
         addEvent();
@@ -42,17 +50,18 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void addView() {
         statusPanel = new StatusPanel();
-        statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIHGT);
+        statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
 
         mineGridPanel = new MineGridPanel();
-        mineGridPanel.setBounds(0, 80, WINDOW_WIDTH, WINDOW_HEIGHT-STATUS_PANEL_HEIHGT);
+        mineGridPanel.setBounds(0, 80, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
     }
@@ -94,7 +103,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IListener {
 
     @Override
     public void restart() {
-        mineGrid = new MineGrid();
+        mineGrid = new MineGrid(num_rows, num_columns,num_bombs);
         mineGridPanel.updateGrid();
+        //this.dispose();
     }
 }

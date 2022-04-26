@@ -1,4 +1,4 @@
-package Views;
+package Interfaces;
 
 public interface IPanel {
     void init();

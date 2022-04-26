@@ -1,8 +1,8 @@
-package Controller;
+package Interfaces;
 
 import Models.Cell;
 
-public interface IListener {
+public interface IGamePlayListener {
     Cell[][] getListCell();
 
     void reveal(int x, int y);
