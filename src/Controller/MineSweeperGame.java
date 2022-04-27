@@ -8,29 +8,34 @@ import Interfaces.IPanel;
 import Views.MineGridPanel;
 import Views.StatusPanel;
 
+import static Views.custom.Theme.*;
+
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+//import static Views.HomePanel.*;
+
+
 public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener {
 
-    private static final String TITLE = "MineSweeper";
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 560;
     public static final int STATUS_PANEL_HEIGHT = 80;
     public static int num_rows;
     public static int num_columns;
-    public static int num_bombs;
     private MineGridPanel mineGridPanel;
+    public static int num_bombs;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
+    private boolean isFinish;
 
     public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
-        this.num_rows = num_rows;
-        this.num_columns = num_columns;
-        this.num_bombs = num_bombs;
+        MineSweeperGame.num_rows = num_rows;
+        MineSweeperGame.num_columns = num_columns;
+        MineSweeperGame.num_bombs = num_bombs;
         init();
         addView();
         addEvent();
@@ -38,7 +43,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void init() {
-        setTitle(TITLE);
+        setTitle(TITLE+BOMB);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setUndecorated(true);
         setLocationRelativeTo(null);
@@ -50,6 +55,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         } catch (Exception e) {
             e.printStackTrace();
         }
+        isFinish = false;
 
     }
 
@@ -89,7 +95,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void reveal(int x, int y) {
         boolean check = mineGrid.reveal(x, y);
-        if (!check) { mineGrid.revealAllCell(); }
+        if (!check) {
+            mineGrid.revealAllCell();
+            isFinish = true;
+        }
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
@@ -106,5 +115,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGrid = new MineGrid(num_rows, num_columns,num_bombs);
         mineGridPanel.updateGrid();
         //this.dispose();
+    }
+
+    @Override
+    public void hint() {
+
+    }
+    public boolean isFinished(){
+        return isFinish;
     }
 }

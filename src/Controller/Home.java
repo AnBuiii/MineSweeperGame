@@ -14,7 +14,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private HomePanel homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
-    public Home( ){
+
+    public Home(){
         init();
         addView();
         addEvent();
@@ -30,6 +31,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
         homePanel = new HomePanel();
         homePanel.setBounds(0,0,400,600);
+        homePanel.setBackground(new Color(239,235,232));
         homePanel.addListener(this);
 
         newGameMenu = new NewGamePanel();
@@ -38,10 +40,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         newGameMenu.setForeground(new Color(104,159,57));
         newGameMenu.setVisible(false);
         newGameMenu.addListener(this);
+
+
     }
-
-
-
     @Override
     public void addView() {
         add(newGameMenu);
@@ -50,11 +51,22 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void addEvent() {
-
     }
 
     @Override
-    public void openGameMenu() {
+    public void restart() {
+        homePanel.addView();
+    }
+
+    @Override
+    public boolean isGameFinish() {
+        if (mineSweeperGame == null) return false;
+        return mineSweeperGame.isFinished();
+    }
+
+    @Override
+    public void openGameMenu(int x, int y) {
+        newGameMenu.setBounds(x,y,300,150);
         newGameMenu.setVisible(true);
     }
 
@@ -70,12 +82,16 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void startGame(GameMode gameMode) {
+        if(mineSweeperGame != null){
+            mineSweeperGame.dispose();
+        }
          mineSweeperGame = switch (gameMode){
              case BEGINNER -> new MineSweeperGame(9,9,10);
              case INTERMEDIATE -> new MineSweeperGame(16,16,40);
              case EXPERT -> new MineSweeperGame(24,24,99);
              default -> new MineSweeperGame(0,0,0);
         };
+         restart();
          mineSweeperGame.setVisible(true);
     }
 }

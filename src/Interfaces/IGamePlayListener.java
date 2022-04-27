@@ -8,4 +8,5 @@ public interface IGamePlayListener {
     void reveal(int x, int y);
     void flag(int x, int y);
     void restart();
+    void hint();
 }

@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.MineSweeperGame;
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Models.MineGrid;
@@ -15,6 +16,12 @@ public class StatusPanel extends JPanel implements IPanel {
     private JButton btnRestart;
     private IGamePlayListener listener;
 
+    private JLabel backBtn;
+    private JLabel clockLb;
+    private JLabel timeLb;
+    private JLabel flagLb;
+    private JLabel hintBtn;
+
     public StatusPanel() {
         init();
         addView();
@@ -24,40 +31,48 @@ public class StatusPanel extends JPanel implements IPanel {
     @Override
     public void init() {
         setLayout(null);
+        backBtn = new JLabel("\u2190");
     }
 
     @Override
     public void addView() {
-        Font font = new Font("VNI", Font.PLAIN, 20);
-
-        lbNumCellUnrevealed = new JLabel();
-        lbNumCellUnrevealed.setFont(font);
-        lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
-        lbNumCellUnrevealed.setBounds(10, 10, 250, 40);
-        add(lbNumCellUnrevealed);
-
-        lbNotify = new JLabel();
-        lbNotify.setFont(font);
-        lbNotify.setBounds(270, 10, 200, 40);
-        add(lbNotify);
-
-        btnRestart = new JButton();
-        btnRestart.setFont(font);
-        btnRestart.setText("Chơi lại");
-        btnRestart.setBounds(490, 10, 200, 40);
-        add(btnRestart);
+        backBtn.setBounds(0,0,50, MineSweeperGame.STATUS_PANEL_HEIGHT);
+        backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        backBtn.setVerticalAlignment(JLabel.CENTER);
+        backBtn.setOpaque(true);
+        backBtn.setBackground(Color.green);
+        backBtn.setFont(new Font("VNI", Font.BOLD, 30));
+        add(backBtn);
+//        Font font = new Font("VNI", Font.PLAIN, 20);
+//
+//        lbNumCellUnrevealed = new JLabel();
+//        lbNumCellUnrevealed.setFont(font);
+//        lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
+//        lbNumCellUnrevealed.setBounds(10, 10, 250, 40);
+//        add(lbNumCellUnrevealed);
+//
+//        lbNotify = new JLabel();
+//        lbNotify.setFont(font);
+//        lbNotify.setBounds(270, 10, 200, 40);
+//        add(lbNotify);
+//
+//        btnRestart = new JButton();
+//        btnRestart.setFont(font);
+//        btnRestart.setText("Chơi lại");
+//        btnRestart.setBounds(490, 10, 200, 40);
+//        add(btnRestart);
     }
 
     @Override
     public void addEvent() {
-        btnRestart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.restart();
-                lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
-                lbNotify.setText("");
-            }
-        });
+//        btnRestart.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                listener.restart();
+//                lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
+//                lbNotify.setText("");
+//            }
+//        });
     }
 
     public void addListener(IGamePlayListener event) {
@@ -65,13 +80,13 @@ public class StatusPanel extends JPanel implements IPanel {
     }
 
     public void updateStatus(int numSquareUnrevealed) {
-        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
-        if (numSquareUnrevealed == MineGrid.NUM_MINES) {
-            lbNotify.setText("THẮNG");
-            lbNotify.setForeground(Color.blue);
-        } else if (numSquareUnrevealed == 0) {
-            lbNotify.setText("THUA");
-            lbNotify.setForeground(Color.red);
-        }
+//        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
+//        if (numSquareUnrevealed == MineGrid.NUM_MINES) {
+//            lbNotify.setText("THẮNG");
+//            lbNotify.setForeground(Color.blue);
+//        } else if (numSquareUnrevealed == 0) {
+//            lbNotify.setText("THUA");
+//            lbNotify.setForeground(Color.red);
+//        }
     }
 }
