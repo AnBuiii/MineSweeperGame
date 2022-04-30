@@ -2,7 +2,7 @@ package Controller;
 
 import Interfaces.IHomeListener;
 import Interfaces.IStartGameListener;
-import Models.GameMode;
+import Models.GameDifficulty;
 import Views.HomePanel;
 import Interfaces.IPanel;
 import Views.NewGamePanel;
@@ -54,8 +54,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
 
     @Override
-    public void restart() {
+    public void continueGame() {
+        setVisible(false);
+        mineSweeperGame.setVisible(true);
+    }
+
+    @Override
+    public void reDrawHome() {
         homePanel.addView();
+        closeGameMenu();
     }
 
     @Override
@@ -81,17 +88,24 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
 
     @Override
-    public void startGame(GameMode gameMode) {
+    public void startGame(GameDifficulty gameDifficulty) {
         if(mineSweeperGame != null){
             mineSweeperGame.dispose();
         }
-         mineSweeperGame = switch (gameMode){
+         mineSweeperGame = switch (gameDifficulty){
              case BEGINNER -> new MineSweeperGame(9,9,10);
              case INTERMEDIATE -> new MineSweeperGame(16,16,40);
              case EXPERT -> new MineSweeperGame(24,24,99);
              default -> new MineSweeperGame(0,0,0);
         };
-         restart();
-         mineSweeperGame.setVisible(true);
+        reDrawHome();
+        this.setVisible(false);
+        mineSweeperGame.setHome(this);
+        mineSweeperGame.setVisible(true);
+    }
+
+    @Override
+    public void closeHomePanel() {
+        this.setVisible(false);
     }
 }

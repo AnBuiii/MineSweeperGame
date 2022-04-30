@@ -30,11 +30,11 @@ public class HomePanel extends JPanel implements IPanel {
         static int x = 50;
         static int y = 140;
         static int width = 300;
-        static int height = 50;
+        static int height = 50 ;
     }
     public static class newGameMenu_bound{
         static int x = 50;
-        static int y = 250;
+        static int y = 200;
         static int width = 300;
         static int height = 300;
     }
@@ -89,6 +89,7 @@ public class HomePanel extends JPanel implements IPanel {
 
         if(listener != null){
             if(listener.isGameFinish()) {
+                newGameBtn_bound.y = 140;
                 continueBtn.setVisible(false);
             }
             else {
@@ -106,6 +107,7 @@ public class HomePanel extends JPanel implements IPanel {
         add(newGameBtn);
 
     }
+
     @Override
     public void addEvent() {
 
@@ -122,7 +124,7 @@ public class HomePanel extends JPanel implements IPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                listener.continueGame();
             }
         });
 
@@ -134,15 +136,16 @@ public class HomePanel extends JPanel implements IPanel {
                 if(!listener.isGameMenuOpen()){
                     unTarget(newGameBtn);
                 }
-
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!listener.isGameMenuOpen()){
                     target(newGameBtn);
-                    listener.openGameMenu(50,260);
+                    if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
+                    listener.openGameMenu(newGameMenu_bound.x,newGameMenu_bound.y);
                 } else {
+                    if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
                     unTarget(newGameBtn);
                     listener.closeGameMenu();
                 }

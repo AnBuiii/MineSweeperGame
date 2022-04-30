@@ -1,8 +1,8 @@
 package Interfaces;
 
-import Models.GameMode;
+import Models.GameDifficulty;
 
 public interface IStartGameListener {
-
-    void startGame(GameMode gameMode);
+    void startGame(GameDifficulty gameDifficulty);
+    void closeHomePanel();
 }

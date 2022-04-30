@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static Views.custom.Theme.*;
+
 public class MineGridPanel extends JPanel implements IPanel {
     private Label[][] lbCell;
     private IGamePlayListener listener;
@@ -136,19 +138,19 @@ public class MineGridPanel extends JPanel implements IPanel {
                     if(i < MineGrid.NUM_ROWS -1 && j > 0) if( b == 0 && c == 0 && !listCell[i+1][j-1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(0, (MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIGHT) / MineGrid.NUM_ROWS - 3,3,3 );
+                        corner.setBounds(0, CELL_SIZE - 3,3,3 );
                         lbCell[i][j].add(corner);
                     }
                     if(i > 0 && j < MineGrid.NUM_COLUMNS -1 ) if( a == 0 && d == 0 && !listCell[i-1][j+1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(MineSweeperGame.WINDOW_WIDTH/MineGrid.NUM_COLUMNS-3, 0,3,3 );
+                        corner.setBounds(CELL_SIZE-3, 0,3,3 );
                         lbCell[i][j].add(corner);
                     }
                     if(i< MineGrid.NUM_ROWS -1  && j < MineGrid.NUM_COLUMNS -1 ) if(c == 0 && d == 0 && !listCell[i+1][j+1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(MineSweeperGame.WINDOW_WIDTH/MineGrid.NUM_COLUMNS -3,(MineSweeperGame.WINDOW_HEIGHT - MineSweeperGame.STATUS_PANEL_HEIGHT) / MineGrid.NUM_ROWS - 3,3,3);
+                        corner.setBounds(CELL_SIZE -3,CELL_SIZE - 3,3,3);
                         lbCell[i][j].add(corner);
                     }
 

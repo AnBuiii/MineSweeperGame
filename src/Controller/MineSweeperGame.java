@@ -2,6 +2,7 @@ package Controller;
 
 
 import Interfaces.IGamePlayListener;
+import Interfaces.IStatusPanelListener;
 import Models.Cell;
 import Models.MineGrid;
 import Interfaces.IPanel;
@@ -18,11 +19,11 @@ import java.awt.event.WindowListener;
 //import static Views.HomePanel.*;
 
 
-public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener {
+public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener {
 
-    public static final int WINDOW_WIDTH = 600;
-    public static final int WINDOW_HEIGHT = 560;
-    public static final int STATUS_PANEL_HEIGHT = 80;
+    public Home home;
+    public static int WINDOW_WIDTH = 600;
+    public static int WINDOW_HEIGHT = 560;
     public static int num_rows;
     public static int num_columns;
     private MineGridPanel mineGridPanel;
@@ -36,6 +37,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         MineSweeperGame.num_rows = num_rows;
         MineSweeperGame.num_columns = num_columns;
         MineSweeperGame.num_bombs = num_bombs;
+
+        WINDOW_WIDTH = num_columns * CELL_SIZE;
+        WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
+
         init();
         addView();
         addEvent();
@@ -67,7 +72,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         statusPanel.addListener(this);
 
         mineGridPanel = new MineGridPanel();
-        mineGridPanel.setBounds(0, 80, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
+        mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
     }
@@ -114,7 +119,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void restart() {
         mineGrid = new MineGrid(num_rows, num_columns,num_bombs);
         mineGridPanel.updateGrid();
-        //this.dispose();
+    }
+
+    @Override
+    public void back() {
+        this.setVisible(false);
+        home.reDrawHome();
+        home.setVisible(true);
     }
 
     @Override
@@ -123,5 +134,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
     public boolean isFinished(){
         return isFinish;
+    }
+    public void setHome(Home home){
+        this.home = home;
     }
 }

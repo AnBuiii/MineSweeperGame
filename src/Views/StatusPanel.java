@@ -1,26 +1,26 @@
 package Views;
 
 import Controller.MineSweeperGame;
-import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
-import Models.MineGrid;
+import Interfaces.IStatusPanelListener;
+import Models.GameDifficulty;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
+import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
     private JLabel lbNumCellUnrevealed;
     private JLabel lbNotify;
     private JButton btnRestart;
-    private IGamePlayListener listener;
-
     private JLabel backBtn;
     private JLabel clockLb;
     private JLabel timeLb;
     private JLabel flagLb;
     private JLabel hintBtn;
+    private IStatusPanelListener listener;
 
     public StatusPanel() {
         init();
@@ -36,46 +36,36 @@ public class StatusPanel extends JPanel implements IPanel {
 
     @Override
     public void addView() {
-        backBtn.setBounds(0,0,50, MineSweeperGame.STATUS_PANEL_HEIGHT);
+        backBtn.setBounds(0,0,50, STATUS_PANEL_HEIGHT);
         backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         backBtn.setVerticalAlignment(JLabel.CENTER);
         backBtn.setOpaque(true);
         backBtn.setBackground(Color.green);
         backBtn.setFont(new Font("VNI", Font.BOLD, 30));
         add(backBtn);
-//        Font font = new Font("VNI", Font.PLAIN, 20);
-//
-//        lbNumCellUnrevealed = new JLabel();
-//        lbNumCellUnrevealed.setFont(font);
-//        lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
-//        lbNumCellUnrevealed.setBounds(10, 10, 250, 40);
-//        add(lbNumCellUnrevealed);
-//
-//        lbNotify = new JLabel();
-//        lbNotify.setFont(font);
-//        lbNotify.setBounds(270, 10, 200, 40);
-//        add(lbNotify);
-//
-//        btnRestart = new JButton();
-//        btnRestart.setFont(font);
-//        btnRestart.setText("Chơi lại");
-//        btnRestart.setBounds(490, 10, 200, 40);
-//        add(btnRestart);
+
     }
 
     @Override
     public void addEvent() {
-//        btnRestart.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                listener.restart();
-//                lbNumCellUnrevealed.setText("Số ô chưa mở: " + MineGrid.NUM_ROWS * MineGrid.NUM_COLUMNS);
-//                lbNotify.setText("");
-//            }
-//        });
+        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.back();
+
+            }
+        });
+
     }
 
-    public void addListener(IGamePlayListener event) {
+    public void addListener(IStatusPanelListener event) {
         listener = event;
     }
 

@@ -2,7 +2,7 @@ package Views;
 
 import Interfaces.IPanel;
 import Interfaces.IStartGameListener;
-import Models.GameMode;
+import Models.GameDifficulty;
 import Views.custom.RoundedBorder;
 
 import javax.swing.*;
@@ -122,7 +122,9 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                listener.startGame(GameMode.BEGINNER);
+                listener.startGame(GameDifficulty.BEGINNER);
+                //listener.closeHomePanel();
+
             }
         });
         beginnerInfoLb.addMouseListener(beginnerLb.getMouseListeners()[0]);
@@ -139,7 +141,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                listener.startGame(GameMode.INTERMEDIATE);
+                listener.startGame(GameDifficulty.INTERMEDIATE);
             }
         });
         intermediateInfoLb.addMouseListener(intermediateLb.getMouseListeners()[0]);
@@ -156,7 +158,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                listener.startGame(GameMode.EXPERT);
+                listener.startGame(GameDifficulty.EXPERT);
             }
         });
         expertInfoLb.addMouseListener(expertLb.getMouseListeners()[0]);

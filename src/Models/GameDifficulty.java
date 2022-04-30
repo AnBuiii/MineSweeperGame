@@ -1,5 +1,5 @@
 package Models;
 
-public enum GameMode {
+public enum GameDifficulty {
     BEGINNER , INTERMEDIATE, EXPERT, CUSTOM
 }
