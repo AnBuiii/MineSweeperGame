@@ -43,7 +43,6 @@ public class StatusPanel extends JPanel implements IPanel {
         backBtn.setBackground(Color.green);
         backBtn.setFont(new Font("VNI", Font.BOLD, 30));
         add(backBtn);
-
     }
 
     @Override

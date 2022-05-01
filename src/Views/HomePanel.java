@@ -6,7 +6,10 @@ import Views.custom.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.sql.Time;
 
 import static Views.custom.Theme.*;
 
@@ -29,12 +32,21 @@ public class HomePanel extends JPanel implements IPanel {
     public static class newGameBtn_bound {
         static int x = 50;
         static int y = 140;
+        static final int y_default = y;
         static int width = 300;
-        static int height = 50 ;
+        static int height = 50;
     }
     public static class newGameMenu_bound{
         static int x = 50;
         static int y = 200;
+        static final int y_default = y;
+        static int width = 300;
+        static int height = 300;
+    }
+    public static class gameModeMenu_bound{
+        static int x = 50;
+        static int y = 200;
+        static final int y_default = y;
         static int width = 300;
         static int height = 300;
     }
@@ -88,6 +100,8 @@ public class HomePanel extends JPanel implements IPanel {
 
 
         if(listener != null){
+            newGameBtn_bound.y = newGameBtn_bound.y_default;
+            newGameMenu_bound.y = newGameMenu_bound.y_default;
             if(listener.isGameFinish()) {
                 newGameBtn_bound.y = 140;
                 continueBtn.setVisible(false);
@@ -133,21 +147,47 @@ public class HomePanel extends JPanel implements IPanel {
                 target(newGameBtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                if(!listener.isGameMenuOpen()){
+                if(!listener.getNewGameMenu().isVisible()){
                     unTarget(newGameBtn);
                 }
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!listener.isGameMenuOpen()){
+                super.mouseClicked(e);
+                if(!listener.getNewGameMenu().isVisible()){
                     target(newGameBtn);
+                    new Timer(1, new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() + 10);
+                            if (listener.getNewGameMenu().getContentPn().getY() == 0){
+                                ((Timer) e.getSource()).stop();
+                                newGameBtn.setEnabled(true);
+                            }
+                        }
+                    }).start();
+
                     if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
-                    listener.openGameMenu(newGameMenu_bound.x,newGameMenu_bound.y);
+                    listener.getNewGameMenu().setVisible(true);
+                    listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
+                    listener.getNewGameMenu().getContentPn().setLocation(0, - newGameMenu_bound.height);
+                    newGameBtn.setEnabled(false);
+
+
                 } else {
                     if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
                     unTarget(newGameBtn);
-                    listener.closeGameMenu();
+                    new Timer(1, new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() - 10);
+                            if (listener.getNewGameMenu().getContentPn().getY() == -newGameMenu_bound.height){
+                                ((Timer) e.getSource()).stop();
+                                listener.getNewGameMenu().setVisible(false);
+                            }
+                        }
+                    }).start();
                 }
             }
         });

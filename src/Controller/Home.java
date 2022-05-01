@@ -62,7 +62,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void reDrawHome() {
         homePanel.addView();
-        closeGameMenu();
+        newGameMenu.setVisible(false);
+//        closeGameMenu();
     }
 
     @Override
@@ -71,21 +72,16 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         return mineSweeperGame.isFinished();
     }
 
-    @Override
-    public void openGameMenu(int x, int y) {
-        newGameMenu.setBounds(x,y,300,150);
-        newGameMenu.setVisible(true);
-    }
+
 
     @Override
-    public void closeGameMenu() {
-        newGameMenu.setVisible(false);
+    public NewGamePanel getNewGameMenu() {
+        return newGameMenu;
     }
 
-    @Override
-    public boolean isGameMenuOpen() {
-        return newGameMenu.isVisible();
-    }
+
+
+
 
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
@@ -108,4 +104,5 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void closeHomePanel() {
         this.setVisible(false);
     }
+
 }

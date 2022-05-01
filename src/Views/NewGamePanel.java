@@ -4,8 +4,10 @@ import Interfaces.IPanel;
 import Interfaces.IStartGameListener;
 import Models.GameDifficulty;
 import Views.custom.RoundedBorder;
+import Views.custom.Theme;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -20,6 +22,8 @@ public class NewGamePanel extends JPanel implements IPanel {
     JLabel expertInfoLb;
     JLabel customInfoLb;
     IStartGameListener listener;
+    JPanel contentPn;
+
     public NewGamePanel(){
         init();
         addView();
@@ -27,8 +31,12 @@ public class NewGamePanel extends JPanel implements IPanel {
     }
     @Override
     public void init() {
-        setLayout(new GridLayout(4,2));
-        setBorder(new RoundedBorder(10));
+//        setLayout(new GridLayout(4,2));
+//        setBorder(new RoundedBorder(10));
+
+        setLayout(null);
+
+
 
         beginnerLb = new JLabel();
         intermediateLb = new JLabel();
@@ -38,6 +46,11 @@ public class NewGamePanel extends JPanel implements IPanel {
         intermediateInfoLb = new JLabel();
         expertInfoLb = new JLabel();
         customInfoLb = new JLabel();
+        contentPn = new JPanel();
+
+        contentPn.setLayout(new GridLayout(4,2));
+        contentPn.setBorder(new RoundedBorder(10));
+
     }
 
     @Override
@@ -96,17 +109,23 @@ public class NewGamePanel extends JPanel implements IPanel {
         customInfoLb.setOpaque(true);
         unTarget(customInfoLb);
 
-        add(beginnerLb);
-        add(beginnerInfoLb);
-        add(intermediateLb);
-        add(intermediateInfoLb);
-        add(expertLb);
-        add(expertInfoLb);
-        add(customLb);
-        add(customInfoLb);
+        contentPn.add(beginnerLb);
+        contentPn.add(beginnerInfoLb);
+        contentPn.add(intermediateLb);
+        contentPn.add(intermediateInfoLb);
+        contentPn.add(expertLb);
+        contentPn.add(expertInfoLb);
+        contentPn.add(customLb);
+        contentPn.add(customInfoLb);
+        contentPn.setBounds(0,0, 300, 150);
+        contentPn.setBackground(Theme.FOREGROUND);
+        contentPn.setForeground(Theme.BACKGROUND);
+        add(contentPn);
 
     }
-
+    public JPanel getContentPn(){
+        return contentPn;
+    }
     @Override
     public void addEvent() {
         
