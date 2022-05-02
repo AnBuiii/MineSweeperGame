@@ -6,13 +6,15 @@ public class MineGrid {
     public static int NUM_ROWS = 8;
     public static int NUM_COLUMNS = 10;
     public static int NUM_MINES = 20;
-
-    private Cell[][] cells;
+    public boolean isPlayed;
+    private final Cell[][] cells;
 
     public MineGrid(int rows, int columns, int bombs) {
         NUM_ROWS = rows;
         NUM_COLUMNS = columns;
         NUM_MINES = bombs;
+        isPlayed = false;
+
         cells = new Cell[NUM_ROWS][NUM_COLUMNS];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
@@ -28,6 +30,10 @@ public class MineGrid {
             }
             cells[x][y].setMine(true);
         }
+        setCellNumber();
+
+    }
+    public void setCellNumber(){
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 int count = 0;
@@ -46,6 +52,18 @@ public class MineGrid {
             }
         }
     }
+    public void firstMove(int x, int y){
+        if(cells[x][y].isMine()) cells[x][y].setMine(false);
+        int xx = genRan(NUM_ROWS);
+        int yy = genRan(NUM_COLUMNS);
+        while (cells[xx][yy].isMine()) {
+            xx = genRan(NUM_ROWS);
+            yy = genRan(NUM_COLUMNS);
+        }
+        cells[xx][yy].setMine(true);
+        setCellNumber();
+        isPlayed = true;
+    }
 
     private int genRan(int range) {
         Random rd = new Random();
@@ -57,7 +75,7 @@ public class MineGrid {
     }
 
     public boolean reveal(int x, int y) {
-        if (!cells[x][y].isRevealed()) {
+        if (!cells[x][y].isRevealed() && !cells[x][y].isFlagged()) {
             cells[x][y].setRevealed(true);
             if (cells[x][y].isMine()) {
                 return false;
@@ -79,11 +97,7 @@ public class MineGrid {
 
     public void flag(int x, int y) {
         if (!cells[x][y].isRevealed()) {
-            if (!cells[x][y].isFlagged()) {
-                cells[x][y].setFlagged(true);
-            } else {
-                cells[x][y].setFlagged(false);
-            }
+            cells[x][y].setFlagged(!cells[x][y].isFlagged());
         }
     }
 

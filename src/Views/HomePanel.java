@@ -55,6 +55,7 @@ public class HomePanel extends JPanel implements IPanel {
     private JLabel titleLb;
     private RoundedButton newGameBtn;
     private RoundedButton continueBtn;
+    private RoundedButton getModeBtn;
 
     public HomePanel(){
         init();
@@ -157,6 +158,10 @@ public class HomePanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 if(!listener.getNewGameMenu().isVisible()){
                     target(newGameBtn);
+                    if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
+                    listener.getNewGameMenu().setVisible(true);
+                    listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
+                    listener.getNewGameMenu().getContentPn().setLocation(0, 200- newGameMenu_bound.height);
                     new Timer(1, new ActionListener(){
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -168,16 +173,12 @@ public class HomePanel extends JPanel implements IPanel {
                         }
                     }).start();
 
-                    if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
-                    listener.getNewGameMenu().setVisible(true);
-                    listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
-                    listener.getNewGameMenu().getContentPn().setLocation(0, - newGameMenu_bound.height);
-                    newGameBtn.setEnabled(false);
 
 
                 } else {
                     if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
                     unTarget(newGameBtn);
+                    listener.getNewGameMenu().getContentPn().setEnabled(false);
                     new Timer(1, new ActionListener(){
                         @Override
                         public void actionPerformed(ActionEvent e) {

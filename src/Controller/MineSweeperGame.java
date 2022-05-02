@@ -99,6 +99,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reveal(int x, int y) {
+        if(!mineGrid.isPlayed) mineGrid.firstMove(x, y);
         boolean check = mineGrid.reveal(x, y);
         if (!check) {
             mineGrid.revealAllCell();

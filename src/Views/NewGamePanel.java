@@ -92,7 +92,7 @@ public class NewGamePanel extends JPanel implements IPanel {
         expertLb.setOpaque(true);
         unTarget(expertLb);
 
-        expertInfoLb.setText("24x24 - 99");
+        expertInfoLb.setText("16x30 - 99");
         expertInfoLb.setFont(font);
         expertInfoLb.setHorizontalAlignment(JLabel.RIGHT);
         expertInfoLb.setVerticalAlignment(JLabel.CENTER);
