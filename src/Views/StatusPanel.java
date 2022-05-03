@@ -78,4 +78,8 @@ public class StatusPanel extends JPanel implements IPanel {
 //            lbNotify.setForeground(Color.red);
 //        }
     }
+
+    public void load() {
+        addEvent();
+    }
 }

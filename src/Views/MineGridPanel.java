@@ -24,6 +24,9 @@ public class MineGridPanel extends JPanel implements IPanel {
         addView();
         addEvent();
     }
+    public MineGridPanel(MineGridPanel old){
+
+    }
 
     @Override
     public void init() {
@@ -75,10 +78,12 @@ public class MineGridPanel extends JPanel implements IPanel {
     }
 
     public void updateGrid() {
+
         Font font = new Font("VNI", Font.PLAIN, 20);
         numCellUnRevealed = 0;
         Cell[][] listCell = listener.getListCell();
         for (int i = 0; i < listCell.length; i++) {
+            System.out.println("asd");
             for (int j = 0; j < listCell[0].length; j++) {
                 lbCell[i][j].setFont(font);
                 lbCell[i][j].setBorder(null);
@@ -101,8 +106,6 @@ public class MineGridPanel extends JPanel implements IPanel {
                 else {
                     if (listCell[i][j].isMine()) {
                         lbCell[i][j].setText("\uD83D\uDCA3"); // 'bomb'
-
-
                     } else {
                         int numMineAround = listCell[i][j].getNumMineAround();
                         if (numMineAround == 0) {
@@ -121,7 +124,6 @@ public class MineGridPanel extends JPanel implements IPanel {
                             }
                         }
                     }
-
                     int a= 0, b= 0, c= 0, d = 0;
                     if(i>0) if(!listCell[i-1][j].isRevealed()) a = 3;
                     if(j>0) if(!listCell[i][j-1].isRevealed()) b = 3;
@@ -153,14 +155,17 @@ public class MineGridPanel extends JPanel implements IPanel {
                         corner.setBounds(CELL_SIZE -3,CELL_SIZE - 3,3,3);
                         lbCell[i][j].add(corner);
                     }
-
                     if((i + j) % 2 == 0) lbCell[i][j].setBackground(new Color(210,184,154));
                     else lbCell[i][j].setBackground(new Color(223,194,161));
+
 
                 }
             }
         }
+        System.out.println("asd");
     }
+
+
 
     private class Label extends JLabel {
         private int x;

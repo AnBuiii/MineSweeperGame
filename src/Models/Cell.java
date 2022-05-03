@@ -1,6 +1,8 @@
 package Models;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
     private boolean isRevealed;
     private boolean isMine;
     private int numMineAround;
@@ -36,4 +38,6 @@ public class Cell {
     public void setFlagged(boolean isTarget) {
         this.isFlagged = isTarget;
     }
+
+
 }

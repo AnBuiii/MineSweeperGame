@@ -3,8 +3,9 @@ package Views.custom;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.Serializable;
 
-public class RoundedBorder implements Border {
+public class RoundedBorder implements Border, Serializable {
     private int radius;
     public RoundedBorder(int radius){
         this.radius = radius;

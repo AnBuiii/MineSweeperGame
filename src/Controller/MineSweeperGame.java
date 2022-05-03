@@ -21,22 +21,23 @@ import java.awt.event.WindowListener;
 
 public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener {
 
-    public Home home;
-    public static int WINDOW_WIDTH = 600;
-    public static int WINDOW_HEIGHT = 560;
-    public static int num_rows;
-    public static int num_columns;
+    private int WINDOW_WIDTH;
+    private int WINDOW_HEIGHT;
+    private int num_rows;
+    private int num_columns;
+    private int num_bombs;
+    private boolean isFinish;
     private MineGridPanel mineGridPanel;
-    public static int num_bombs;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
-    private boolean isFinish;
+    public Home home;
+
 
     public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
-        MineSweeperGame.num_rows = num_rows;
-        MineSweeperGame.num_columns = num_columns;
-        MineSweeperGame.num_bombs = num_bombs;
+        this.num_rows = num_rows;
+        this.num_columns = num_columns;
+        this.num_bombs = num_bombs;
 
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
@@ -44,6 +45,31 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         init();
         addView();
         addEvent();
+    }
+
+    public MineSweeperGame(MineSweeperGame old){
+        mineGrid = old.mineGrid;
+        WINDOW_WIDTH = old.WINDOW_WIDTH;
+        WINDOW_HEIGHT = old.WINDOW_HEIGHT;
+        num_rows = old.num_rows;
+        num_columns = old.num_columns;
+        num_bombs = old.num_bombs;
+        isFinish = old.isFinish;
+        mineGrid = old.mineGrid;
+
+        init();
+        addView();
+        addEvent();
+
+
+        for(int x = 0; x< mineGrid.getCells().length; x++){
+            for(int y = 0; y< mineGrid.getCells()[0].length; y++){
+                System.out.print(mineGrid.getCells()[x][y].getNumMineAround()+ " ");
+            }
+        }
+        //System.out.println(mineGrid.getCells().length);
+        mineGridPanel.updateGrid();
+
     }
 
     @Override
@@ -61,7 +87,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             e.printStackTrace();
         }
         isFinish = false;
-
     }
 
     @Override
@@ -94,7 +119,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public Cell[][] getListCell() {
-        return mineGrid.getListCell();
+        return mineGrid.getCells();
     }
 
     @Override

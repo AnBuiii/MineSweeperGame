@@ -2,13 +2,19 @@ package Controller;
 
 import Interfaces.IHomeListener;
 import Interfaces.IStartGameListener;
+import Models.Cell;
 import Models.GameDifficulty;
+
 import Views.HomePanel;
 import Interfaces.IPanel;
 import Views.NewGamePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.*;
 
 public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener {
     private HomePanel homePanel;
@@ -19,6 +25,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         init();
         addView();
         addEvent();
+        homePanel.addView();
     }
 
 
@@ -27,7 +34,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         setSize(400,600);
         setUndecorated(true);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         homePanel = new HomePanel();
         homePanel.setBounds(0,0,400,600);
@@ -41,16 +48,54 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         newGameMenu.setVisible(false);
         newGameMenu.addListener(this);
 
+        try {
+            FileInputStream fileIn = new FileInputStream("oldgame.txt");
+            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
+            MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
+            mineSweeperGame = new MineSweeperGame(obj);
+            mineSweeperGame.setHome(this);
+            ojIn.close();
+            fileIn.close();
+
+        } catch (Exception ex) {
+
+            mineSweeperGame = null;
+        }
+
+        add(newGameMenu);
+        add(homePanel);
+
 
     }
     @Override
     public void addView() {
-        add(newGameMenu);
-        add(homePanel);
+
     }
 
     @Override
     public void addEvent() {
+        WindowListener wd = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    Cell[][] cells = null;
+                    MineSweeperGame save = null;
+                    FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
+                    ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+                    if(mineSweeperGame!=null) if(!mineSweeperGame.isFinished()){
+                        cells = mineSweeperGame.getListCell();
+                        save = mineSweeperGame;
+                    }
+                    ojOut.writeObject(save);
+                    ojOut.close();
+                    fileOut.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                System.exit(0);
+            }
+        };
+        addWindowListener(wd);
     }
 
     @Override
@@ -68,7 +113,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public boolean isGameFinish() {
-        if (mineSweeperGame == null) return false;
+        if (mineSweeperGame == null) return true;
         return mineSweeperGame.isFinished();
     }
 
@@ -78,10 +123,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public NewGamePanel getNewGameMenu() {
         return newGameMenu;
     }
-
-
-
-
 
     @Override
     public void startGame(GameDifficulty gameDifficulty) {

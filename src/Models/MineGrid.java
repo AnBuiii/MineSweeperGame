@@ -1,37 +1,45 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class MineGrid {
-    public static int NUM_ROWS = 8;
-    public static int NUM_COLUMNS = 10;
-    public static int NUM_MINES = 20;
+public class MineGrid implements Serializable {
+    public static int NUM_ROWS = 9;
+    public static int NUM_COLUMNS = 9;
+    private int num_rows ;
+    private int num_columns;
+    private int num_mines ;
     public boolean isPlayed;
     private final Cell[][] cells;
 
     public MineGrid(int rows, int columns, int bombs) {
-        NUM_ROWS = rows;
-        NUM_COLUMNS = columns;
-        NUM_MINES = bombs;
+        num_rows = rows;
+        num_columns = columns;
+        num_mines = bombs;
         isPlayed = false;
 
-        cells = new Cell[NUM_ROWS][NUM_COLUMNS];
+        cells = new Cell[num_rows][num_columns];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 cells[i][j] = new Cell();
             }
         }
-        for (int i = 0; i < NUM_MINES; i++) {
-            int x = genRan(NUM_ROWS);
-            int y = genRan(NUM_COLUMNS);
+        for (int i = 0; i < num_mines; i++) {
+            int x = genRan(num_rows);
+            int y = genRan(num_columns);
             while (cells[x][y].isMine()) {
-                x = genRan(NUM_ROWS);
-                y = genRan(NUM_COLUMNS);
+                x = genRan(num_rows);
+                y = genRan(num_columns);
             }
             cells[x][y].setMine(true);
         }
         setCellNumber();
-
+    }
+    public MineGrid(MineGrid old){
+        num_rows = old.num_rows;
+        num_columns = old.num_columns;
+        num_mines = old.num_mines;
+        cells = old.cells;
     }
     public void setCellNumber(){
         for (int i = 0; i < cells.length; i++) {
@@ -39,10 +47,10 @@ public class MineGrid {
                 int count = 0;
                 for (int m = -1; m <= 1; m++) {
                     if (i + m < 0) { m++; }
-                    if (i + m > NUM_ROWS - 1) { break; }
+                    if (i + m > num_rows - 1) { break; }
                     for (int n = -1; n <= 1; n++) {
                         if (j + n < 0) { n++; }
-                        if (j + n > NUM_COLUMNS - 1) { break; }
+                        if (j + n > num_columns - 1) { break; }
                         if (!(m == 0 && n == 0) && cells[i + m][j + n].isMine()) {
                             count++;
                         }
@@ -54,11 +62,11 @@ public class MineGrid {
     }
     public void firstMove(int x, int y){
         if(cells[x][y].isMine()) cells[x][y].setMine(false);
-        int xx = genRan(NUM_ROWS);
-        int yy = genRan(NUM_COLUMNS);
+        int xx = genRan(num_rows);
+        int yy = genRan(num_columns);
         while (cells[xx][yy].isMine()) {
-            xx = genRan(NUM_ROWS);
-            yy = genRan(NUM_COLUMNS);
+            xx = genRan(num_rows);
+            yy = genRan(num_columns);
         }
         cells[xx][yy].setMine(true);
         setCellNumber();
@@ -70,7 +78,7 @@ public class MineGrid {
         return rd.nextInt(range);
     }
 
-    public Cell[][] getListCell() {
+    public Cell[][] getCells() {
         return cells;
     }
 
@@ -83,10 +91,10 @@ public class MineGrid {
             if (cells[x][y].getNumMineAround() == 0) {
                 for (int m = -1; m <= 1; m++) {
                     if (x + m < 0) { m++; }
-                    if (x + m > NUM_ROWS - 1) { break; }
+                    if (x + m > num_rows - 1) { break; }
                     for (int n = -1; n <= 1; n++) {
                         if (y + n < 0) { n++; }
-                        if (y + n > NUM_COLUMNS - 1) { break; }
+                        if (y + n > num_columns - 1) { break; }
                         reveal(x + m, y + n);
                     }
                 }
@@ -108,4 +116,17 @@ public class MineGrid {
             }
         }
     }
+    public int getNum_mines(){
+        return num_mines;
+    }
+
+    public int getNum_columns() {
+        return num_columns;
+    }
+
+    public int getNum_rows() {
+        return num_rows;
+    }
+
+
 }
