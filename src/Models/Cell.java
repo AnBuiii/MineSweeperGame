@@ -8,6 +8,7 @@ public class Cell implements Serializable {
     private int numMineAround;
     private boolean isFlagged;
 
+
     public Cell() {
         isRevealed = false;
         isMine = false;
