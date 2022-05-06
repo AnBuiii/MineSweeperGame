@@ -7,6 +7,7 @@ import Models.Cell;
 import Models.MineGrid;
 import Interfaces.IPanel;
 import Views.MineGridPanel;
+import Views.MineTriangleGridPanel;
 import Views.StatusPanel;
 
 import static Views.custom.Theme.*;
@@ -28,16 +29,19 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private int num_bombs;
     private boolean isFinish;
     private MineGridPanel mineGridPanel;
+    private MineTriangleGridPanel mineTriangleGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
     public Home home;
+    int gameMode;
 
 
-    public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
+    public MineSweeperGame(int num_rows, int num_columns, int num_bombs, int gameMode) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
+        this.gameMode = gameMode;
 
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
@@ -96,10 +100,19 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         add(statusPanel);
         statusPanel.addListener(this);
 
-        mineGridPanel = new MineGridPanel();
-        mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
-        add(mineGridPanel);
-        mineGridPanel.addListener(this);
+        if(gameMode == 1) {
+            mineGridPanel = new MineGridPanel();
+            mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH , WINDOW_HEIGHT - STATUS_PANEL_HEIGHT);
+            add(mineGridPanel);
+            mineGridPanel.addListener(this);
+        }
+        else if(gameMode == 2){
+            WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
+            setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+            mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
+            add(mineTriangleGridPanel);
+        }
+
     }
 
     @Override

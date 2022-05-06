@@ -2,52 +2,64 @@ package Views;
 
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
-import Models.MineGrid;
 import Models.TriangleLabel;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Point2D;
+import static Views.custom.Theme.*;
+
 
 public class MineTriangleGridPanel extends JPanel implements IPanel {
     private TriangleLabel[][] lbCell;
     private IGamePlayListener listener;
     private int numCellUnRevealed;
+    private Shape[][] triangleShape;
+    private Graphics grp;
+    private int gridWidth;
+    private int gridHeight;
 
-    public MineTriangleGridPanel(){
+    public MineTriangleGridPanel(int gridHeight, int gridWidth){
+        this.gridHeight = gridHeight;
+        this.gridWidth = gridWidth;
         init();
-        addView();
+       // addView();
         addEvent();
     }
     @Override
     public void init() {
-        setSize(640, 640);
-        //setLayout(new GridLayout(640, 640));
+
     }
 
     @Override
     public void addView() {
-        Label x = new Label();
+
+    }
+
+    private void doDrawing(Graphics g){
+        Graphics2D g2d = (Graphics2D) g.create();
+
         int gridSize = 640;
-        int cellSize = 40;
+        int cellSize = CELL_SIZE;
         int gridWidth = 2 * (gridSize / cellSize) - 1;
         int gridHeight = (gridSize / cellSize);
-        lbCell = new TriangleLabel[gridHeight][gridWidth];
+
+        triangleShape = new Shape[gridHeight][gridWidth];
+
         Point a = new Point(0, 0);
         Point b = new Point(cellSize / 2, cellSize);
         Point c = new Point(cellSize, 0);
 
         for(int i = 0; i < gridHeight; i ++){
             for (int j = 0; j < gridWidth; j ++){
-               // lbCell[i][j] = new TriangleLabel(a, b, c);
-                lbCell[i][j] = new TriangleLabel();
 
-                if((i + j) % 2 == 0){
-                    lbCell[i][j].setBackground(new Color(169,207,81));
-                } else {
-                    lbCell[i][j].setBackground(new Color(176,213,88));
-                }
-                add(lbCell[i][j]);
+                triangleShape[i][j] = CreateTriangleShape(a, b, c);
+                g2d.setColor(Color.black);
+                g2d.draw(triangleShape[i][j]);
+                g2d.setColor(Color.gray);
+                g2d.fill(triangleShape[i][j]);
+                a = (Point) b.clone();
+                b = (Point) c.clone();
+                c = (Point) a.clone();
+
                 c.x += cellSize;
             }
 
@@ -61,8 +73,21 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                 b.setLocation(cellSize / 2, b.y + cellSize);
             }
         }
+
     }
 
+    private Shape CreateTriangleShape(Point a, Point b, Point c) {
+        int[] x = {a.x, b.x, c.x};
+        int[] y = {a.y, b.y, c.y};
+        return new Polygon(x, y, x.length);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        grp = g.create();
+        doDrawing(grp);
+    }
 
     @Override
     public void addEvent() {

@@ -20,6 +20,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private HomePanel homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
+    private int gridSize = 640;
+    private int cellSize = 40;
 
     public Home(){
         init();
@@ -130,10 +132,11 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame.dispose();
         }
          mineSweeperGame = switch (gameDifficulty){
-             case BEGINNER -> new MineSweeperGame(9,9,10);
-             case INTERMEDIATE -> new MineSweeperGame(16,16,40);
-             case EXPERT -> new MineSweeperGame(16,30,99);
-             default -> new MineSweeperGame(0,0,0);
+             case BEGINNER -> new MineSweeperGame(9,9,10, 1);
+             case INTERMEDIATE -> new MineSweeperGame(16,16,40, 1);
+             case EXPERT -> new MineSweeperGame(16,30,99, 1);
+             case CUSTOM -> new MineSweeperGame(16,31, 40, 1);
+             default -> new MineSweeperGame(0,0,0, 0);
         };
         reDrawHome();
         this.setVisible(false);

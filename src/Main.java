@@ -12,11 +12,9 @@ public class Main {
         Home homePanel = new Home();
         homePanel.setVisible(true);
 //        JFrame frame = new JFrame();
-//        frame.setSize(640, 640);
-//        final JLabel b = new TriangleLabel();
-//        b.setText("ádfjaslkfjlkasjflkajslfjasfjalsjfkajfljakldfjladjflkajsfjaslfjalsfjlasjflajfkljaslfjaslkf");
-//        b.setBackground(Color.green);
-//        frame.add( new JPanel(){{add(b);}} );
+//        frame.setSize(700, 700);
+//        MineTriangleGridPanel x = new MineTriangleGridPanel();
+//        frame.add(x);
 //        frame.setVisible(true);
 
 

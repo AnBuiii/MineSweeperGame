@@ -13,8 +13,9 @@ public class Cell implements Serializable {
         isRevealed = false;
         isMine = false;
         isFlagged = false;
+        this.numMineAround = 0;
     }
-
+    public void addAMineAround() { this.numMineAround ++;}
     public boolean isRevealed() {
         return isRevealed;
     }

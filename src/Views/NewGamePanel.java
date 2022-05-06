@@ -191,6 +191,11 @@ public class NewGamePanel extends JPanel implements IPanel {
                 unTarget(customLb);
                 unTarget(customInfoLb);
             }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.startGame(GameDifficulty.CUSTOM);
+            }
         });
         customInfoLb.addMouseListener(customLb.getMouseListeners()[0]);
 
