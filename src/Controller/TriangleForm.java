@@ -1,12 +1,11 @@
 package Controller;
 
 import Interfaces.IHomeListener;
+import Interfaces.IPanel;
 import Interfaces.IStartGameListener;
 import Models.Cell;
 import Models.GameDifficulty;
-
 import Views.HomePanel;
-import Interfaces.IPanel;
 import Views.NewGamePanel;
 
 import javax.swing.*;
@@ -16,12 +15,12 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
 
-public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener {
+public class TriangleForm extends JFrame implements IPanel, IHomeListener, IStartGameListener {
     private HomePanel homePanel;
     private NewGamePanel newGameMenu;
-    private MineSweeperGame mineSweeperGame;
+    private MineTriangleSweeperGame mineTriangleSweeperGame;
 
-    public Home(){
+    public TriangleForm(){
         init();
         addView();
         addEvent();
@@ -48,19 +47,19 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         newGameMenu.setVisible(false);
         newGameMenu.addListener(this);
 
-        try {
-            FileInputStream fileIn = new FileInputStream("oldgame.txt");
-            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
-            MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
-            mineSweeperGame = new MineSweeperGame(obj);
-            mineSweeperGame.setHome(this);
-            ojIn.close();
-            fileIn.close();
-
-        } catch (Exception ex) {
-
-            mineSweeperGame = null;
-        }
+//        try {
+//            FileInputStream fileIn = new FileInputStream("oldgame.txt");
+//            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
+//            MineTriangleSweeperGame obj = (MineTriangleSweeperGame) ojIn.readObject();
+//            mineTriangleSweeperGame = new MineTriangleSweeperGame(obj);
+//            mineTriangleSweeperGame.setTriangleForm(this);
+//            ojIn.close();
+//            fileIn.close();
+//
+//        } catch (Exception ex) {
+//
+//            mineTriangleSweeperGame = null;
+//        }
 
         add(newGameMenu);
         add(homePanel);
@@ -82,9 +81,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
                     MineSweeperGame save = null;
                     FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
                     ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
-                    if(mineSweeperGame!=null) if(!mineSweeperGame.isFinished()){
-                        cells = mineSweeperGame.getListCell();
-                        save = mineSweeperGame;
+                    if(mineTriangleSweeperGame !=null) if(!mineTriangleSweeperGame.isFinished()){
+                        cells = mineTriangleSweeperGame.getListCell();
+                       // save = mineTriangleSweeperGame;
                     }
                     ojOut.writeObject(save);
                     ojOut.close();
@@ -101,7 +100,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void continueGame() {
         setVisible(false);
-        mineSweeperGame.setVisible(true);
+        mineTriangleSweeperGame.setVisible(true);
     }
 
     @Override
@@ -113,8 +112,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public boolean isGameFinish() {
-        if (mineSweeperGame == null) return true;
-        return mineSweeperGame.isFinished();
+        if (mineTriangleSweeperGame == null) return true;
+        return mineTriangleSweeperGame.isFinished();
     }
 
     @Override
@@ -124,24 +123,21 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
-        if(mineSweeperGame != null){
-            mineSweeperGame.dispose();
+        if(mineTriangleSweeperGame != null){
+            mineTriangleSweeperGame.dispose();
         }
-         mineSweeperGame = switch (gameDifficulty){
-             case BEGINNER -> new MineSweeperGame(9,9,10, 1);
-             case INTERMEDIATE -> new MineSweeperGame(16,16,40, 1);
-             case EXPERT -> new MineSweeperGame(16,30,99, 1);
-             default -> new MineSweeperGame(0,0,0, 1);
+        mineTriangleSweeperGame = switch (gameDifficulty){
+            case BEGINNER -> new MineTriangleSweeperGame(16, 31, 40, 2);
+            default -> throw new IllegalStateException("Unexpected value: " + gameDifficulty);
         };
         reDrawHome();
         this.setVisible(false);
-        mineSweeperGame.setHome(this);
-        mineSweeperGame.setVisible(true);
+        mineTriangleSweeperGame.setTriangleForm(this);
+        mineTriangleSweeperGame.setVisible(true);
     }
 
     @Override
     public void closeHomePanel() {
         this.setVisible(false);
     }
-
 }

@@ -7,7 +7,6 @@ import Models.Cell;
 import Models.MineGrid;
 import Interfaces.IPanel;
 import Views.MineGridPanel;
-import Views.MineTriangleGridPanel;
 import Views.StatusPanel;
 
 import static Views.custom.Theme.*;
@@ -29,7 +28,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private int num_bombs;
     private boolean isFinish;
     private MineGridPanel mineGridPanel;
-    private MineTriangleGridPanel mineTriangleGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;
     public Home home;
@@ -105,12 +103,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH , WINDOW_HEIGHT - STATUS_PANEL_HEIGHT);
             add(mineGridPanel);
             mineGridPanel.addListener(this);
-        }
-        else if(gameMode == 2){
-            WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
-            setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
-            mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
-            add(mineTriangleGridPanel);
         }
 
     }

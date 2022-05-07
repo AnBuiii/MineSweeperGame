@@ -7,6 +7,7 @@ public class Cell implements Serializable {
     private boolean isMine;
     private int numMineAround;
     private boolean isFlagged;
+    private boolean isUp; // xác định ô tam giác là đứng hay úp
 
 
     public Cell() {
@@ -14,6 +15,13 @@ public class Cell implements Serializable {
         isMine = false;
         isFlagged = false;
         this.numMineAround = 0;
+    }
+
+    public void setIsUp(boolean isUp){
+        this.isUp = isUp;
+    }
+    public boolean getIsUp(){
+        return this.isUp;
     }
     public void addAMineAround() { this.numMineAround ++;}
     public boolean isRevealed() {

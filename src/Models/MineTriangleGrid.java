@@ -16,7 +16,6 @@ public class MineTriangleGrid {
         isPlayed = false;
 
         landMines();
-        setCellNumber();
     }
 //    public MineGrid(MineGrid old){
 //        num_rows = old.num_rows;
@@ -28,6 +27,16 @@ public class MineTriangleGrid {
     public void landMines(){
 
         cells = new Cell[num_rows][num_columns];
+
+        // xác định ô tam giác úp hay đứng
+        for(int i = 0; i < num_rows; i ++){
+            for(int j = 0; j < num_columns; j ++){
+                cells[i][j] = new Cell();
+                cells[i][j].setIsUp(j % 2 == 0);
+            }
+        }
+
+
         int count = 0;
         int ranMine;
 
@@ -37,20 +46,53 @@ public class MineTriangleGrid {
             int j = ranMine % num_columns;
             if(ranMine < (this.num_rows * this.num_columns) && !cells[i][j].isMine()){
                 cells[i][j].setMine(true);
-                if(j - 1 >= 0){
-                    if(i - 1 >= 0){
-                        cells[i][j].addAMineAround();
+
+                if(j - 1 >= 0){ // left
+                    if(i - 1 >= 0){ // left top
+                        cells[i - 1][j - 1].addAMineAround();
+                        if(!cells[i][j].getIsUp() && j - 2 >= 0) { //far left top
+                            cells[i - 1][j - 2].addAMineAround();
+                        }
+                    }
+
+                if(i + 1 < this.num_rows){ // left bottom
+                    cells[i + 1][j - 1].addAMineAround();
+                    if(cells[i][j].getIsUp() && j - 2 >= 0){ // far left bottom
+                        cells[i + 1][j - 2].addAMineAround();
                     }
                 }
+
+                cells[i][j - 1].addAMineAround(); // left middle
+
+                    if(j - 2 >=0 ){
+                        cells[i][j - 2].addAMineAround(); // far left middle
+                    }
+                }
+
+                if(i - 1 >= 0){
+                    cells[i - 1][j].addAMineAround(); // top middle
+                }
+
+                if(j + 1 < this.num_columns){
+                    if(i - 1 >= 0){
+                        cells[i - 1][j + 1].addAMineAround(); // top right
+                    if(!cells[i][j].getIsUp() && j + 2 < this.num_rows){ // far top right
+                        cells[i - 1][j + 2].addAMineAround();
+                    }
+                    }
+                    cells[i][j + 1].addAMineAround(); // middle right
+                    if(j + 2 < this.num_columns){
+                        cells[i][j + 2].addAMineAround(); // far middle right
+                    }
+                }
+                count++;
             }
         }
     }
 
-    public void setCellNumber(){
-
-    }
     public void firstMove(int x, int y){
-
+        if(cells[x][y].isMine()) cells[x][y].setMine(false);
+        landMines();
     }
 
     private int genRan(int range) {
@@ -62,8 +104,61 @@ public class MineTriangleGrid {
         return cells;
     }
 
-    public boolean reveal(int x, int y) {
-       return true;
+    public boolean reveal(int i, int j) {
+        if (!cells[i][j].isRevealed() && !cells[i][j].isFlagged()) {
+            cells[i][j].setRevealed(true);
+            if (cells[i][j].isMine()) {
+                return false;
+            }
+            if (cells[i][j].getNumMineAround() == 0) {
+                if (j - 1 >= 0) { // left
+                    if (i - 1 >= 0) { // left top
+                        this.reveal(i - 1, j - 1);
+                        if (!this.cells[i][j].getIsUp() && j - 2 >= 0) {
+                            this.reveal(i - 1, j - 2);
+                        }
+                    }
+                    if (i + 1 < this.num_rows) { // left bottom
+                        this.reveal(i + 1, j - 1);
+                        if (this.cells[i][j].getIsUp() && j - 2 >= 0) { // far left bottom
+                            this.reveal(i + 1, j - 2);
+                        }
+                    }
+                    this.reveal(i, j - 1); // left middle
+                    if (j - 2 >= 0) {
+                        this.reveal(i, j - 2); // far left middle
+                    }
+                }
+
+                if (i - 1 >= 0) {
+                    this.reveal(i - 1, j); // top middle
+                }
+                if (i + 1 < this.num_rows) {
+                    this.reveal(i + 1, j); // bottom middle
+                }
+
+                if (j + 1 < this.num_columns) {
+                    if (i - 1 >= 0) {
+                        this.reveal(i - 1, j + 1); // top right
+                        if (!this.cells[i][j].getIsUp() && j + 2 < this.num_columns) { // far top  right
+                            this.reveal(i - 1, j + 2);
+                        }
+                    }
+                    if (i + 1 < this.num_rows) {
+                        this.reveal(i + 1, j + 1); // bottom right
+                        if (this.cells[i][j].getIsUp() && j + 2 < this.num_columns) { // far bottom right
+                            this.reveal(i + 1, j + 2);
+                        }
+                    }
+                    this.reveal(i, j + 1); // middle right
+                    if (j + 2 < this.num_columns) {
+                        this.reveal(i, j + 2); // far middle right
+                    }
+                }
+            }
+
+        }
+        return true;
     }
 
     public void flag(int x, int y) {
