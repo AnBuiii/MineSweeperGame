@@ -127,7 +127,7 @@ public class TriangleForm extends JFrame implements IPanel, IHomeListener, IStar
             mineTriangleSweeperGame.dispose();
         }
         mineTriangleSweeperGame = switch (gameDifficulty){
-            case BEGINNER -> new MineTriangleSweeperGame(16, 31, 40, 2);
+            case BEGINNER -> new MineTriangleSweeperGame(16, 31, 65, 2);
             default -> throw new IllegalStateException("Unexpected value: " + gameDifficulty);
         };
         reDrawHome();

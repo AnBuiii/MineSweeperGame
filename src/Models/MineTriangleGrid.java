@@ -79,7 +79,7 @@ public class MineTriangleGrid {
                 if(j + 1 < this.num_columns){
                     if(i - 1 >= 0){
                         cells[i - 1][j + 1].addAMineAround(); // top right
-                    if(!cells[i][j].getIsUp() && j + 2 < this.num_rows){ // far top right
+                    if(!cells[i][j].getIsUp() && j + 2 < this.num_columns){ // far top right
                         cells[i - 1][j + 2].addAMineAround();
                     }
                     }
