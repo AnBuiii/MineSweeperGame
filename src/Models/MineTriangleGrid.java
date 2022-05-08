@@ -32,7 +32,7 @@ public class MineTriangleGrid {
         for(int i = 0; i < num_rows; i ++){
             for(int j = 0; j < num_columns; j ++){
                 cells[i][j] = new Cell();
-                cells[i][j].setIsUp(j % 2 == 0);
+                cells[i][j].setIsUp(( i + j) % 2 != 0);
             }
         }
 
@@ -72,6 +72,9 @@ public class MineTriangleGrid {
                 if(i - 1 >= 0){
                     cells[i - 1][j].addAMineAround(); // top middle
                 }
+                if(i + 1 < this.num_rows){
+                    cells[i + 1][j].addAMineAround(); // bottom middle
+                }
 
                 if(j + 1 < this.num_columns){
                     if(i - 1 >= 0){
@@ -79,6 +82,12 @@ public class MineTriangleGrid {
                     if(!cells[i][j].getIsUp() && j + 2 < this.num_rows){ // far top right
                         cells[i - 1][j + 2].addAMineAround();
                     }
+                    }
+                    if(i + 1 < this.num_rows){
+                        cells[i + 1][j + 1].addAMineAround(); // bottom right
+                        if(cells[i][j].getIsUp() && j + 2 < this.num_columns){ // far bottom right
+                            cells[i + 1][j + 2].addAMineAround();
+                        }
                     }
                     cells[i][j + 1].addAMineAround(); // middle right
                     if(j + 2 < this.num_columns){
@@ -93,6 +102,7 @@ public class MineTriangleGrid {
     public void firstMove(int x, int y){
         if(cells[x][y].isMine()) cells[x][y].setMine(false);
         landMines();
+        isPlayed = true;
     }
 
     private int genRan(int range) {
@@ -106,10 +116,10 @@ public class MineTriangleGrid {
 
     public boolean reveal(int i, int j) {
         if (!cells[i][j].isRevealed() && !cells[i][j].isFlagged()) {
-            cells[i][j].setRevealed(true);
             if (cells[i][j].isMine()) {
                 return false;
             }
+            cells[i][j].setRevealed(true);
             if (cells[i][j].getNumMineAround() == 0) {
                 if (j - 1 >= 0) { // left
                     if (i - 1 >= 0) { // left top

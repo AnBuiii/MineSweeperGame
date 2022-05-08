@@ -7,20 +7,13 @@ public class TriangleShapeItem {
     private Point a;
     private Point b;
     private Point c;
-    private boolean isChecked;
 
     public TriangleShapeItem(Point a, Point b, Point c){
         this.a = a;
         this.b = b;
         this.c = c;
         triangleShape = createTriangleShape();
-        isChecked = false;
-    }
-    public void setChecked(boolean checked){
-        this.isChecked = checked;
-    }
-    public boolean isChecked(){
-        return this.isChecked;
+
     }
 
     public Shape getTriangleShape(){

@@ -2,6 +2,7 @@ package Views;
 
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
+import Models.Cell;
 import Models.TriangleLabel;
 import Models.TriangleShapeItem;
 
@@ -25,6 +26,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
     private int gridHeight;
     private BufferedImage paintImage;
     private  int gridSize;
+    private Cell[][] cells;
 
     public MineTriangleGridPanel(int gridHeight, int gridWidth){
         this.gridHeight = gridHeight;
@@ -86,19 +88,55 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
 
     private void doDrawing(Graphics2D g){
         Graphics2D g2d = (Graphics2D) g.create();
+        Font font = new Font("VNI", Font.PLAIN, 15);
+        g2d.setFont(font);
         // vẽ
         for(int i = 0; i < this.gridHeight; i ++){
             for (int j = 0; j < this.gridWidth; j ++){
-                if(!triangleShape[i][j].isChecked()){
+                if(cells == null){
                     g2d.setColor(Color.gray);
                     g2d.fill(triangleShape[i][j].getTriangleShape());
+                    g2d.setColor(Color.black);
+                    g2d.draw(triangleShape[i][j].getTriangleShape());
                 }
                 else{
-                    g2d.setColor(Color.red);
-                    g2d.fill(triangleShape[i][j].getTriangleShape());
+                    Point center = pointCenterOfTriangle(triangleShape[i][j].getA(),triangleShape[i][j].getB(),triangleShape[i][j].getC());
+                    center.x -= 6;
+                    center.y += 6;
+                    if(cells[i][j].isRevealed()){
+                        if(cells[i][j].isMine()){
+                            g2d.setColor(Color.black);
+                            g2d.drawString("\uD83D\uDCA3", center.x, center.y); // bomb
+                        }
+                        else{
+                            int x = cells[i][j].getNumMineAround();
+                            if(x != 0){
+                                String s = String.valueOf(x);
+                                g2d.setColor(Color.blue);
+                                g2d.drawString(s, center.x, center.y);
+                            }
+                        }
+                        g2d.setColor(Color.black);
+                        g2d.draw(triangleShape[i][j].getTriangleShape());
+                    }
+                    else {
+                        if(cells[i][j].isFlagged()){
+                            g2d.setColor(Color.gray);
+                            g2d.fill(triangleShape[i][j].getTriangleShape());
+                            g2d.setColor(Color.red);
+                            g2d.drawString("\uD83D\uDEA9", center.x, center.y);   //flag
+                            g2d.setColor(Color.black);
+                            g2d.draw(triangleShape[i][j].getTriangleShape());
+                        }
+                        else{
+                            g2d.setColor(Color.gray);
+                            g2d.fill(triangleShape[i][j].getTriangleShape());
+                            g2d.setColor(Color.black);
+                            g2d.draw(triangleShape[i][j].getTriangleShape());
+                        }
+
+                    }
                 }
-                g2d.setColor(Color.black);
-                g2d.draw(triangleShape[i][j].getTriangleShape());
             }
         }
     }
@@ -120,7 +158,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                 double x = e.getPoint().getLocation().getX();
                 double y = e.getPoint().getLocation().getY();
                 Point2D pointMouse = new Point2D.Double(x, y);
-                findTriangleCellClicked(pointMouse);
+                findTriangleCellClicked(pointMouse, e);
             }
         });
 
@@ -134,21 +172,35 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         return (alpha > 0 && beta > 0 && gamma > 0);
     }
 
-    public void findTriangleCellClicked(Point2D mouse){
+    public void updateTriangleGridPanel(){
+        this.cells = listener.getListCell();
+        repaint();
+    }
+
+    public void findTriangleCellClicked(Point2D mouse, MouseEvent event){
         for(int i = 0; i < triangleShape.length; i ++){
             for(int j = 0; j < triangleShape[0].length; j ++){
                 if(pointInTriangle(mouse, triangleShape[i][j].getA(), triangleShape[i][j].getB(), triangleShape[i][j].getC())){
                     System.out.println(i + " " + j);
-                    triangleShape[i][j].setChecked(true);
-//                    grp.setColor(Color.black);
-//                    grp.draw(triangleShape[i][j].getTriangleShape());
-//                    grp.setColor(Color.red);
-//                    grp.fill(triangleShape[i][j].getTriangleShape());
-                    repaint();
+                    if(event.getButton() == MouseEvent.BUTTON1){
+                        listener.reveal(i, j);
+                        System.out.println("left clicked!");
+                    }
+                    else if(event.getButton() == MouseEvent.BUTTON3){
+                        listener.flag(i, j);
+                        System.out.println("right clicked!");
+                    }
                 }
             }
         }
     }
+    public void addListener(IGamePlayListener event) {
+        listener = event;
+    }
+    private Point pointCenterOfTriangle(Point a, Point b, Point c){
+        return new Point((a.x + b.x + c.x) / 3, (a. y + b.y + c.y) / 3);
+    }
+
 
 
 }

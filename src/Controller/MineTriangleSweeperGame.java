@@ -101,6 +101,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             mineTriangleGridPanel = new MineTriangleGridPanel(num_columns, num_columns);
             mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
             add(mineTriangleGridPanel);
+            mineTriangleGridPanel.addListener(this);
         }
 
     }
@@ -133,7 +134,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             mineTriangleGrid.revealAllCell();
             isFinish = true;
         }
-       // mineTriangleGridPanel.updateGrid();
+        mineTriangleGridPanel.updateTriangleGridPanel();
       //  int numSquareClosed = mineTriangleGridPanel.getNumCellUnRevealed();
       //  statusPanel.updateStatus(numSquareClosed);
     }
@@ -141,13 +142,13 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     @Override
     public void flag(int x, int y) {
         mineTriangleGrid.flag(x, y);
-     //   mineTriangleGridPanel.updateGrid();
+        mineTriangleGridPanel.updateTriangleGridPanel();
     }
 
     @Override
     public void restart() {
         mineTriangleGrid = new MineTriangleGrid(num_rows, num_columns,num_bombs);
-      //  mineTriangleGridPanel.updateGrid();
+        mineTriangleGridPanel.updateTriangleGridPanel();
     }
 
     @Override
