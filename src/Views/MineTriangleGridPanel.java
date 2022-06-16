@@ -45,6 +45,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         addEvent();
        // doDrawing(grp);
     }
+
     @Override
     public void init() {
 

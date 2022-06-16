@@ -108,7 +108,7 @@ public class HomePanel extends JPanel implements IPanel {
         triangleGame.setBackground(FOREGROUND);
         triangleGame.setForeground(BACKGROUND);
 
-
+        // check continue btn
         if(listener != null){
             newGameBtn_bound.y = newGameBtn_bound.y_default;
             newGameMenu_bound.y = newGameMenu_bound.y_default;
@@ -119,7 +119,7 @@ public class HomePanel extends JPanel implements IPanel {
             }
             else {
                 newGameBtn_bound.y = 200;
-                triangleGame_bound.y = 240;
+                triangleGame_bound.y = 260;
                 continueBtn.setVisible(true);
             }
         }

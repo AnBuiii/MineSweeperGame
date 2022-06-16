@@ -27,7 +27,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     private StatusPanel statusPanel;
     private MineTriangleGrid mineTriangleGrid;
     public Home home;
-    int gameMode;
+
 
 
     public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs, int gameMode) {
@@ -35,10 +35,9 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
-        this.gameMode = gameMode;
 
-        WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
+        WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
 
         init();
         addView();
@@ -46,30 +45,23 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
 
 
-//    public MineTriangleSweeperGame(MineTriangleSweeperGame old){
-//        mineGrid = old.mineGrid;
-//        WINDOW_WIDTH = old.WINDOW_WIDTH;
-//        WINDOW_HEIGHT = old.WINDOW_HEIGHT;
-//        num_rows = old.num_rows;
-//        num_columns = old.num_columns;
-//        num_bombs = old.num_bombs;
-//        isFinish = old.isFinish;
-//        mineGrid = old.mineGrid;
-//
-//        init();
-//        addView();
-//        addEvent();
-//
-//
-//        for(int x = 0; x< mineGrid.getCells().length; x++){
-//            for(int y = 0; y< mineGrid.getCells()[0].length; y++){
-//                System.out.print(mineGrid.getCells()[x][y].getNumMineAround()+ " ");
-//            }
-//        }
-//        //System.out.println(mineGrid.getCells().length);
-//      //  mineGridPanel.updateGrid();
-//
-//    }
+    public MineTriangleSweeperGame(MineTriangleSweeperGame old){
+        mineTriangleGrid = old.mineTriangleGrid;
+        WINDOW_WIDTH = old.WINDOW_WIDTH;
+        WINDOW_HEIGHT = old.WINDOW_HEIGHT;
+        num_rows = old.num_rows;
+        num_columns = old.num_columns;
+        num_bombs = old.num_bombs;
+        isFinish = old.isFinish;
+
+        init();
+        addView();
+        addEvent();
+
+        //System.out.println(mineGrid.getCells().length);
+      //  mineGridPanel.updateGrid();
+
+    }
 
     @Override
     public void init() {
@@ -95,14 +87,14 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         add(statusPanel);
         statusPanel.addListener(this);
 
-         if(gameMode == 2){
-            WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
-            setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
-            mineTriangleGridPanel = new MineTriangleGridPanel(num_columns, num_columns);
-            mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
-            add(mineTriangleGridPanel);
-            mineTriangleGridPanel.addListener(this);
-        }
+//
+
+        setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
+        mineTriangleGridPanel = new MineTriangleGridPanel(num_columns, num_columns);
+        mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
+        add(mineTriangleGridPanel);
+        mineTriangleGridPanel.addListener(this);
+//
 
     }
 
@@ -111,7 +103,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         WindowListener window = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int kq = JOptionPane.showConfirmDialog(MineTriangleSweeperGame.this, "Bạn có muốn thoát không?",
+                int kq = JOptionPane.showConfirmDialog(MineTriangleSweeperGame.this, "Bạn sẽ mất dữ liệu vừa chơi, tiếp tục?",
                         "Thông báo", JOptionPane.YES_NO_OPTION);
                 if (kq == JOptionPane.YES_OPTION) {
                     dispose();

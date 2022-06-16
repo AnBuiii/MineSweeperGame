@@ -17,7 +17,7 @@ import java.awt.event.WindowListener;
 import java.io.*;
 
 public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener {
-    private HomePanel homePanel;
+    private HomePanel   homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
 
@@ -38,18 +38,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        homePanel = new HomePanel();
-        homePanel.setBounds(0,0,400,600);
-        homePanel.setBackground(new Color(239,235,232));
-        homePanel.addListener(this);
-
-
-        newGameMenu = new NewGamePanel();
-        newGameMenu.setBounds(50,160, 300,150);
-        newGameMenu.setBackground(new Color(239,235,232));
-        newGameMenu.setForeground(new Color(104,159,57));
-        newGameMenu.setVisible(false);
-        newGameMenu.addListener(this);
 
         try {
             FileInputStream fileIn = new FileInputStream("oldgame.txt");
@@ -65,13 +53,26 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame = null;
         }
 
-        add(newGameMenu);
-        add(homePanel);
 
 
     }
     @Override
     public void addView() {
+        homePanel = new HomePanel();
+        homePanel.setBounds(0,0,400,600);
+        homePanel.setBackground(new Color(239,235,232));
+        homePanel.addListener(this);
+
+
+        newGameMenu = new NewGamePanel();
+        newGameMenu.setBounds(50,160, 300,150);
+        newGameMenu.setBackground(new Color(239,235,232));
+        newGameMenu.setForeground(new Color(104,159,57));
+        newGameMenu.setVisible(false);
+        newGameMenu.addListener(this);
+
+        add(newGameMenu);
+        add(homePanel);
 
     }
 
@@ -106,7 +107,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void continueGame() {
         setVisible(false);
-        mineSweeperGame.setVisible(true);
+        if(mineTriangleSweeperGame != null) mineTriangleSweeperGame.setVisible(true);
+        if(mineSweeperGame != null) mineSweeperGame.setVisible(true);
     }
 
     @Override
@@ -118,12 +120,23 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public boolean isGameFinish() {
-        if (mineSweeperGame == null) return true;
-        return mineSweeperGame.isFinished();
+
+
+        if(mineSweeperGame != null){
+            return mineSweeperGame.isFinished();
+        }
+        if(mineTriangleSweeperGame != null){
+            return mineTriangleSweeperGame.isFinished();
+        }
+        return true;
     }
 
     @Override
     public void startTriangleGame() {
+        if(mineSweeperGame != null){
+            mineSweeperGame.dispose();
+            mineSweeperGame = null;
+        }
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
         }
@@ -142,6 +155,11 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
+        if(mineTriangleSweeperGame != null){
+            mineTriangleSweeperGame.dispose();
+            mineTriangleSweeperGame = null;
+
+        }
         if(mineSweeperGame != null){
             mineSweeperGame.dispose();
         }
@@ -151,6 +169,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
              case EXPERT -> new MineSweeperGame(16,30,99, 1);
              default -> new MineSweeperGame(0,0,0, 1);
         };
+
         reDrawHome();
         this.setVisible(false);
         mineSweeperGame.setHome(this);
@@ -161,5 +180,4 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void closeHomePanel() {
         this.setVisible(false);
     }
-
 }
