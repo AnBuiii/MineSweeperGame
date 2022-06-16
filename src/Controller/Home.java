@@ -57,8 +57,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             ojIn.close();
             fileIn.close();
 
-        } catch (Exception ex) {
 
+        } catch (Exception ex) {
             mineSweeperGame = null;
         }
 
@@ -82,17 +82,19 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
                     MineSweeperGame save = null;
                     FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
                     ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
-                    if(mineSweeperGame!=null) if(!mineSweeperGame.isFinished()){
-                        cells = mineSweeperGame.getListCell();
-                        save = mineSweeperGame;
-                    }
-                    ojOut.writeObject(save);
-                    ojOut.close();
-                    fileOut.close();
+                    if(mineSweeperGame!=null)
+                        if(!mineSweeperGame.isFinished()){
+                            cells = mineSweeperGame.getListCell();
+                            save = mineSweeperGame;
+                            System.out.println("ua");
+                            ojOut.writeObject(save);
+                            ojOut.close();
+                            fileOut.close();
+                        }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                System.exit(0);
+                System.exit(1);
             }
         };
         addWindowListener(wd);

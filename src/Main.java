@@ -1,4 +1,5 @@
 import Controller.Home;
+import Controller.MineSweeperGame;
 import Controller.PlayForm;
 import Controller.TriangleForm;
 import Models.TriangleLabel;

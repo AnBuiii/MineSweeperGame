@@ -78,7 +78,7 @@ public class MineGridPanel extends JPanel implements IPanel {
     }
 
     public void updateGrid() {
-
+        System.out.println("cccc gi v");
         Font font = new Font("VNI", Font.PLAIN, 20);
         numCellUnRevealed = 0;
         Cell[][] listCell = listener.getListCell();
@@ -162,7 +162,6 @@ public class MineGridPanel extends JPanel implements IPanel {
                 }
             }
         }
-        System.out.println("asd");
     }
 
 
