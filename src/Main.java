@@ -1,14 +1,4 @@
 import Controller.Home;
-import Controller.MineSweeperGame;
-import Controller.PlayForm;
-import Controller.TriangleForm;
-import Models.TriangleLabel;
-import Views.MineTriangleGridPanel;
-import Views.StatusPanel;
-import Views.custom.Theme;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {

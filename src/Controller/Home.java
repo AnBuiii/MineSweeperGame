@@ -21,6 +21,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
 
+    private MineTriangleSweeperGame mineTriangleSweeperGame;
+
     public Home(){
         init();
         addView();
@@ -40,6 +42,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         homePanel.setBounds(0,0,400,600);
         homePanel.setBackground(new Color(239,235,232));
         homePanel.addListener(this);
+
 
         newGameMenu = new NewGamePanel();
         newGameMenu.setBounds(50,160, 300,150);
@@ -117,6 +120,19 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public boolean isGameFinish() {
         if (mineSweeperGame == null) return true;
         return mineSweeperGame.isFinished();
+    }
+
+    @Override
+    public void startTriangleGame() {
+        if(mineTriangleSweeperGame != null){
+            mineTriangleSweeperGame.dispose();
+        }
+        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 65, 2);
+
+        reDrawHome();
+        this.setVisible(false);
+        mineTriangleSweeperGame.setTriangleForm(this);
+        mineTriangleSweeperGame.setVisible(true);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     private MineTriangleGridPanel mineTriangleGridPanel;
     private StatusPanel statusPanel;
     private MineTriangleGrid mineTriangleGrid;
-    public TriangleForm triangleForm;
+    public Home home;
     int gameMode;
 
 
@@ -154,8 +154,8 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     @Override
     public void back() {
         this.setVisible(false);
-        triangleForm.reDrawHome();
-        triangleForm.setVisible(true);
+        home.reDrawHome();
+        home.setVisible(true);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     public boolean isFinished(){
         return isFinish;
     }
-    public void setTriangleForm(TriangleForm triangleForm){
-        this.triangleForm = triangleForm;
+    public void setTriangleForm(Home home){
+        this.home = home;
     }
 }

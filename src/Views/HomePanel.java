@@ -43,19 +43,19 @@ public class HomePanel extends JPanel implements IPanel {
         static int width = 300;
         static int height = 300;
     }
-    public static class gameModeMenu_bound{
+    public static class triangleGame_bound{
         static int x = 50;
         static int y = 200;
         static final int y_default = y;
         static int width = 300;
-        static int height = 300;
+        static int height = 50;
     }
 
     private IHomeListener listener;
     private JLabel titleLb;
     private RoundedButton newGameBtn;
     private RoundedButton continueBtn;
-    private RoundedButton getModeBtn;
+    private RoundedButton triangleGame ;
 
     public HomePanel(){
         init();
@@ -70,6 +70,7 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb = new JLabel(TITLE);
         continueBtn = new RoundedButton(10);
         newGameBtn = new RoundedButton(10);
+        triangleGame = new RoundedButton(10);
 
     }
 
@@ -99,16 +100,26 @@ public class HomePanel extends JPanel implements IPanel {
         newGameBtn.setBackground(FOREGROUND);
         newGameBtn.setForeground(BACKGROUND);
 
+        triangleGame.setFont(font);
+        triangleGame.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
+        triangleGame.setFocusPainted(false);
+        triangleGame.setText("Triangle Game Mode");
+        triangleGame.setHorizontalAlignment(SwingConstants.LEFT);
+        triangleGame.setBackground(FOREGROUND);
+        triangleGame.setForeground(BACKGROUND);
+
 
         if(listener != null){
             newGameBtn_bound.y = newGameBtn_bound.y_default;
             newGameMenu_bound.y = newGameMenu_bound.y_default;
             if(listener.isGameFinish()) {
                 newGameBtn_bound.y = 140;
+                triangleGame_bound.y = 200;
                 continueBtn.setVisible(false);
             }
             else {
                 newGameBtn_bound.y = 200;
+                triangleGame_bound.y = 240;
                 continueBtn.setVisible(true);
             }
         }
@@ -116,10 +127,13 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb.setBounds(title_bound.x,title_bound.y,title_bound.width,title_bound.height);
         continueBtn.setBounds(continueBtn_bound.x,continueBtn_bound.y,continueBtn_bound.width,continueBtn_bound.height);
         newGameBtn.setBounds(newGameBtn_bound.x, newGameBtn_bound.y, newGameBtn_bound.width, newGameBtn_bound.height);
+        triangleGame.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
+
 
         add(titleLb);
         add(continueBtn);
         add(newGameBtn);
+        add(triangleGame);
 
     }
 
@@ -190,6 +204,23 @@ public class HomePanel extends JPanel implements IPanel {
                         }
                     }).start();
                 }
+            }
+        });
+        triangleGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                target(triangleGame);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                if(!listener.getNewGameMenu().isVisible()){
+                    unTarget(triangleGame);
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.startTriangleGame();
+
             }
         });
 
