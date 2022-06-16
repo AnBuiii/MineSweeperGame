@@ -17,10 +17,12 @@ public class NewGamePanel extends JPanel implements IPanel {
     JLabel intermediateLb;
     JLabel expertLb;
     JLabel customLb;
+    JLabel triangleLb;
     JLabel beginnerInfoLb;
     JLabel intermediateInfoLb;
     JLabel expertInfoLb;
     JLabel customInfoLb;
+    JLabel triangleInfoLb;
     IStartGameListener listener;
     JPanel contentPn;
 
@@ -42,13 +44,15 @@ public class NewGamePanel extends JPanel implements IPanel {
         intermediateLb = new JLabel();
         expertLb = new JLabel();
         customLb = new JLabel();
+        triangleLb = new JLabel();
         beginnerInfoLb = new JLabel();
         intermediateInfoLb = new JLabel();
         expertInfoLb = new JLabel();
         customInfoLb = new JLabel();
+        triangleInfoLb = new JLabel();
         contentPn = new JPanel();
 
-        contentPn.setLayout(new GridLayout(4,2));
+        contentPn.setLayout(new GridLayout(5,2));
         contentPn.setBorder(new RoundedBorder(10));
 
     }
@@ -109,6 +113,16 @@ public class NewGamePanel extends JPanel implements IPanel {
         customInfoLb.setOpaque(true);
         unTarget(customInfoLb);
 
+        triangleLb.setText("Triangle");
+        triangleLb.setFont(font);
+        triangleLb.setHorizontalAlignment(JLabel.LEFT);
+        triangleLb.setVerticalAlignment(JLabel.CENTER);
+        triangleLb.setOpaque(true);
+        unTarget(triangleLb);
+
+        triangleInfoLb.setOpaque(true);
+        unTarget(triangleInfoLb);
+
         contentPn.add(beginnerLb);
         contentPn.add(beginnerInfoLb);
         contentPn.add(intermediateLb);
@@ -117,6 +131,8 @@ public class NewGamePanel extends JPanel implements IPanel {
         contentPn.add(expertInfoLb);
         contentPn.add(customLb);
         contentPn.add(customInfoLb);
+        contentPn.add(triangleLb);
+        contentPn.add(triangleInfoLb);
         contentPn.setBounds(0,0, 300, 150);
         contentPn.setBackground(Theme.FOREGROUND);
         contentPn.setForeground(Theme.BACKGROUND);
@@ -198,6 +214,22 @@ public class NewGamePanel extends JPanel implements IPanel {
             }
         });
         customInfoLb.addMouseListener(customLb.getMouseListeners()[0]);
+        triangleLb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                target(triangleLb);
+                target(triangleInfoLb);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                unTarget(triangleLb);
+                unTarget(triangleInfoLb);
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.startTriangleGame();
+            }
+        });
+        triangleInfoLb.addMouseListener(triangleLb.getMouseListeners()[0]);
 
 
     }

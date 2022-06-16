@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
 
 import static Views.custom.Theme.*;
 
@@ -41,7 +40,7 @@ public class HomePanel extends JPanel implements IPanel {
         static int y = 200;
         static final int y_default = y;
         static int width = 300;
-        static int height = 300;
+        static int height = 150;
     }
     public static class triangleGame_bound{
         static int x = 50;
@@ -51,11 +50,13 @@ public class HomePanel extends JPanel implements IPanel {
         static int height = 50;
     }
 
+
     private IHomeListener listener;
     private JLabel titleLb;
     private RoundedButton newGameBtn;
     private RoundedButton continueBtn;
-    private RoundedButton triangleGame ;
+    private RoundedButton statisticbtn;
+    private boolean newGameBtnIsClick;
 
     public HomePanel(){
         init();
@@ -70,7 +71,8 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb = new JLabel(TITLE);
         continueBtn = new RoundedButton(10);
         newGameBtn = new RoundedButton(10);
-        triangleGame = new RoundedButton(10);
+        statisticbtn = new RoundedButton(10);
+        newGameBtnIsClick = false;
 
     }
 
@@ -100,13 +102,13 @@ public class HomePanel extends JPanel implements IPanel {
         newGameBtn.setBackground(FOREGROUND);
         newGameBtn.setForeground(BACKGROUND);
 
-        triangleGame.setFont(font);
-        triangleGame.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
-        triangleGame.setFocusPainted(false);
-        triangleGame.setText("Triangle Game Mode");
-        triangleGame.setHorizontalAlignment(SwingConstants.LEFT);
-        triangleGame.setBackground(FOREGROUND);
-        triangleGame.setForeground(BACKGROUND);
+        statisticbtn.setFont(font);
+        statisticbtn.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
+        statisticbtn.setFocusPainted(false);
+        statisticbtn.setText("Statistics");
+        statisticbtn.setHorizontalAlignment(SwingConstants.LEFT);
+        statisticbtn.setBackground(FOREGROUND);
+        statisticbtn.setForeground(BACKGROUND);
 
         // check continue btn
         if(listener != null){
@@ -114,12 +116,12 @@ public class HomePanel extends JPanel implements IPanel {
             newGameMenu_bound.y = newGameMenu_bound.y_default;
             if(listener.isGameFinish()) {
                 newGameBtn_bound.y = 140;
-                triangleGame_bound.y = 200;
+                triangleGame_bound.y = 210;
                 continueBtn.setVisible(false);
             }
             else {
                 newGameBtn_bound.y = 200;
-                triangleGame_bound.y = 260;
+                triangleGame_bound.y = 270;
                 continueBtn.setVisible(true);
             }
         }
@@ -127,13 +129,13 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb.setBounds(title_bound.x,title_bound.y,title_bound.width,title_bound.height);
         continueBtn.setBounds(continueBtn_bound.x,continueBtn_bound.y,continueBtn_bound.width,continueBtn_bound.height);
         newGameBtn.setBounds(newGameBtn_bound.x, newGameBtn_bound.y, newGameBtn_bound.width, newGameBtn_bound.height);
-        triangleGame.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
+        statisticbtn.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
 
 
         add(titleLb);
         add(continueBtn);
         add(newGameBtn);
-        add(triangleGame);
+        add(statisticbtn);
 
     }
 
@@ -169,58 +171,72 @@ public class HomePanel extends JPanel implements IPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if(!listener.getNewGameMenu().isVisible()){
-                    target(newGameBtn);
-                    if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
-                    listener.getNewGameMenu().setVisible(true);
-                    listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
-                    listener.getNewGameMenu().getContentPn().setLocation(0, 200- newGameMenu_bound.height);
-                    new Timer(1, new ActionListener(){
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() + 10);
-                            if (listener.getNewGameMenu().getContentPn().getY() == 0){
-                                ((Timer) e.getSource()).stop();
-                                newGameBtn.setEnabled(true);
+                if(!newGameBtnIsClick){
+                    newGameBtnIsClick = true;
+                    super.mouseClicked(e);
+                    if(!listener.getNewGameMenu().isVisible()){
+                        target(newGameBtn);
+                        if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
+                        listener.getNewGameMenu().setVisible(true);
+                        listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
+
+                        listener.getNewGameMenu().getContentPn().setLocation(0, - newGameMenu_bound.height);
+                        new Timer(1, new ActionListener(){
+                            int count = 0;
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() + 10);
+                                statisticbtn.setLocation(statisticbtn.getX(), statisticbtn.getY() + 10);
+                                count +=10;
+
+                                if (count == 150){
+                                    ((Timer) e.getSource()).stop();
+                                    newGameBtnIsClick = false;
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
 
 
 
-                } else {
-                    if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
-                    unTarget(newGameBtn);
-                    listener.getNewGameMenu().getContentPn().setEnabled(false);
-                    new Timer(1, new ActionListener(){
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() - 10);
-                            if (listener.getNewGameMenu().getContentPn().getY() == -newGameMenu_bound.height){
-                                ((Timer) e.getSource()).stop();
-                                listener.getNewGameMenu().setVisible(false);
+                    } else {
+                        if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
+                        unTarget(newGameBtn);
+                        listener.getNewGameMenu().getContentPn().setEnabled(false);
+                        new Timer(1, new ActionListener(){
+                            int count = 0;
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() - 10);
+                                statisticbtn.setLocation(statisticbtn.getX(), statisticbtn.getY() - 10);
+                                count += 10;
+
+                                if (count == 150){
+                                    ((Timer) e.getSource()).stop();
+                                    listener.getNewGameMenu().setVisible(false);
+                                    newGameBtnIsClick = false;
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
+
                 }
+
             }
         });
-        triangleGame.addMouseListener(new java.awt.event.MouseAdapter() {
+        statisticbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                target(triangleGame);
+                target(statisticbtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                if(!listener.getNewGameMenu().isVisible()){
-                    unTarget(triangleGame);
-                }
+
+                unTarget(statisticbtn);
+
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                listener.openStatistic();
                 super.mouseClicked(e);
-                listener.startTriangleGame();
-
             }
         });
 

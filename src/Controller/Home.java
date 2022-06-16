@@ -5,6 +5,7 @@ import Interfaces.IStartGameListener;
 import Models.Cell;
 import Models.GameDifficulty;
 
+import Models.Player;
 import Views.HomePanel;
 import Interfaces.IPanel;
 import Views.NewGamePanel;
@@ -20,8 +21,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private HomePanel   homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
-
     private MineTriangleSweeperGame mineTriangleSweeperGame;
+    private Player player;
 
     public Home(){
         init();
@@ -129,6 +130,13 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             return mineTriangleSweeperGame.isFinished();
         }
         return true;
+    }
+
+    @Override
+    public void openStatistic() {
+        Statistics statistics = new Statistics(player);
+        statistics.setVisible(true);
+        this.setVisible(false);
     }
 
     @Override
