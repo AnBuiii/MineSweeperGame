@@ -57,6 +57,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         num_bombs = old.num_bombs;
         isFinish = old.isFinish;
         mineGrid = old.mineGrid;
+        gameMode = old.gameMode;
 
         init();
         addView();
@@ -113,7 +114,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         WindowListener window = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int kq = JOptionPane.showConfirmDialog(MineSweeperGame.this, "Bạn có muốn thoát không?",
+                int kq = JOptionPane.showConfirmDialog(MineSweeperGame.this, "Bạn sẽ mất dữ liệu phần mới chơi, tiếp tục?",
                         "Thông báo", JOptionPane.YES_NO_OPTION);
                 if (kq == JOptionPane.YES_OPTION) {
                     dispose();
