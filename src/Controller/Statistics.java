@@ -2,6 +2,7 @@ package Controller;
 
 import Interfaces.IPanel;
 import Models.Player;
+import Views.StatisticsPanel;
 
 import javax.swing.*;
 
@@ -10,11 +11,15 @@ import static Views.custom.Theme.TITLE;
 
 public class Statistics extends JFrame implements IPanel {
     Player player;
+    private StatisticsPanel statisticspanel;
+
+
     Statistics(Player player){
         this.player = player;
         init();
         addView();
         addEvent();
+
     }
 
     @Override
@@ -34,7 +39,9 @@ public class Statistics extends JFrame implements IPanel {
 
     @Override
     public void addView() {
-
+        statisticspanel = new StatisticsPanel();
+        statisticspanel.setBounds(0,0,500,800);
+        add(statisticspanel);
     }
 
     @Override

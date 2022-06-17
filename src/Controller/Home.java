@@ -59,6 +59,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
     @Override
     public void addView() {
+
         homePanel = new HomePanel();
         homePanel.setBounds(0,0,400,600);
         homePanel.setBackground(new Color(239,235,232));
