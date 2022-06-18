@@ -99,7 +99,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         statusPanel.addListener(this);
 
 
-        mineGridPanel = new MineGridPanel();
+        mineGridPanel = new MineGridPanel(num_rows, num_columns);
         mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH , WINDOW_HEIGHT - STATUS_PANEL_HEIGHT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
@@ -130,12 +130,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reveal(int x, int y) {
-        if(!mineGrid.isPlayed) mineGrid.firstMove(x, y);
+        if(mineGrid.numCellPlayed == 0) mineGrid.firstMove(x, y);
         boolean check = mineGrid.reveal(x, y);
         if (!check) {
             mineGrid.revealAllCell();
             isFinish = true;
         }
+        if(isVictory()) isFinish = true;
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
@@ -170,4 +171,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void setHome(Home home){
         this.home = home;
     }
+    public boolean isVictory(){
+        return mineGrid.isVictory();
+    }
+
 }

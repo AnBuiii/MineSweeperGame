@@ -65,7 +65,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         homePanel.setBackground(new Color(239,235,232));
         homePanel.addListener(this);
 
-
         newGameMenu = new NewGamePanel();
         newGameMenu.setBounds(50,160, 300,150);
         newGameMenu.setBackground(new Color(239,235,232));

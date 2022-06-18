@@ -4,19 +4,17 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class MineGrid implements Serializable {
-    public static int NUM_ROWS = 9;
-    public static int NUM_COLUMNS = 9;
     private int num_rows ;
     private int num_columns;
     private int num_mines ;
-    public boolean isPlayed;
+    public int numCellPlayed;
     private final Cell[][] cells;
 
     public MineGrid(int rows, int columns, int bombs) {
         num_rows = rows;
         num_columns = columns;
         num_mines = bombs;
-        isPlayed = false;
+        numCellPlayed = 0;
 
         cells = new Cell[num_rows][num_columns];
         for (int i = 0; i < cells.length; i++) {
@@ -33,6 +31,7 @@ public class MineGrid implements Serializable {
             }
             cells[x][y].setMine(true);
         }
+
         setCellNumber();
     }
     public MineGrid(MineGrid old){
@@ -61,16 +60,17 @@ public class MineGrid implements Serializable {
         }
     }
     public void firstMove(int x, int y){
-        if(cells[x][y].isMine()) cells[x][y].setMine(false);
-        int xx = genRan(num_rows);
-        int yy = genRan(num_columns);
-        while (cells[xx][yy].isMine()) {
-            xx = genRan(num_rows);
-            yy = genRan(num_columns);
+        if(cells[x][y].isMine()) {
+            cells[x][y].setMine(false);
+            int xx = genRan(num_rows);
+            int yy = genRan(num_columns);
+            while (cells[xx][yy].isMine()) {
+                xx = genRan(num_rows);
+                yy = genRan(num_columns);
+            }
+            cells[xx][yy].setMine(true);
+            setCellNumber();
         }
-        cells[xx][yy].setMine(true);
-        setCellNumber();
-        isPlayed = true;
     }
 
     private int genRan(int range) {
@@ -88,6 +88,7 @@ public class MineGrid implements Serializable {
             if (cells[x][y].isMine()) {
                 return false;
             }
+            numCellPlayed++;
             if (cells[x][y].getNumMineAround() == 0) {
                 for (int m = -1; m <= 1; m++) {
                     if (x + m < 0) { m++; }
@@ -116,6 +117,13 @@ public class MineGrid implements Serializable {
             }
         }
     }
+
+    public boolean isVictory(){
+        System.out.println(num_columns*num_rows - num_mines - numCellPlayed);
+        if(numCellPlayed == num_columns*num_rows - num_mines) return true;
+        return false;
+    }
+
     public int getNum_mines(){
         return num_mines;
     }

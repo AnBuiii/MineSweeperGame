@@ -15,11 +15,15 @@ import java.awt.event.MouseEvent;
 import static Views.custom.Theme.*;
 
 public class MineGridPanel extends JPanel implements IPanel {
+    private int num_rows;
+    private int num_columns;
     private Label[][] lbCell;
     private IGamePlayListener listener;
     private int numCellUnRevealed;
 
-    public MineGridPanel() {
+    public MineGridPanel(int rows, int columns) {
+        this.num_rows = rows;
+        this.num_columns = columns;
         init();
         addView();
         addEvent();
@@ -30,12 +34,12 @@ public class MineGridPanel extends JPanel implements IPanel {
 
     @Override
     public void init() {
-        setLayout(new GridLayout(MineGrid.NUM_ROWS, MineGrid.NUM_COLUMNS));
+        setLayout(new GridLayout(num_rows, num_columns));
     }
 
     @Override
     public void addView() {
-        lbCell = new Label[MineGrid.NUM_ROWS][MineGrid.NUM_COLUMNS];
+        lbCell = new Label[num_rows][num_columns];
         for (int i = 0; i < lbCell.length; i++) {
             for (int j = 0; j < lbCell[0].length; j++) {
                 lbCell[i][j] = new Label();
@@ -78,12 +82,10 @@ public class MineGridPanel extends JPanel implements IPanel {
     }
 
     public void updateGrid() {
-        System.out.println("cccc gi v");
         Font font = new Font("VNI", Font.PLAIN, 20);
         numCellUnRevealed = 0;
         Cell[][] listCell = listener.getListCell();
         for (int i = 0; i < listCell.length; i++) {
-            System.out.println("asd");
             for (int j = 0; j < listCell[0].length; j++) {
                 lbCell[i][j].setFont(font);
                 lbCell[i][j].setBorder(null);
@@ -127,8 +129,8 @@ public class MineGridPanel extends JPanel implements IPanel {
                     int a= 0, b= 0, c= 0, d = 0;
                     if(i>0) if(!listCell[i-1][j].isRevealed()) a = 3;
                     if(j>0) if(!listCell[i][j-1].isRevealed()) b = 3;
-                    if(i<MineGrid.NUM_ROWS-1) if(!listCell[i+1][j].isRevealed()) c = 3;
-                    if(j<MineGrid.NUM_COLUMNS-1) if(!listCell[i][j+1].isRevealed()) d = 3;
+                    if(i<num_rows-1) if(!listCell[i+1][j].isRevealed()) c = 3;
+                    if(j<num_columns-1) if(!listCell[i][j+1].isRevealed()) d = 3;
                     lbCell[i][j].setBorder(BorderFactory.createMatteBorder(a,b,c,d,new Color(141,173,65) ));
 
                     if(i>0 && j > 0) if(a == 0 && b == 0 && !listCell[i-1][j-1].isRevealed()){
@@ -137,19 +139,19 @@ public class MineGridPanel extends JPanel implements IPanel {
                         corner.setBounds(0,0,3,3);
                         lbCell[i][j].add(corner);
                     }
-                    if(i < MineGrid.NUM_ROWS -1 && j > 0) if( b == 0 && c == 0 && !listCell[i+1][j-1].isRevealed()){
+                    if(i < num_rows -1 && j > 0) if( b == 0 && c == 0 && !listCell[i+1][j-1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
                         corner.setBounds(0, CELL_SIZE - 3,3,3 );
                         lbCell[i][j].add(corner);
                     }
-                    if(i > 0 && j < MineGrid.NUM_COLUMNS -1 ) if( a == 0 && d == 0 && !listCell[i-1][j+1].isRevealed()){
+                    if(i > 0 && j < num_columns -1 ) if( a == 0 && d == 0 && !listCell[i-1][j+1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
                         corner.setBounds(CELL_SIZE-3, 0,3,3 );
                         lbCell[i][j].add(corner);
                     }
-                    if(i< MineGrid.NUM_ROWS -1  && j < MineGrid.NUM_COLUMNS -1 ) if(c == 0 && d == 0 && !listCell[i+1][j+1].isRevealed()){
+                    if(i< num_rows -1  && j < num_columns -1 ) if(c == 0 && d == 0 && !listCell[i+1][j+1].isRevealed()){
                         JPanel corner = new JPanel();
                         corner.setBackground(new Color(141,173,65));
                         corner.setBounds(CELL_SIZE -3,CELL_SIZE - 3,3,3);
