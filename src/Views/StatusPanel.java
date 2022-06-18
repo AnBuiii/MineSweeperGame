@@ -39,12 +39,12 @@ public class StatusPanel extends JPanel implements IPanel {
         setLayout(new GridBagLayout());
         setBackground(BACKGROUND);
 
-        backBtn = new JLabel("\u2190");
+        backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
         numFlagLb = new JLabel("00");
-        clockLb = new JLabel("\u23F1");
+        clockLb = new JLabel(CLOCK);
         timeLb = new JLabel("000");
-        hintBtn = new JLabel("\uD83D\uDCA1");
+        hintBtn = new JLabel("\uD83D\uDDD1");
         gbc = new GridBagConstraints();
     }
 

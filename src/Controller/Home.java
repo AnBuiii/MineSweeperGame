@@ -137,6 +137,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void openStatistic() {
         Statistics statistics = new Statistics(player);
         statistics.setVisible(true);
+        statistics.setHome(this);
         this.setVisible(false);
     }
 

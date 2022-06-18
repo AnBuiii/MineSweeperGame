@@ -1,18 +1,18 @@
 package Views;
 
+import Controller.Statistics;
 import Interfaces.IPanel;
-import Views.custom.RoundedBorder;
-import Views.custom.Theme;
+import Interfaces.IStatisticPanelListener;
 
 import javax.swing.*;
 
 import java.awt.*;
-import java.util.jar.JarEntry;
-
-import static Views.HomePanel.WINDOW_HEIGHT;
-import static Views.HomePanel.WINDOW_WIDTH;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import static Views.custom.Theme.*;
 
 public class StatisticsPanel extends JPanel implements IPanel {
+    IStatisticPanelListener listener;
     JComboBox<String> gameMode ;
     JPanel displayPn;
 
@@ -28,6 +28,11 @@ public class StatisticsPanel extends JPanel implements IPanel {
     JLabel perform;
     JLabel victoryLb;
     JLabel victory;
+    JLabel modeLb;
+    JLabel mode;
+    JLabel backBtn;
+    JLabel windowName;
+    JLabel deleteBtn;
 
     public StatisticsPanel(){
         init();
@@ -37,7 +42,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
     @Override
     public void init() {
         setLayout(null);
-        setBackground(Theme.FOREGROUND);
+        setBackground(FOREGROUND);
 
         String[] header = {"BEGINNER", "INTERMEDIATE", "EXPERT", "TRIANGLE"};
         gameMode = new JComboBox<>(header);
@@ -54,27 +59,112 @@ public class StatisticsPanel extends JPanel implements IPanel {
         perform = new JLabel();
         victoryLb = new JLabel();
         victory = new JLabel();
-
+        modeLb = new JLabel();
+        mode = new JLabel();
+        backBtn = new JLabel();
+        windowName = new JLabel();
+        deleteBtn = new JLabel();
         displayPn = new JPanel();
-        displayPn.setLayout(new GridLayout(6,2));
-        displayPn.setBorder(new RoundedBorder(10));
+        displayPn.setLayout(new GridLayout(7,2));
     }
 
     @Override
     public void addView() {
-        gameMode.setBounds(100,100,150,20);
-        gameMode.setFont(Theme.FONT);
-        gameMode.setForeground(Theme.BACKGROUND);
-        add(gameMode);
 
-        displayPn.setBounds(20,200,300,150);
-        displayPn.setBackground(Theme.FOREGROUND);
-        displayPn.setForeground(Theme.BACKGROUND);
+
+
+        createJLabelView(modeLb, "BEGINNER", JLabel.LEFT);
+        createJLabelView(mode, ">" , JLabel.LEFT    );
+        createJLabelView(gamesLb, "Games", JLabel.LEFT);
+        createJLabelView(games, "0", JLabel.RIGHT);
+        createJLabelView(minesLb, "Mines", JLabel.LEFT);
+        createJLabelView(mines, "0", JLabel.RIGHT);
+        createJLabelView(totalTimeLb, "Total Time", JLabel.LEFT);
+        createJLabelView(totalTime, "0:0", JLabel.RIGHT);
+        createJLabelView(minTimeLb, "Shortest Time", JLabel.LEFT);
+        createJLabelView(minTime, "0:0", JLabel.RIGHT);
+        createJLabelView(performLb,"Performance", JLabel.LEFT);
+        createJLabelView(perform, "0%", JLabel.RIGHT);
+        createJLabelView(victoryLb, "Victory", JLabel.LEFT);
+        createJLabelView(victory, "0", JLabel.RIGHT);
+        createJLabelView(backBtn, BACK, JLabel.CENTER);
+
+        backBtn.setText(BACK);
+        backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
+        backBtn.setForeground(BACKGROUND);
+
+        deleteBtn.setText(BIN);
+        deleteBtn.setFont(new Font("VNI", Font.PLAIN, 30));
+        deleteBtn.setForeground(BACKGROUND);
+
+        windowName.setText("STATISTICS");
+        windowName.setFont(new Font("VNI", Font.PLAIN, 30));
+        windowName.setForeground(BACKGROUND);
+
+
+        backBtn.setBounds(10,10,30,30);
+        windowName.setBounds(70,10,200,30);
+        deleteBtn.setBounds(460,10,100,30);
+
+        add(backBtn);
+        add(windowName);
+        add(deleteBtn);
+        displayPn.add(modeLb);
+        displayPn.add(mode);
+        displayPn.add(gamesLb);
+        displayPn.add(games);
+        displayPn.add(minesLb);
+        displayPn.add(mines);
+        displayPn.add(totalTimeLb);
+        displayPn.add(totalTime);
+        displayPn.add(minTimeLb);
+        displayPn.add(minTime);
+        displayPn.add(performLb);
+        displayPn.add(perform);
+        displayPn.add(victoryLb);
+        displayPn.add(victory);
+
+        displayPn.setBounds(20,80, Statistics.WIDTH - 2*20,Statistics.HEIGHT - 80 - 20);
+        displayPn.setBackground(FOREGROUND);
+        displayPn.setForeground(BACKGROUND);
         add(displayPn);
     }
 
     @Override
     public void addEvent() {
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.back();
 
+            }
+        });
+        deleteBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+        mode.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+
+    }
+    private void createJLabelView(JLabel jLabel, String text, int alignment){
+        Font font = new Font("VNI", Font.PLAIN, 20);
+        jLabel.setText(text);
+        jLabel.setFont(font);
+        jLabel.setHorizontalAlignment(alignment);
+        jLabel.setVerticalAlignment(JLabel.CENTER);
+        jLabel.setOpaque(true);
+        jLabel.setBackground(FOREGROUND);
+        jLabel.setForeground(BACKGROUND);
+    }
+    public void addListener(IStatisticPanelListener listener){
+        this.listener = listener;
     }
 }
