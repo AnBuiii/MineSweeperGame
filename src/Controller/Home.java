@@ -41,20 +41,27 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
 
         try {
-            FileInputStream fileIn = new FileInputStream("oldgame.txt");
+            FileInputStream fileIn = new FileInputStream("oldGame.txt");
             ObjectInputStream ojIn = new ObjectInputStream(fileIn);
             MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
             mineSweeperGame = new MineSweeperGame(obj);
             mineSweeperGame.setHome(this);
             ojIn.close();
             fileIn.close();
-
-
         } catch (Exception ex) {
             mineSweeperGame = null;
         }
-
-
+        try{
+            FileInputStream fileIn = new FileInputStream("PlayerRecord.txt");
+            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
+            Player obj = (Player) ojIn.readObject();
+            player = new Player(obj);
+            ojIn.close();
+            fileIn.close();
+            System.out.println(player.totalGames[1]);
+        } catch (Exception ex){
+            player = null;
+        }
 
     }
     @Override
@@ -83,15 +90,12 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    Cell[][] cells = null;
-                    MineSweeperGame save = null;
+                    MineSweeperGame save;
                     FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
                     ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
                     if(mineSweeperGame!=null)
                         if(!mineSweeperGame.isFinished()){
-                            cells = mineSweeperGame.getListCell();
                             save = mineSweeperGame;
-                            System.out.println("ua");
                             ojOut.writeObject(save);
                             ojOut.close();
                             fileOut.close();
@@ -174,9 +178,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         }
          mineSweeperGame = switch (gameDifficulty){
              case BEGINNER -> new MineSweeperGame(9,9,10, 1);
-             case INTERMEDIATE -> new MineSweeperGame(16,16,40, 1);
-             case EXPERT -> new MineSweeperGame(16,30,99, 1);
-             default -> new MineSweeperGame(0,0,0, 1);
+             case INTERMEDIATE -> new MineSweeperGame(16,16,40, 2);
+             case EXPERT -> new MineSweeperGame(16,30,99, 3);
+             default -> new MineSweeperGame(0,0,0, 0);
         };
 
         reDrawHome();
@@ -188,5 +192,31 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void closeHomePanel() {
         this.setVisible(false);
+    }
+    public void savingData(MineSweeperGame game){
+        System.out.println("saving...");
+        if(player == null){
+            player = new Player();
+        }
+        player.totalGames[game.gameMode]++;
+        player.totalBomb[game.gameMode] += game.num_bombs;
+        player.totalTime[game.gameMode] += game.getTime();
+        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
+            player.shortestFinishTime[game.gameMode] = game.getTime();
+        }
+        if(game.isVictory()) player.totalVictoryGame[game.gameMode]++;
+        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode]/(float) player.totalGames[game.gameMode];
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
+            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+            ojOut.writeObject(player);
+            ojOut.close();
+            fileOut.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }

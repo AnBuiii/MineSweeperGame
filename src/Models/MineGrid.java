@@ -119,7 +119,6 @@ public class MineGrid implements Serializable {
     }
 
     public boolean isVictory(){
-        System.out.println(num_columns*num_rows - num_mines - numCellPlayed);
         if(numCellPlayed == num_columns*num_rows - num_mines) return true;
         return false;
     }

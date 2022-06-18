@@ -25,7 +25,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private int WINDOW_HEIGHT;
     private int num_rows;
     private int num_columns;
-    private int num_bombs;
+    public int num_bombs;
     private boolean isFinish;
     private MineGridPanel mineGridPanel;
     private StatusPanel statusPanel;
@@ -64,14 +64,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         addEvent();
 
 
-        for(int x = 0; x< mineGrid.getCells().length; x++){
-            for(int y = 0; y< mineGrid.getCells()[0].length; y++){
-                System.out.print(mineGrid.getCells()[x][y].getNumMineAround()+ " ");
-            }
-        }
+
         //System.out.println(mineGrid.getCells().length);
         mineGridPanel.updateGrid();
-        System.out.println("hmmm");
     }
 
     @Override
@@ -104,8 +99,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         add(mineGridPanel);
         mineGridPanel.addListener(this);
 
-
-
     }
 
     @Override
@@ -132,11 +125,14 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void reveal(int x, int y) {
         if(mineGrid.numCellPlayed == 0) mineGrid.firstMove(x, y);
         boolean check = mineGrid.reveal(x, y);
-        if (!check) {
+        if (!check ) {
             mineGrid.revealAllCell();
             isFinish = true;
         }
-        if(isVictory()) isFinish = true;
+        if(isVictory()){
+            isFinish = true;
+        }
+
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
@@ -159,6 +155,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         this.setVisible(false);
         home.reDrawHome();
         home.setVisible(true);
+        home.savingData(this);
     }
 
     @Override
@@ -173,6 +170,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
     public boolean isVictory(){
         return mineGrid.isVictory();
+    }
+    public int getTime(){
+        return statusPanel.time;
     }
 
 }

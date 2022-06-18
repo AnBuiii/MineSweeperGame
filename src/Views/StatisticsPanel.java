@@ -3,6 +3,7 @@ package Views;
 import Controller.Statistics;
 import Interfaces.IPanel;
 import Interfaces.IStatisticPanelListener;
+import Models.Player;
 
 import javax.swing.*;
 
@@ -34,7 +35,9 @@ public class StatisticsPanel extends JPanel implements IPanel {
     JLabel windowName;
     JLabel deleteBtn;
 
-    public StatisticsPanel(){
+    Player player;
+    public StatisticsPanel(Player player){
+        this.player = player;
         init();
         addView();
         addEvent();
@@ -66,19 +69,18 @@ public class StatisticsPanel extends JPanel implements IPanel {
         deleteBtn = new JLabel();
         displayPn = new JPanel();
         displayPn.setLayout(new GridLayout(7,2));
+
     }
 
     @Override
     public void addView() {
 
-
-
         createJLabelView(modeLb, "BEGINNER", JLabel.LEFT);
         createJLabelView(mode, ">" , JLabel.LEFT    );
         createJLabelView(gamesLb, "Games", JLabel.LEFT);
-        createJLabelView(games, "0", JLabel.RIGHT);
+        createJLabelView(games, String.valueOf(player.totalGames[0]), JLabel.RIGHT);
         createJLabelView(minesLb, "Mines", JLabel.LEFT);
-        createJLabelView(mines, "0", JLabel.RIGHT);
+        createJLabelView(mines, String.valueOf(player.totalBomb), JLabel.RIGHT);
         createJLabelView(totalTimeLb, "Total Time", JLabel.LEFT);
         createJLabelView(totalTime, "0:0", JLabel.RIGHT);
         createJLabelView(minTimeLb, "Shortest Time", JLabel.LEFT);
@@ -88,6 +90,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
         createJLabelView(victoryLb, "Victory", JLabel.LEFT);
         createJLabelView(victory, "0", JLabel.RIGHT);
         createJLabelView(backBtn, BACK, JLabel.CENTER);
+        viewPlayerRecord(1);
 
         backBtn.setText(BACK);
         backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
@@ -128,6 +131,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
         displayPn.setBackground(FOREGROUND);
         displayPn.setForeground(BACKGROUND);
         add(displayPn);
+
     }
 
     @Override
@@ -166,5 +170,13 @@ public class StatisticsPanel extends JPanel implements IPanel {
     }
     public void addListener(IStatisticPanelListener listener){
         this.listener = listener;
+    }
+    public void viewPlayerRecord(int gameMode){
+        games.setText(String.valueOf(player.totalGames[gameMode]));
+        mines.setText(String.valueOf(player.totalBomb[gameMode]));
+        totalTime.setText(player.totalTime[gameMode]/60 + ":" + player.totalTime[gameMode]%60);
+        minTime.setText(player.shortestFinishTime[gameMode]/60 + ":" + player.shortestFinishTime[gameMode]%60);
+        perform.setText(player.performance[gameMode] + "%");
+        victory.setText(String.valueOf(player.totalVictoryGame[gameMode]));
     }
 }

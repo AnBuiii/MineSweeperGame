@@ -1,40 +1,37 @@
 package Models;
 
-public class Player {
-    int beginnerTotalGames;
-    int beginnerBomb;
-    int[] beginnerTotalTime = new int[2];
-    int[] beginnerShortestFinishTime = new int[2];
-    float beginnerPerformance;
-    int beginnerTotalVictoryGame;
+import java.io.Serializable;
 
-    int intermediateGames;
-    int intermediateBomb;
-    int[] intermediateTotalTime = new int[2];
-    int[] intermediateShortestFinishTime = new int[2];
-    float intermediatePerformances;
-    int intermediateVictoryGame;
+public class Player implements Serializable {
 
-    int expertTotalGames;
-    int expertBomb;
-    int[] expertTotalTime = new int[2];
-    int[] expertShortestFinishTime = new int[2];
-    float expertPerformances;
-    int expertVictoryGame;
+    private static final int  CUSTOM = 0;
+    private static final int  BEGINNER = 1;
+    private static final int  INTERMEDIATE = 2;
+    private static final int  EXPERT = 3;
+    private static final int  TRIANGLE = 4;
 
-    int customTotalGames;
-    int customBomb;
-    int[] customTotalTime = new int[2];
-    int[] customShortestFinishTime = new int[2];
-    float customPerformances;
-    int customVictoryGame;
+    public int[] totalGames ;
+    public int[] totalBomb ;
+    public int[] totalTime ;
+    public int[]shortestFinishTime ;
+    public float[] performance;
+    public int[] totalVictoryGame;
 
-    int triangleTotalGames;
-    int triangleBomb;
-    int[] triangleTotalTime = new int[2];
-    int[] triangleShortestFinishTime = new int[2];
-    float trianglePerformance;
-    int triangleVictoryGame;
+    public Player(){
+        totalGames = new int[5];
+        totalBomb = new int[5];
+        totalTime = new int[5];
+        shortestFinishTime = new int[5];
+        performance = new float[5];
+        totalVictoryGame = new int[5];
+    }
 
-
+    public Player(Player obj) {
+        this.totalGames = obj.totalGames;
+        this.totalBomb = obj.totalBomb;
+        this.totalTime = obj.totalTime;
+        this.shortestFinishTime = obj.shortestFinishTime;
+        this.performance = obj.performance;
+        this.totalVictoryGame = obj.totalVictoryGame;
+    }
 }

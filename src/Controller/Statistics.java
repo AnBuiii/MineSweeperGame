@@ -44,7 +44,7 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
 
     @Override
     public void addView() {
-        statisticspanel = new StatisticsPanel();
+        statisticspanel = new StatisticsPanel(player);
         statisticspanel.setBounds(0,0,WIDTH,HEIGHT);
         statisticspanel.addListener(this);
         add(statisticspanel);
@@ -66,6 +66,12 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
     public void delete(int mode) {
 
     }
+
+    @Override
+    public Player getPlayer() {
+        return player;
+    }
+
     public void setHome(Home home){
         this.home = home;
     }

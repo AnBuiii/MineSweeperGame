@@ -26,6 +26,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private GridBagConstraints gbc;
 
     private IStatusPanelListener listener;
+    public int time;
 
     public StatusPanel() {
         init();
