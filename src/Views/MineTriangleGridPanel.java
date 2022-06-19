@@ -113,7 +113,17 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                             int x = cells[i][j].getNumMineAround();
                             if(x != 0){
                                 String s = String.valueOf(x);
-                                g2d.setColor(Color.blue);
+                                //g2d.setColor(Color.blue);
+                                switch (x) {
+                                    case 1 -> g2d.setColor(new Color(0, 0, 255));
+                                    case 2 -> g2d.setColor(new Color(0, 132, 0));
+                                    case 3 -> g2d.setColor(new Color(255, 0, 0));
+                                    case 4 -> g2d.setColor(new Color(0, 0, 132));
+                                    case 5 -> g2d.setColor(new Color(132, 0, 0));
+                                    case 6 -> g2d.setColor(new Color(0, 132, 132));
+                                    case 7 -> g2d.setColor(new Color(132, 0, 132));
+                                    case 8 -> g2d.setColor(new Color(132, 132, 132));
+                                }
                                 g2d.drawString(s, center.x, center.y);
                             }
                         }
