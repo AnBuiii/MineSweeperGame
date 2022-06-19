@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Interfaces.IFinishGameListener;
 import Interfaces.IGamePlayListener;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
@@ -19,7 +20,7 @@ import java.awt.event.WindowListener;
 //import static Views.HomePanel.*;
 
 
-public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener {
+public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener, IFinishGameListener {
 
     private int WINDOW_WIDTH;
     private int WINDOW_HEIGHT;
@@ -131,11 +132,21 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         }
         if(isVictory()){
             isFinish = true;
+
+        }
+        if(isFinish){
+            openFinishGame();
         }
 
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
+    }
+    void openFinishGame(){
+        FinishGame finishGame = new FinishGame();
+        finishGame.setVisible(true);
+        finishGame.addListener(this);
+        this.disable();
     }
 
     @Override
@@ -175,4 +186,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         return statusPanel.time;
     }
 
+    @Override
+    public void closeFinishGame() {
+        enable();
+        requestFocus();
+    }
 }

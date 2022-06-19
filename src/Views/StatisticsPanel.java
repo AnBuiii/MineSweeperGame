@@ -176,7 +176,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
         mines.setText(String.valueOf(player.totalBomb[gameMode]));
         totalTime.setText(player.totalTime[gameMode]/60 + ":" + player.totalTime[gameMode]%60);
         minTime.setText(player.shortestFinishTime[gameMode]/60 + ":" + player.shortestFinishTime[gameMode]%60);
-        perform.setText(player.performance[gameMode] + "%");
+        perform.setText(player.performance[gameMode]*100 + "%");
         victory.setText(String.valueOf(player.totalVictoryGame[gameMode]));
     }
 }

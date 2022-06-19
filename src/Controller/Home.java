@@ -60,7 +60,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             fileIn.close();
             System.out.println(player.totalGames[1]);
         } catch (Exception ex){
-            player = null;
+            player = new Player();
         }
 
     }
@@ -194,6 +194,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         this.setVisible(false);
     }
     public void savingData(MineSweeperGame game){
+        if(!game.isFinished()) return;
         System.out.println("saving...");
         if(player == null){
             player = new Player();
