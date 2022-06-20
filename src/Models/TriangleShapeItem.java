@@ -8,6 +8,8 @@ public class TriangleShapeItem {
     private Point b;
     private Point c;
 
+    public boolean isMouseMoved = false;
+
     public TriangleShapeItem(Point a, Point b, Point c){
         this.a = a;
         this.b = b;
