@@ -40,7 +40,7 @@ public class MineGridPanel extends JPanel implements IPanel {
     @Override
     public void addView() {
         lbCell = new Label[num_rows][num_columns];
-        for (int i = 0; i < lbCell.length; i++) {
+        for (int    i = 0; i < lbCell.length; i++) {
             for (int j = 0; j < lbCell[0].length; j++) {
                 lbCell[i][j] = new Label();
                 lbCell[i][j].setOpaque(true);

@@ -97,6 +97,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         for(int i = 0; i < this.gridHeight; i ++){
             for (int j = 0; j < this.gridWidth; j ++){
                 if(cells == null){
+                    //khởi tạo
                    if(triangleShape[i][j].isMouseMoved){
                         g2d.setColor(Color.blue);
                         g2d.fill(triangleShape[i][j].getTriangleShape());
@@ -104,11 +105,19 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                         g2d.draw(triangleShape[i][j].getTriangleShape());
                     }
                     else {
-                        g2d.setColor(Color.gray);
+                        if((i + j) % 2 == 0){
+                            g2d.setColor(new Color(169,207,81));
+                        }
+                        else {
+                            g2d.setColor(new Color(176,213,88));
+                        }
+                       // g2d.setColor(Color.gray);
                         g2d.fill(triangleShape[i][j].getTriangleShape());
-                        g2d.setColor(Color.black);
-                        g2d.draw(triangleShape[i][j].getTriangleShape());
+                      //  g2d.setColor(Color.black);
+                       // g2d.draw(triangleShape[i][j].getTriangleShape());
+
                     }
+                    //System.out.println("lô");
                 }
                 else{
                     Point center = pointCenterOfTriangle(triangleShape[i][j].getA(),triangleShape[i][j].getB(),triangleShape[i][j].getC());
@@ -141,22 +150,25 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                         g2d.draw(triangleShape[i][j].getTriangleShape());
                     }
                     else {
+                        if((i + j) % 2 == 0){
+                            g2d.setColor(new Color(169,207,81));
+                        }
+                        else {
+                            g2d.setColor(new Color(176,213,88));
+                        }
+                        g2d.fill(triangleShape[i][j].getTriangleShape());
                         if(cells[i][j].isFlagged()){
-                            g2d.setColor(Color.gray);
-                            g2d.fill(triangleShape[i][j].getTriangleShape());
+                            System.out.println("(" + i + "," + j + ")");
+                          //  g2d.setColor(Color.gray);
+                           // g2d.fill(triangleShape[i][j].getTriangleShape());
+                            //System.out.println("ủa alo");
                             g2d.setColor(Color.red);
                             g2d.drawString("\uD83D\uDEA9", center.x, center.y);   //flag
-                            g2d.setColor(Color.black);
-                            g2d.draw(triangleShape[i][j].getTriangleShape());
+                            //g2d.setColor(Color.black);
+                           // g2d.draw(triangleShape[i][j].getTriangleShape());
                         }
                         else if(triangleShape[i][j].isMouseMoved){
                             g2d.setColor(Color.blue);
-                            g2d.fill(triangleShape[i][j].getTriangleShape());
-                            g2d.setColor(Color.black);
-                            g2d.draw(triangleShape[i][j].getTriangleShape());
-                        }
-                        else {
-                            g2d.setColor(Color.gray);
                             g2d.fill(triangleShape[i][j].getTriangleShape());
                             g2d.setColor(Color.black);
                             g2d.draw(triangleShape[i][j].getTriangleShape());
@@ -196,7 +208,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                 double x = e.getPoint().getLocation().getX();
                 double y = e.getPoint().getLocation().getY();
                 Point2D pointMouse = new Point2D.Double(x, y);
-                findTriangleCellClicked(pointMouse, e);
+                //findTriangleCellClicked(pointMouse, e);
             }
         });
 
@@ -216,8 +228,6 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         repaint();
     }
 
-
-
     public void findTriangleCellClicked(Point2D mouse, MouseEvent event){
         for(int i = 0; i < triangleShape.length; i ++){
             for(int j = 0; j < triangleShape[0].length; j ++){
@@ -229,14 +239,17 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                     }
                     else if(event.getButton() == MouseEvent.BUTTON3){
                         listener.flag(i, j);
-                        System.out.println("right clicked!");
+                        System.out.println("right clicked!" + "(" + i + "," + j + ")");
                     }
                     else {
                         triangleShape[i][j].isMouseMoved = true;
                         repaint();
                     }
                 }
-                else triangleShape[i][j].isMouseMoved = false;
+                else {
+                    triangleShape[i][j].isMouseMoved = false;
+                    repaint();
+                }
             }
         }
     }
