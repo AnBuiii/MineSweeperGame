@@ -126,6 +126,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                             }
                         }
                     }
+                    
                     int a= 0, b= 0, c= 0, d = 0;
                     if(i>0) if(!listCell[i-1][j].isRevealed()) a = 3;
                     if(j>0) if(!listCell[i][j-1].isRevealed()) b = 3;
