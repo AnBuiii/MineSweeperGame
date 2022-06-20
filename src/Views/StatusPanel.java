@@ -8,6 +8,8 @@ import Views.custom.Theme;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import static Views.custom.Theme.*;
@@ -33,22 +35,39 @@ public class StatusPanel extends JPanel implements IPanel {
         addView();
         addEvent();
     }
-
+    private Timer timer;
     @Override
     public void init() {
-
         setLayout(new GridBagLayout());
         setBackground(BACKGROUND);
-
         backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
         numFlagLb = new JLabel("00");
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel("000");
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                time++;
+                updatetimeLb();
+            }
+        });
         hintBtn = new JLabel("\uD83D\uDDD1");
         gbc = new GridBagConstraints();
     }
-
+    public void updatetimeLb() {
+        String sTime = String.valueOf(time);
+        if (sTime.length() == 1) {
+            timeLb.setText("00" + sTime);
+        }
+        if (sTime.length() == 2) {
+            timeLb.setText("0" + sTime);
+        }
+        if (sTime.length() == 3) {
+            timeLb.setText("" + sTime);
+        }
+    }
+    
     @Override
     public void addView() {
         //backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -130,7 +149,9 @@ public class StatusPanel extends JPanel implements IPanel {
         });
 
     }
+    //public void Flag (Tile t) {
 
+    //}
     public void addListener(IStatusPanelListener event) {
         listener = event;
     }
