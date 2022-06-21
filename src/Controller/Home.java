@@ -125,7 +125,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void reDrawHome() {
-       // playStartGameMusic();
+
         homePanel.addView();
         newGameMenu.setVisible(false);
 //        closeGameMenu();
