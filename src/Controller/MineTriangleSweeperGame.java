@@ -30,14 +30,19 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
 
 
-    public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs, int gameMode) {
+    public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs) {
         mineTriangleGrid = new MineTriangleGrid(num_rows, num_columns, num_bombs);
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
 
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
-        WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
+        if(num_columns % 2 == 0){
+            WINDOW_WIDTH = num_columns / 2 * CELL_SIZE;
+        }else {
+            WINDOW_WIDTH = (num_columns + 1) / 2 * CELL_SIZE;
+        }
+
 
         init();
         addView();
@@ -57,9 +62,6 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         init();
         addView();
         addEvent();
-
-        //System.out.println(mineGrid.getCells().length);
-      //  mineGridPanel.updateGrid();
 
     }
 
@@ -87,10 +89,8 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         add(statusPanel);
         statusPanel.addListener(this);
 
-//
-
         setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
-        mineTriangleGridPanel = new MineTriangleGridPanel(num_columns, num_columns);
+        mineTriangleGridPanel = new MineTriangleGridPanel(num_rows, num_columns);
         mineTriangleGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT- STATUS_PANEL_HEIGHT);
         add(mineTriangleGridPanel);
         mineTriangleGridPanel.addListener(this);

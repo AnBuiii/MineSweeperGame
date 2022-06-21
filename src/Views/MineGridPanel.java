@@ -101,13 +101,13 @@ public class MineGridPanel extends JPanel implements IPanel {
                     if (!listCell[i][j].isFlagged()) {
                         lbCell[i][j].setText("");
                     } else {
-                        lbCell[i][j].setText("\uD83D\uDEA9"); // 'flag'
+                        lbCell[i][j].setText(FLAG); // 'flag'
                         lbCell[i][j].setForeground(Color.red);
                     }
                 }
                 else {
                     if (listCell[i][j].isMine()) {
-                        lbCell[i][j].setText("\uD83D\uDCA3"); // 'bomb'
+                        lbCell[i][j].setText(BOMB); // 'bomb'
                     } else {
                         int numMineAround = listCell[i][j].getNumMineAround();
                         if (numMineAround == 0) {

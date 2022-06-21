@@ -26,34 +26,20 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
     private Graphics2D grp;
     private int gridWidth;
     private int gridHeight;
-    private BufferedImage paintImage;
-    private  int gridSize;
     private Cell[][] cells;
 
     public MineTriangleGridPanel(int gridHeight, int gridWidth){
         this.gridHeight = gridHeight;
         this.gridWidth = gridWidth;
 
-        try {
-            // replace this image with your image
-            paintImage = new BufferedImage(640, 640, BufferedImage.TYPE_INT_ARGB);
-
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
         init();
-        //grp = paintImage.createGraphics();
         addView();
         addEvent();
-       // doDrawing(grp);
     }
 
     @Override
     public void init() {
 
-        gridSize = 640;
-        this.gridWidth = 2 * (gridSize / CELL_SIZE) - 1;
-        this.gridHeight = (gridSize / CELL_SIZE);
         triangleShape = new TriangleShapeItem[gridHeight][gridWidth];
 
         // set các tọa độ để vẽ tam giác
@@ -91,7 +77,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
 
     private void doDrawing(Graphics2D g){
         Graphics2D g2d = (Graphics2D) g.create();
-        Font font = new Font("VNI", Font.PLAIN, 15);
+        Font font = FONT;
         g2d.setFont(font);
         // vẽ
         for(int i = 0; i < this.gridHeight; i ++){
@@ -132,7 +118,8 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                         g2d.fill(triangleShape[i][j].getTriangleShape());
                         if(cells[i][j].isMine()){
                             g2d.setColor(Color.black);
-                            g2d.drawString("\uD83D\uDCA3", center.x, center.y); // bomb
+                            ;
+                            g2d.drawString(BOMB, center.x, center.y); // bomb
                         }
                         else{
                             int x = cells[i][j].getNumMineAround();
@@ -174,7 +161,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                            // g2d.fill(triangleShape[i][j].getTriangleShape());
                             //System.out.println("ủa alo");
                             g2d.setColor(Color.red);
-                            g2d.drawString("\uD83D\uDEA9", center.x, center.y);   //flag
+                            g2d.drawString(FLAG, center.x, center.y);   //flag
                             //g2d.setColor(Color.black);
                            // g2d.draw(triangleShape[i][j].getTriangleShape());
                         }
