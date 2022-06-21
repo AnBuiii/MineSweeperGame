@@ -14,7 +14,7 @@ import static Views.custom.Theme.*;
 
 public class FinishGame extends JDialog implements IPanel {
 
-    boolean isVictory;
+     boolean isVictory;
     JLabel closeBtn;
     JLabel result1Lb;
     JLabel result2Lb;

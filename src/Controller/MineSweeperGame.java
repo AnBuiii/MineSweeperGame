@@ -24,12 +24,13 @@ import java.awt.event.WindowListener;
 
 public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener, IFinishGameListener {
 
+    public static boolean isFinish;
     private int WINDOW_WIDTH;
     private int WINDOW_HEIGHT;
     private int num_rows;
     private int num_columns;
     public int num_bombs;
-    private boolean isFinish;
+    //private boolean isFinish;
     private MineGridPanel mineGridPanel;
     private StatusPanel statusPanel;
     private MineGrid mineGrid;

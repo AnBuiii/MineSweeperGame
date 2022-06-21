@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
             Home homePanel = new Home();
-             homePanel.setVisible(true);
+            homePanel.setVisible(true);
 
     }
 }

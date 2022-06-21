@@ -1,5 +1,6 @@
 package Views;
 
+import Controller.FinishGame;
 import Controller.MineSweeperGame;
 import Interfaces.IPanel;
 import Interfaces.IStatusPanelListener;
@@ -51,6 +52,10 @@ public class StatusPanel extends JPanel implements IPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                if (MineSweeperGame.isFinish == true)
+                {
+                    break;
+                }
             }
         }
 
@@ -68,6 +73,10 @@ public class StatusPanel extends JPanel implements IPanel {
         timeLb = new JLabel();
         Clock clock = new Clock();
         clock.start();
+        if (MineSweeperGame.isFinish == true)
+        {
+            clock.stop();
+        }
         hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
