@@ -85,10 +85,9 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                 if(cells == null){
                     //khởi tạo
                    if(triangleShape[i][j].isMouseMoved){
-                        g2d.setColor(Color.blue);
+                       // g2d.setColor(new Color(176,213,88, 50));
+                       g2d.setColor(Color.GREEN);
                         g2d.fill(triangleShape[i][j].getTriangleShape());
-                        g2d.setColor(Color.black);
-                        g2d.draw(triangleShape[i][j].getTriangleShape());
                     }
                     else {
                         if((i + j) % 2 == 0){
@@ -166,10 +165,10 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                            // g2d.draw(triangleShape[i][j].getTriangleShape());
                         }
                         else if(triangleShape[i][j].isMouseMoved){
-                            g2d.setColor(Color.blue);
+                            g2d.setColor(Color.GREEN);
                             g2d.fill(triangleShape[i][j].getTriangleShape());
-                            g2d.setColor(Color.black);
-                            g2d.draw(triangleShape[i][j].getTriangleShape());
+                           // g2d.setColor(Color.black);
+                            //g2d.draw(triangleShape[i][j].getTriangleShape());
                         }
                     }
                 }
