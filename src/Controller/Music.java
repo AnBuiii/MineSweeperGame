@@ -5,7 +5,9 @@ import java.io.*;
 import java.net.URL;
 
 
-public class Music {
+public class Music implements Serializable { // implements Serializable để lưu được cái này vào để save game được
+    @Serial
+    private static final long serialVersionUID = -6500665823330706018L;
     public Clip startGameMusic() {
 
         Clip clip = null;
@@ -18,6 +20,7 @@ public class Music {
 //            AudioFormat format = audioInputStream.getFormat();
 //            DataLine.Info info = new DataLine.Info(Clip.class, format);
 //            clip = (Clip) AudioSystem.getLine(info);
+
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -47,5 +50,6 @@ public class Music {
         }
         return clip;
     }
+
 
 }

@@ -24,7 +24,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private MineTriangleSweeperGame mineTriangleSweeperGame;
     private Player player;
 
-    private Music musicGame;
+    private Music musicGame = new Music();;
     private Clip musicPlayer;
 
     public Home(){
@@ -93,8 +93,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         WindowListener wd = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+
                 try {
-                    musicPlayer.close();
+                    closeMusic();
                     MineSweeperGame save;
                     FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
                     ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
@@ -232,15 +233,23 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         }
 
     }
+
+    private void closeMusic(){
+        if(musicPlayer!= null &&  (musicPlayer.isOpen() || musicPlayer.isActive() || musicPlayer.isRunning())){
+            musicPlayer.stop();
+            musicPlayer.close();
+        }
+        musicPlayer = null;
+    }
     public void playInGameMusic(){
         //play in game music
-        musicPlayer.stop();
+        closeMusic();
         musicPlayer = musicGame.InGameMusic();
         musicPlayer.start();
     }
     public void playStartGameMusic(){
-        musicGame = new Music();
-        if(musicPlayer != null) musicPlayer.stop();
+
+        closeMusic();
         musicPlayer = musicGame.startGameMusic();
         musicPlayer.start();
     }
