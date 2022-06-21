@@ -56,6 +56,7 @@ public class HomePanel extends JPanel implements IPanel {
     private RoundedButton newGameBtn;
     private RoundedButton continueBtn;
     private RoundedButton statisticbtn;
+    private RoundedButton tutorialbtn;
     private boolean newGameBtnIsClick;
 
     public HomePanel(){
@@ -72,6 +73,7 @@ public class HomePanel extends JPanel implements IPanel {
         continueBtn = new RoundedButton(10);
         newGameBtn = new RoundedButton(10);
         statisticbtn = new RoundedButton(10);
+        tutorialbtn = new RoundedButton(10);
         newGameBtnIsClick = false;
 
     }
@@ -110,6 +112,14 @@ public class HomePanel extends JPanel implements IPanel {
         statisticbtn.setBackground(FOREGROUND);
         statisticbtn.setForeground(BACKGROUND);
 
+        tutorialbtn.setFont(font);
+        tutorialbtn.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
+        tutorialbtn.setFocusPainted(false);
+        tutorialbtn.setText("Tutorial");
+        tutorialbtn.setHorizontalAlignment(SwingConstants.LEFT);
+        tutorialbtn.setBackground(FOREGROUND);
+        tutorialbtn.setForeground(BACKGROUND);
+
         // check continue btn
         if(listener != null){
             newGameBtn_bound.y = newGameBtn_bound.y_default;
@@ -130,12 +140,14 @@ public class HomePanel extends JPanel implements IPanel {
         continueBtn.setBounds(continueBtn_bound.x,continueBtn_bound.y,continueBtn_bound.width,continueBtn_bound.height);
         newGameBtn.setBounds(newGameBtn_bound.x, newGameBtn_bound.y, newGameBtn_bound.width, newGameBtn_bound.height);
         statisticbtn.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
+        tutorialbtn.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
 
 
         add(titleLb);
         add(continueBtn);
         add(newGameBtn);
         add(statisticbtn);
+        add(tutorialbtn);
 
     }
 
@@ -239,6 +251,22 @@ public class HomePanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
             }
         });
+
+        /*tutorialbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                target(tutorialbtn);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+
+                unTarget(tutorialbtn);
+
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });*/
 
     }
     public void target(Component c){
