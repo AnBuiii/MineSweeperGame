@@ -15,7 +15,7 @@ public class Theme {
 
   //  public final static Font FONT = new Font("Arial", Font.PLAIN, 20); // cái font Arial vẽ cờ bị lỗi
 
-    public final static Font FONT = new Font("VNI", Font.PLAIN, 20);
+    public final static Font FONT = new Font("VNI", Font.PLAIN, 18);
     public final static int CELL_SIZE = 40;
     public final static int STATUS_PANEL_HEIGHT = 60;
 }

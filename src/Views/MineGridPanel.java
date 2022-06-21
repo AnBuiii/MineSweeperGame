@@ -87,7 +87,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                         super.mouseExited(e);
                         Label label = (Label) e.getComponent();
                         if(!listener.getListCell()[label.x][label.y].isRevealed()){
-                            label.setBackground(new Color(195,223,129));
+                           // label.setBackground(new Color(195,223,129));
                             if((label.x + label.y) % 2 == 0){
                                 label.setBackground(new Color(169,207,81));
                             } else {
