@@ -157,16 +157,16 @@ public class StatusPanel extends JPanel implements IPanel {
         listener = event;
     }
 
-    /*public void updateStatus(int numSquareUnrevealed) {
-        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
+    public void updateStatus(int numSquareUnrevealed) {
+        /*lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
         if (numSquareUnrevealed == MineGrid.num_mines) {
             lbNotify.setText("THẮNG");
             lbNotify.setForeground(Color.blue);
        } else if (numSquareUnrevealed == 0) {
             lbNotify.setText("THUA");
             lbNotify.setForeground(Color.red);
-       }
-    }*/
+       }*/
+    }
 
     public void load() {
         addEvent();
