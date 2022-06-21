@@ -50,6 +50,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
             mineSweeperGame = new MineSweeperGame(obj);
             mineSweeperGame.setHome(this);
+            mineSweeperGame.dispose();
             ojIn.close();
             fileIn.close();
         } catch (Exception ex) {
