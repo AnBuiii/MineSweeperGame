@@ -122,6 +122,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void reDrawHome() {
+        playStartGameMusic();
         homePanel.addView();
         newGameMenu.setVisible(false);
 //        closeGameMenu();
@@ -237,6 +238,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
     private void playStartGameMusic(){
         musicGame = new Music();
+        if(musicPlayer != null) musicPlayer.stop();
         musicPlayer = musicGame.startGameMusic();
         musicPlayer.start();
     }
