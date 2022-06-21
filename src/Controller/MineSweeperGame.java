@@ -170,6 +170,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void back() {
         this.setVisible(false);
         home.reDrawHome();
+        home.playStartGameMusic();
         home.setVisible(true);
         home.savingData(this);
     }

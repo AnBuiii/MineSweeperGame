@@ -116,13 +116,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void continueGame() {
         setVisible(false);
+        playInGameMusic();
         if(mineTriangleSweeperGame != null) mineTriangleSweeperGame.setVisible(true);
         if(mineSweeperGame != null) mineSweeperGame.setVisible(true);
     }
 
     @Override
     public void reDrawHome() {
-        playStartGameMusic();
+       // playStartGameMusic();
         homePanel.addView();
         newGameMenu.setVisible(false);
 //        closeGameMenu();
@@ -230,13 +231,13 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         }
 
     }
-    private void playInGameMusic(){
+    public void playInGameMusic(){
         //play in game music
         musicPlayer.stop();
         musicPlayer = musicGame.InGameMusic();
         musicPlayer.start();
     }
-    private void playStartGameMusic(){
+    public void playStartGameMusic(){
         musicGame = new Music();
         if(musicPlayer != null) musicPlayer.stop();
         musicPlayer = musicGame.startGameMusic();
