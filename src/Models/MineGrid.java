@@ -123,6 +123,13 @@ public class MineGrid implements Serializable {
         return false;
     }
 
+    public boolean isCellRevealed(int x, int y){
+        return cells[x][y].isRevealed();
+    }
+    public boolean isCellFlagged(int x, int y){
+        return cells[x][y].isFlagged();
+    }
+
     public int getNum_mines(){
         return num_mines;
     }
