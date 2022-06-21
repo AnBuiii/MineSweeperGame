@@ -9,33 +9,29 @@ public class MineTriangleGrid {
     public boolean isPlayed;
     private Cell[][] cells;
 
+    private Cell cellFirstClicked = null;
+
     public MineTriangleGrid(int rows, int columns, int bombs) {
         num_rows = rows;
         num_columns = columns;
         num_mines = bombs;
         isPlayed = false;
-
+        initGrid();
         landMines();
     }
-//    public MineGrid(MineGrid old){
-//        num_rows = old.num_rows;
-//        num_columns = old.num_columns;
-//        num_mines = old.num_mines;
-//        cells = old.cells;
-//    }
+   void initGrid(){
+       cells = new Cell[num_rows][num_columns];
+
+       // xác định ô tam giác úp hay đứng
+       for(int i = 0; i < num_rows; i ++){
+           for(int j = 0; j < num_columns; j ++){
+               cells[i][j] = new Cell();
+               cells[i][j].setIsUp(( i + j) % 2 != 0);
+           }
+       }
+   }
 
     public void landMines(){
-
-        cells = new Cell[num_rows][num_columns];
-
-        // xác định ô tam giác úp hay đứng
-        for(int i = 0; i < num_rows; i ++){
-            for(int j = 0; j < num_columns; j ++){
-                cells[i][j] = new Cell();
-                cells[i][j].setIsUp(( i + j) % 2 != 0);
-            }
-        }
-
 
         int count = 0;
         int ranMine;
@@ -44,7 +40,7 @@ public class MineTriangleGrid {
             ranMine = genRan(num_columns * num_rows);
             int i = (int)(ranMine / num_columns);
             int j = ranMine % num_columns;
-            if(ranMine < (this.num_rows * this.num_columns) && !cells[i][j].isMine()){
+            if(ranMine < (this.num_rows * this.num_columns) && !cells[i][j].isMine() && cells[i][j] != cellFirstClicked){
                 cells[i][j].setMine(true);
 
                 if(j - 1 >= 0){ // left
@@ -100,8 +96,12 @@ public class MineTriangleGrid {
     }
 
     public void firstMove(int x, int y){
-        if(cells[x][y].isMine()) cells[x][y].setMine(false);
-        landMines();
+        if(cells[x][y].isMine()) {
+            cells[x][y].setMine(false);
+            cellFirstClicked = cells[x][y];
+            landMines();
+        }
+
         isPlayed = true;
     }
 

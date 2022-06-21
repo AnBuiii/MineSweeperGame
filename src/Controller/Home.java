@@ -153,7 +153,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
         }
-        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 65, 2);
+        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 50, 2);
 
         reDrawHome();
         this.setVisible(false);
