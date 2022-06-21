@@ -262,4 +262,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         Clip soundClickCell = musicGame.SoundSocketFlag();
         soundClickCell.start();
     }
+    public void playSoundLoseGame(){
+        closeMusic();
+        musicPlayer = musicGame.SoundLoseGame();
+        musicPlayer.start();
+    }
+
+    public void playSoundWinGame(){
+        closeMusic();
+        musicPlayer = musicGame.SoundWinGame();
+        musicPlayer.start();
+    }
 }

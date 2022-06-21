@@ -10,13 +10,15 @@ public class Music implements Serializable { // implements Serializable để l�
     private static final long serialVersionUID = -6500665823330706018L;
     public Clip startGameMusic() {
 
-        Clip clip = null;
+        Clip clip;
         AudioInputStream audioInputStream = null;
         try {
 
-            URL url = this.getClass().getClassLoader().getResource("Music/StartGameMusic.wav");
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/StartGameMusic.wav");
            // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
-            audioInputStream = AudioSystem.getAudioInputStream(url);
+           if(urlSound != null){
+               audioInputStream = AudioSystem.getAudioInputStream(urlSound);
+           }
 
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -28,13 +30,13 @@ public class Music implements Serializable { // implements Serializable để l�
         return clip;
     }
     public Clip InGameMusic(){
-        Clip clip = null;
+        Clip clip;
         AudioInputStream audioInputStream = null;
         try {
 
-            URL url = this.getClass().getClassLoader().getResource("Music/InGameMusic.wav");
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/InGameMusic.wav");
             // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
-            audioInputStream = AudioSystem.getAudioInputStream(url);
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
 
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -46,13 +48,13 @@ public class Music implements Serializable { // implements Serializable để l�
         return clip;
     }
     public Clip SoundClickCell(){
-        Clip clip = null;
+        Clip clip;
         AudioInputStream audioInputStream = null;
         try {
 
-            URL url = this.getClass().getClassLoader().getResource("Music/SoundClickCell.wav");
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundClickCell.wav");
             // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
-            audioInputStream = AudioSystem.getAudioInputStream(url);
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -61,13 +63,13 @@ public class Music implements Serializable { // implements Serializable để l�
         return clip;
     }
     public Clip SoundSocketFlag(){
-        Clip clip = null;
+        Clip clip;
         AudioInputStream audioInputStream = null;
         try {
 
-            URL url = this.getClass().getClassLoader().getResource("Music/SoundSocketFlag.wav");
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundSocketFlag.wav");
             // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
-            audioInputStream = AudioSystem.getAudioInputStream(url);
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -75,6 +77,37 @@ public class Music implements Serializable { // implements Serializable để l�
         }
         return clip;
     }
+    public Clip SoundLoseGame(){
+        Clip clip;
+        AudioInputStream audioInputStream = null;
+        try {
+
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundLoseGame.wav");
+            // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        return clip;
+    }
+    public Clip SoundWinGame(){
+        Clip clip;
+        AudioInputStream audioInputStream = null;
+        try {
+
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundWinGame.wav");
+            // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        return clip;
+    }
+
 
 
 }

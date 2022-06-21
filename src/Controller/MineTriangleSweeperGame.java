@@ -179,6 +179,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         FinishGame finishGame = new FinishGame(isVictory());
         finishGame.setVisible(true);
         finishGame.addListener(this);
+        if(isVictory()){
+            home.playSoundWinGame();
+        }else {
+            home.playSoundLoseGame();
+        }
         this.disable();
     }
 
