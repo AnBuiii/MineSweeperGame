@@ -94,6 +94,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
+                    musicPlayer.close();
                     MineSweeperGame save;
                     FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
                     ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
