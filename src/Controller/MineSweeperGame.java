@@ -129,6 +129,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reveal(int x, int y) {
+        home.playSoundClickCell();
         if(mineGrid.numCellPlayed == 0) mineGrid.firstMove(x, y);
         boolean check = mineGrid.reveal(x, y);
         if (!check ) {
@@ -145,7 +146,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
-        //statusPanel.updateStatus(numSquareClosed);
+        statusPanel.updateStatus(numSquareClosed);
     }
     void openFinishGame(){
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
@@ -157,6 +158,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void flag(int x, int y) {
+        home.playSoundSocketFlag();
         mineGrid.flag(x, y);
         mineGridPanel.updateGrid();
     }
@@ -201,8 +203,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reGame() {
+        home.closeMusic();
         dispose();
         home.startGame(GameDifficulty.BEGINNER);
-
     }
 }

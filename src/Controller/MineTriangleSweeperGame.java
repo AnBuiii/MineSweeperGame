@@ -1,14 +1,17 @@
 package Controller;
 
+import Interfaces.IFinishGameListener;
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
+import Models.GameDifficulty;
 import Models.MineTriangleGrid;
 import Views.MineTriangleGridPanel;
 import Views.StatusPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -16,7 +19,7 @@ import java.awt.event.WindowListener;
 import static Views.custom.Theme.*;
 import static Views.custom.Theme.BOMB;
 
-public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener {
+public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener, IFinishGameListener {
     private int WINDOW_WIDTH;
     private int WINDOW_HEIGHT;
     private int num_rows;
@@ -120,11 +123,19 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reveal(int x, int y) {
+        home.playSoundClickCell();
         if(!mineTriangleGrid.isPlayed) mineTriangleGrid.firstMove(x, y);
         boolean check = mineTriangleGrid.reveal(x, y);
         if (!check) {
             mineTriangleGrid.revealAllCell();
             isFinish = true;
+        }
+        if(isVictory()){
+            isFinish = true;
+
+        }
+        if(isFinish){
+            openFinishGame();
         }
         mineTriangleGridPanel.updateTriangleGridPanel();
       //  int numSquareClosed = mineTriangleGridPanel.getNumCellUnRevealed();
@@ -133,6 +144,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void flag(int x, int y) {
+        home.playSoundSocketFlag();
         mineTriangleGrid.flag(x, y);
         mineTriangleGridPanel.updateTriangleGridPanel();
     }
@@ -155,10 +167,37 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     public void hint() {
 
     }
+    void openFinishGame(){
+        //home.closeMusic();
+        this.setForeground(new Color(1.0f,1.0f,1.0f,0));
+        FinishGame finishGame = new FinishGame(isVictory());
+        finishGame.setVisible(true);
+        finishGame.addListener(this);
+        this.disable();
+    }
+
+    public boolean isVictory(){
+        return mineTriangleGrid.isVictory();
+    }
+
     public boolean isFinished(){
         return isFinish;
     }
     public void setTriangleForm(Home home){
         this.home = home;
+    }
+
+    @Override
+    public void closeFinishGame() {
+        enable();
+        requestFocus();
+    }
+
+    @Override
+    public void reGame() {
+        dispose();
+        home.closeMusic();
+        home.startGame(GameDifficulty.BEGINNER);
+
     }
 }

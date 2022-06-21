@@ -235,7 +235,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     }
 
-    private void closeMusic(){
+    public void closeMusic(){
         if(musicPlayer!= null &&  (musicPlayer.isOpen() || musicPlayer.isActive() || musicPlayer.isRunning())){
             musicPlayer.stop();
             musicPlayer.close();
@@ -249,9 +249,17 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         musicPlayer.start();
     }
     public void playStartGameMusic(){
-
         closeMusic();
         musicPlayer = musicGame.startGameMusic();
         musicPlayer.start();
+    }
+    public void playSoundClickCell(){
+        Clip soundClickCell = musicGame.SoundClickCell();
+        soundClickCell.start();
+    }
+
+    public void playSoundSocketFlag(){
+        Clip soundClickCell = musicGame.SoundSocketFlag();
+        soundClickCell.start();
     }
 }

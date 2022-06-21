@@ -10,12 +10,14 @@ public class MineTriangleGrid {
     private Cell[][] cells;
 
     private Cell cellFirstClicked = null;
+    public int numCellPlayed;
 
     public MineTriangleGrid(int rows, int columns, int bombs) {
         num_rows = rows;
         num_columns = columns;
         num_mines = bombs;
         isPlayed = false;
+        numCellPlayed = 0;
         initGrid();
         landMines();
     }
@@ -119,6 +121,7 @@ public class MineTriangleGrid {
             if (cells[i][j].isMine()) {
                 return false;
             }
+            numCellPlayed++;
             cells[i][j].setRevealed(true);
             if (cells[i][j].getNumMineAround() == 0) {
                 if (j - 1 >= 0) { // left
@@ -184,6 +187,12 @@ public class MineTriangleGrid {
             }
         }
     }
+
+    public boolean isVictory(){
+        if(numCellPlayed == num_columns*num_rows - num_mines) return true;
+        return false;
+    }
+
     public int getNum_mines(){
         return num_mines;
     }
