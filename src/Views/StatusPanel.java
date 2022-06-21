@@ -4,6 +4,7 @@ import Controller.MineSweeperGame;
 import Interfaces.IPanel;
 import Interfaces.IStatusPanelListener;
 import Models.GameDifficulty;
+import Models.MineGrid;
 import Views.custom.Theme;
 
 import javax.swing.*;
@@ -60,7 +61,9 @@ public class StatusPanel extends JPanel implements IPanel {
         setBackground(BACKGROUND);
         backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
-        numFlagLb = new JLabel("00");
+        //numFlagLb = new JLabel("00");
+        String mine = String.valueOf(MineGrid.num_mines);
+        numFlagLb = new JLabel(mine);
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
         Clock clock = new Clock();
@@ -68,20 +71,6 @@ public class StatusPanel extends JPanel implements IPanel {
         hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
-    /*public void updatetimeLb() {
-        String sTime = String.valueOf(sec);
-        if (sTime.length() == 1) {
-            timeLb.setText("00" + sTime);
-        }
-        if (sTime.length() == 2) {
-            timeLb.setText("0" + sTime);
-        }
-        if (sTime.length() == 3) {
-            timeLb.setText("" + sTime);
-        }
-    }*/
-
-    
     @Override
     public void addView() {
         //backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -163,23 +152,21 @@ public class StatusPanel extends JPanel implements IPanel {
         });
 
     }
-    //public void Flag (Tile t) {
 
-    //}
     public void addListener(IStatusPanelListener event) {
         listener = event;
     }
 
-    public void updateStatus(int numSquareUnrevealed) {
-//        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
-//        if (numSquareUnrevealed == MineGrid.NUM_MINES) {
-//            lbNotify.setText("THẮNG");
-//            lbNotify.setForeground(Color.blue);
-//        } else if (numSquareUnrevealed == 0) {
-//            lbNotify.setText("THUA");
-//            lbNotify.setForeground(Color.red);
-//        }
-    }
+    /*public void updateStatus(int numSquareUnrevealed) {
+        lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
+        if (numSquareUnrevealed == MineGrid.num_mines) {
+            lbNotify.setText("THẮNG");
+            lbNotify.setForeground(Color.blue);
+       } else if (numSquareUnrevealed == 0) {
+            lbNotify.setText("THUA");
+            lbNotify.setForeground(Color.red);
+       }
+    }*/
 
     public void load() {
         addEvent();

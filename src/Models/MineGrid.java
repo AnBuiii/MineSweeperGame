@@ -6,7 +6,7 @@ import java.util.Random;
 public class MineGrid implements Serializable {
     private int num_rows ;
     private int num_columns;
-    private int num_mines ;
+    public static int num_mines ;
     public int numCellPlayed;
     private final Cell[][] cells;
 
