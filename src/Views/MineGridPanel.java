@@ -72,6 +72,29 @@ public class MineGridPanel extends JPanel implements IPanel {
                             listener.flag(label.x, label.y);
                         }
                     }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        super.mouseEntered(e);
+                        Label label = (Label) e.getComponent();
+                        if(!listener.getListCell()[label.x][label.y].isRevealed()){
+                            label.setBackground(new Color(195,223,129));
+                        }
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        super.mouseExited(e);
+                        Label label = (Label) e.getComponent();
+                        if(!listener.getListCell()[label.x][label.y].isRevealed()){
+                            label.setBackground(new Color(195,223,129));
+                            if((label.x + label.y) % 2 == 0){
+                                label.setBackground(new Color(169,207,81));
+                            } else {
+                                label.setBackground(new Color(176,213,88));
+                            }
+                        }
+                    }
                 });
             }
         }
@@ -166,8 +189,15 @@ public class MineGridPanel extends JPanel implements IPanel {
             }
         }
     }
-
-
+    public void target(Component c){
+//        c.setBackground(BACKGROUND);
+        c.setForeground(FOREGROUND);
+        c.setBackground(new Color(195,223,129));
+    }
+    public void unTarget(Component c){
+//        c.setBackground(FOREGROUND);
+        c.setForeground(BACKGROUND);
+    }
 
     private class Label extends JLabel {
         private int x;
