@@ -199,6 +199,7 @@ public class HomePanel extends JPanel implements IPanel {
                             public void actionPerformed(ActionEvent e) {
                                 listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() + 10);
                                 statisticbtn.setLocation(statisticbtn.getX(), statisticbtn.getY() + 10);
+                                tutorialbtn.setLocation(tutorialbtn.getX(), tutorialbtn.getY() + 10);
                                 count +=10;
 
                                 if (count == 150){
@@ -220,6 +221,7 @@ public class HomePanel extends JPanel implements IPanel {
                             public void actionPerformed(ActionEvent e) {
                                 listener.getNewGameMenu().getContentPn().setLocation(listener.getNewGameMenu().getContentPn().getX(),listener.getNewGameMenu().getContentPn().getY() - 10);
                                 statisticbtn.setLocation(statisticbtn.getX(), statisticbtn.getY() - 10);
+                                tutorialbtn.setLocation(tutorialbtn.getX(), tutorialbtn.getY() - 10);
                                 count += 10;
 
                                 if (count == 150){
