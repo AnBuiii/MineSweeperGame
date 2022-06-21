@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.lang.Thread;
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
@@ -29,13 +31,29 @@ public class StatusPanel extends JPanel implements IPanel {
 
     private IStatusPanelListener listener;
     public int time;
+    public long sec;
 
     public StatusPanel() {
         init();
         addView();
         addEvent();
     }
-    private Timer timer;
+    public class Clock extends Thread{
+        public Clock(){	}
+        public void run() {
+            while (true) {
+                sec++;
+                String S = String.valueOf(sec);
+                timeLb.setText(S);
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+    }
     @Override
     public void init() {
         setLayout(new GridBagLayout());
@@ -44,19 +62,14 @@ public class StatusPanel extends JPanel implements IPanel {
         flagLb = new JLabel(FLAG);
         numFlagLb = new JLabel("00");
         clockLb = new JLabel(CLOCK);
-        timeLb = new JLabel("000");
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                time++;
-                updatetimeLb();
-            }
-        });
+        timeLb = new JLabel();
+        Clock clock = new Clock();
+        clock.start();
         hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
-    public void updatetimeLb() {
-        String sTime = String.valueOf(time);
+    /*public void updatetimeLb() {
+        String sTime = String.valueOf(sec);
         if (sTime.length() == 1) {
             timeLb.setText("00" + sTime);
         }
@@ -66,7 +79,8 @@ public class StatusPanel extends JPanel implements IPanel {
         if (sTime.length() == 3) {
             timeLb.setText("" + sTime);
         }
-    }
+    }*/
+
     
     @Override
     public void addView() {
