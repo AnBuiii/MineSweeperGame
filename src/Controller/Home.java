@@ -2,7 +2,6 @@ package Controller;
 
 import Interfaces.IHomeListener;
 import Interfaces.IStartGameListener;
-import Models.Cell;
 import Models.GameDifficulty;
 
 import Models.Player;
@@ -10,6 +9,7 @@ import Views.HomePanel;
 import Interfaces.IPanel;
 import Views.NewGamePanel;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -24,11 +24,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private MineTriangleSweeperGame mineTriangleSweeperGame;
     private Player player;
 
+    private Music musicGame;
+    private Clip musicPlayer;
+
     public Home(){
         init();
         addView();
         addEvent();
         homePanel.addView();
+        playStartGameMusic();
     }
 
 
@@ -159,7 +163,10 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         this.setVisible(false);
         mineTriangleSweeperGame.setTriangleForm(this);
         mineTriangleSweeperGame.setVisible(true);
+        playInGameMusic();
     }
+
+
 
     @Override
     public NewGamePanel getNewGameMenu() {
@@ -187,6 +194,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         this.setVisible(false);
         mineSweeperGame.setHome(this);
         mineSweeperGame.setVisible(true);
+        playInGameMusic();
+
     }
 
     @Override
@@ -219,5 +228,16 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             ex.printStackTrace();
         }
 
+    }
+    private void playInGameMusic(){
+        //play in game music
+        musicPlayer.stop();
+        musicPlayer = musicGame.InGameMusic();
+        musicPlayer.start();
+    }
+    private void playStartGameMusic(){
+        musicGame = new Music();
+        musicPlayer = musicGame.startGameMusic();
+        musicPlayer.start();
     }
 }
