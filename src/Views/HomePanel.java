@@ -252,21 +252,19 @@ public class HomePanel extends JPanel implements IPanel {
             }
         });
 
-        /*tutorialbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        tutorialbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 target(tutorialbtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
 
                 unTarget(tutorialbtn);
-
             }
-
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
             }
-        });*/
+        });
 
     }
     public void target(Component c){
