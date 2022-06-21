@@ -5,6 +5,7 @@ import Interfaces.IFinishGameListener;
 import Interfaces.IGamePlayListener;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
+import Models.GameDifficulty;
 import Models.MineGrid;
 import Interfaces.IPanel;
 import Views.MineGridPanel;
@@ -13,6 +14,7 @@ import Views.StatusPanel;
 import static Views.custom.Theme.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -65,16 +67,18 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         addEvent();
 
 
-
         //System.out.println(mineGrid.getCells().length);
         mineGridPanel.updateGrid();
     }
+
+
 
     @Override
     public void init() {
         setTitle(TITLE+BOMB);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setUndecorated(true);
+        setVisible(true);
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -143,7 +147,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         statusPanel.updateStatus(numSquareClosed);
     }
     void openFinishGame(){
-        FinishGame finishGame = new FinishGame();
+        this.setForeground(new Color(1.0f,1.0f,1.0f,0));
+        FinishGame finishGame = new FinishGame(isVictory());
         finishGame.setVisible(true);
         finishGame.addListener(this);
         this.disable();
@@ -190,5 +195,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void closeFinishGame() {
         enable();
         requestFocus();
+    }
+
+    @Override
+    public void reGame() {
+        dispose();
+        home.startGame(GameDifficulty.BEGINNER);
+
     }
 }

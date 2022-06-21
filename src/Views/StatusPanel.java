@@ -52,7 +52,7 @@ public class StatusPanel extends JPanel implements IPanel {
                 updatetimeLb();
             }
         });
-        hintBtn = new JLabel("\uD83D\uDDD1");
+        hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
     public void updatetimeLb() {
