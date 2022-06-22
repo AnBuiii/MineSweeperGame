@@ -104,6 +104,7 @@ public class MineGrid implements Serializable {
         return true;
     }
 
+
     public void flag(int x, int y) {
         if (!cells[x][y].isRevealed()) {
             cells[x][y].setFlagged(!cells[x][y].isFlagged());

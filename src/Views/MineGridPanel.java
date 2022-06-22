@@ -65,6 +65,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                 lbCell[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
+                        if(listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             listener.reveal(label.x, label.y);
@@ -76,6 +77,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         super.mouseEntered(e);
+                        if(listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
                         if(!listener.getListCell()[label.x][label.y].isRevealed()){
                             label.setBackground(new Color(195,223,129));
@@ -85,6 +87,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                     @Override
                     public void mouseExited(MouseEvent e) {
                         super.mouseExited(e);
+                        if(listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
                         if(!listener.getListCell()[label.x][label.y].isRevealed()){
                            // label.setBackground(new Color(195,223,129));
@@ -197,6 +200,10 @@ public class MineGridPanel extends JPanel implements IPanel {
     public void unTarget(Component c){
 //        c.setBackground(FOREGROUND);
         c.setForeground(BACKGROUND);
+    }
+
+    public void mark(int x, int y) {
+        lbCell[x][y].setBackground(new Color(195,223,129));
     }
 
     private class Label extends JLabel {
