@@ -43,9 +43,16 @@ public class HomePanel extends JPanel implements IPanel {
         static int width = 300;
         static int height = 150;
     }
-    public static class triangleGame_bound{
+    public static class statisticsGame_bound {
         static int x = 50;
         static int y = 200;
+        static final int y_default = y;
+        static int width = 300;
+        static int height = 50;
+    }
+    public static class tutorialGame_bound {
+        static int x = 50;
+        static int y = 260;
         static final int y_default = y;
         static int width = 300;
         static int height = 50;
@@ -128,12 +135,14 @@ public class HomePanel extends JPanel implements IPanel {
             newGameMenu_bound.y = newGameMenu_bound.y_default;
             if(listener.isGameFinish()) {
                 newGameBtn_bound.y = 140;
-                triangleGame_bound.y = 210;
+                statisticsGame_bound.y = 210;
+                tutorialGame_bound.y = 280;
                 continueBtn.setVisible(false);
             }
             else {
                 newGameBtn_bound.y = 200;
-                triangleGame_bound.y = 270;
+                statisticsGame_bound.y = 270;
+                tutorialGame_bound.y = 270;
                 continueBtn.setVisible(true);
             }
         }
@@ -141,8 +150,8 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb.setBounds(title_bound.x,title_bound.y,title_bound.width,title_bound.height);
         continueBtn.setBounds(continueBtn_bound.x,continueBtn_bound.y,continueBtn_bound.width,continueBtn_bound.height);
         newGameBtn.setBounds(newGameBtn_bound.x, newGameBtn_bound.y, newGameBtn_bound.width, newGameBtn_bound.height);
-        statisticbtn.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
-        tutorialbtn.setBounds(triangleGame_bound.x, triangleGame_bound.y, triangleGame_bound.width, triangleGame_bound.height);
+        statisticbtn.setBounds(statisticsGame_bound.x, statisticsGame_bound.y, statisticsGame_bound.width, statisticsGame_bound.height);
+        tutorialbtn.setBounds(tutorialGame_bound.x, tutorialGame_bound.y, tutorialGame_bound.width, tutorialGame_bound.height);
 
 
         add(titleLb);
@@ -198,7 +207,6 @@ public class HomePanel extends JPanel implements IPanel {
                         if(continueBtn.isVisible()) newGameMenu_bound.y += 60;
                         listener.getNewGameMenu().setVisible(true);
                         listener.getNewGameMenu().setLocation(newGameMenu_bound.x, newGameMenu_bound.y);
-
                         listener.getNewGameMenu().getContentPn().setLocation(0, - newGameMenu_bound.height);
                         new Timer(1, new ActionListener(){
                             int count = 0;
