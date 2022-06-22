@@ -2,6 +2,7 @@ package Controller;
 
 import Interfaces.IFinishGameListener;
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Views.custom.RoundedButton;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class FinishGame extends JDialog implements IPanel {
     RoundedButton someThingBtn;
 
     IFinishGameListener listener;
+    ISoundEventButton eventButton;
     FinishGame(boolean isVictory){
         this.isVictory = isVictory;
         init();
@@ -100,16 +102,30 @@ public class FinishGame extends JDialog implements IPanel {
     public void addEvent() {
         closeBtn.addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 dispose();
                 listener.closeFinishGame();
             }
         });
         newGameBtn.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
+                eventButton.playSoundClickButton();
                 listener.closeFinishGame();
                 listener.reGame();
                 super.mouseClicked(e);
@@ -119,5 +135,8 @@ public class FinishGame extends JDialog implements IPanel {
 
     public void addListener(IFinishGameListener listener){
         this.listener = listener;
+    }
+    public void addEventButtonListener(ISoundEventButton eventButton){
+        this.eventButton = eventButton;
     }
 }

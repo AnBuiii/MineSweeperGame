@@ -1,21 +1,14 @@
 package Views;
 
-import Controller.FinishGame;
+
 import Controller.MineSweeperGame;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
-import Models.GameDifficulty;
 import Models.MineGrid;
-import Views.custom.Theme;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.Calendar;
-import java.util.Date;
 import java.lang.Thread;
 import static Views.custom.Theme.*;
 
@@ -45,7 +38,7 @@ public class StatusPanel extends JPanel implements IPanel {
     public class Clock extends Thread{
         public Clock(){	}
         public void run() {
-            while (true) {
+            do {
                 sec++;
                 String S = String.valueOf(sec);
                 timeLb.setText(S);
@@ -54,11 +47,7 @@ public class StatusPanel extends JPanel implements IPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                if (MineSweeperGame.isFinish == true)
-                {
-                    break;
-                }
-            }
+            } while (!MineSweeperGame.isFinish);
         }
 
     }
@@ -75,7 +64,7 @@ public class StatusPanel extends JPanel implements IPanel {
         timeLb = new JLabel();
         Clock clock = new Clock();
         clock.start();
-        if (MineSweeperGame.isFinish == true)
+        if (MineSweeperGame.isFinish)
         {
             clock.stop();
         }

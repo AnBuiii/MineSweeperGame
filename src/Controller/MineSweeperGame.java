@@ -155,6 +155,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         FinishGame finishGame = new FinishGame(isVictory());
         finishGame.setVisible(true);
         finishGame.addListener(this);
+        finishGame.addEventButtonListener(this.home.getSoundEventButton());
         if(isVictory()){
             home.playSoundWinGame();
         }else {
