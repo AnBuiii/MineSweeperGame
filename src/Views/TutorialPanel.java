@@ -35,7 +35,7 @@ public class TutorialPanel extends JPanel implements IPanel {
         tutorialTa = new JTextArea();
         backBtn = new JLabel();
         displayPn = new JPanel();
-        displayPn.setLayout(new GridLayout(7,2));
+        displayPn.setLayout(new GridLayout(1,5));
         windowName = new JLabel();
     }
 
@@ -50,7 +50,7 @@ public class TutorialPanel extends JPanel implements IPanel {
                 "\nUsing this information, you can determine cells that are safe, and cells that contain mines. " +
                 "\nCells suspected of being mines can be marked with a flag using the right mouse button.",JLabel.CENTER);*/
         String textTutorial = "Minesweeper rules are very simple." +
-                "\nThe board is divided into cells, \nwith mines randomly distributed." +
+                "\nThe board is divided into cells, with mines randomly distributed." +
                 "\nTo win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it." +
                 "\nUsing this information, you can determine cells that are safe, and cells that contain mines." +
                 "\nCells suspected of being mines can be marked with a flag using the right mouse button.";
@@ -75,7 +75,8 @@ public class TutorialPanel extends JPanel implements IPanel {
 
         add(backBtn);
         add(windowName);
-        displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20,Tutorial.HEIGHT - 80 - 20);
+        //displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20,Tutorial.HEIGHT - 80 - 20);
+        displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20 ,Tutorial.HEIGHT - 80 - 20);
         displayPn.setBackground(FOREGROUND);
         displayPn.setForeground(BACKGROUND);
         add(displayPn);
@@ -124,10 +125,11 @@ public class TutorialPanel extends JPanel implements IPanel {
         jTextArea.setBackground(FOREGROUND);
         jTextArea.setForeground(BACKGROUND);
         jTextArea.setWrapStyleWord(true);
-        //jTextArea.setLineWrap(true);
+        jTextArea.setLineWrap(true);
         jTextArea.setSize(new Dimension(500, 500));
         jTextArea.setPreferredSize(new Dimension(500, 500));
         add(new JScrollPane(new JTextArea(50, 50)), BorderLayout.PAGE_START);
+        jTextArea.setEditable(false);
         //JScrollPane scrollPane = new JScrollPane(jTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     }
 

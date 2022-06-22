@@ -147,6 +147,22 @@ public class FinishGame extends JDialog implements IPanel {
                 listener.reviewMode();
             }
         });
+        someThingBtn.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                eventButton.playSoundClickButton();
+                listener.closeFinishGame();
+                //listener.openTutorial();
+                super.mouseClicked(e);
+            }
+        });
     }
 
     public void addListener(IFinishGameListener listener){
