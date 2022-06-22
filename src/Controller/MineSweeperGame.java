@@ -196,11 +196,24 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reviewNext() {
+        if(reviewStep == playHistory.size()) return;
         reveal(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
         reviewStep++;
         if(reviewStep == playHistory.size()) return;
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
 
+    }
+
+    @Override
+    public void reviewPrevious() {
+        if(reviewStep == 0) return;
+        mineGrid.unRevealAllCells();
+        mineGridPanel.updateGrid();
+        reviewStep--;
+        for(int i = 0; i < reviewStep; i++){
+            reveal(playHistory.get(i).x, playHistory.get(i).y);
+        }
+        mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
     @Override

@@ -189,7 +189,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-//                reviewPrevious();
+                listener.reviewPrevious();
             }
         });
 

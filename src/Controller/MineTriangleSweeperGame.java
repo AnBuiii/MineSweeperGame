@@ -172,6 +172,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
 
     @Override
+    public void reviewPrevious() {
+
+    }
+
+    @Override
     public void back() {
         this.setVisible(false);
         home.playStartGameMusic();

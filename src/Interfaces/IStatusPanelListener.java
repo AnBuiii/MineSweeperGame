@@ -6,4 +6,6 @@ public interface IStatusPanelListener {
     void restart();
 
     void reviewNext();
+
+    void reviewPrevious();
 }
