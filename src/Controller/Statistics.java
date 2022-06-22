@@ -1,12 +1,16 @@
 package Controller;
 
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Interfaces.IStatisticPanelListener;
 import Interfaces.IStatusPanelListener;
 import Models.Player;
 import Views.StatisticsPanel;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+
+import java.awt.*;
 
 import static Views.custom.Theme.BOMB;
 import static Views.custom.Theme.TITLE;
@@ -74,5 +78,21 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
 
     public void setHome(Home home){
         this.home = home;
+        statisticspanel.addEventButtonListener(home.getSoundEventButton());
     }
+
+   /* @Override
+    public void playSoundHoverButton() {
+        Music musicGame = new Music();
+        Clip soundHoverCell = musicGame.SoundHoverButton();
+        soundHoverCell.start();
+
+    }
+
+    @Override
+    public void playSoundClickButton() {
+        Music musicGame = new Music();
+        Clip soundClickCell = musicGame.SoundClickButton();
+        soundClickCell.start();
+    }*/
 }

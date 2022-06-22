@@ -2,6 +2,7 @@ package Views;
 
 import Controller.Statistics;
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Interfaces.IStatisticPanelListener;
 import Models.Player;
 
@@ -14,6 +15,7 @@ import static Views.custom.Theme.*;
 
 public class StatisticsPanel extends JPanel implements IPanel {
     IStatisticPanelListener listener;
+    ISoundEventButton eventButton;
     JComboBox<String> gameMode ;
     JPanel displayPn;
 
@@ -138,22 +140,42 @@ public class StatisticsPanel extends JPanel implements IPanel {
     public void addEvent() {
         backBtn.addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.back();
-
             }
         });
         deleteBtn.addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
             }
         });
         mode.addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
             }
         });
 
@@ -170,6 +192,9 @@ public class StatisticsPanel extends JPanel implements IPanel {
     }
     public void addListener(IStatisticPanelListener listener){
         this.listener = listener;
+    }
+    public void addEventButtonListener(ISoundEventButton eventButton){
+        this.eventButton = eventButton;
     }
     public void viewPlayerRecord(int gameMode){
         games.setText(String.valueOf(player.totalGames[gameMode]));

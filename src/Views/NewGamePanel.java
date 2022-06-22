@@ -1,13 +1,13 @@
 package Views;
 
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Interfaces.IStartGameListener;
 import Models.GameDifficulty;
 import Views.custom.RoundedBorder;
 import Views.custom.Theme;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +24,7 @@ public class NewGamePanel extends JPanel implements IPanel {
     JLabel customInfoLb;
     JLabel triangleInfoLb;
     IStartGameListener listener;
+    ISoundEventButton eventButton;
     JPanel contentPn;
 
     public NewGamePanel(){
@@ -147,6 +148,7 @@ public class NewGamePanel extends JPanel implements IPanel {
         
         beginnerLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(beginnerLb);
                 target(beginnerInfoLb);
             }
@@ -157,6 +159,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.startGame(GameDifficulty.BEGINNER);
                 //listener.closeHomePanel();
 
@@ -166,6 +169,7 @@ public class NewGamePanel extends JPanel implements IPanel {
 
         intermediateLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(intermediateLb);
                 target(intermediateInfoLb);
             }
@@ -176,6 +180,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.startGame(GameDifficulty.INTERMEDIATE);
             }
         });
@@ -183,6 +188,7 @@ public class NewGamePanel extends JPanel implements IPanel {
 
         expertLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(expertLb);
                 target(expertInfoLb);
             }
@@ -193,6 +199,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.startGame(GameDifficulty.EXPERT);
             }
         });
@@ -200,6 +207,7 @@ public class NewGamePanel extends JPanel implements IPanel {
 
         customLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(customLb);
                 target(customInfoLb);
             }
@@ -210,12 +218,14 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.startGame(GameDifficulty.CUSTOM);
             }
         });
         customInfoLb.addMouseListener(customLb.getMouseListeners()[0]);
         triangleLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(triangleLb);
                 target(triangleInfoLb);
             }
@@ -226,6 +236,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.startTriangleGame();
             }
         });
@@ -235,6 +246,9 @@ public class NewGamePanel extends JPanel implements IPanel {
     }
     public void addListener(IStartGameListener event){
         listener = event;
+    }
+    public void addEventButtonListener(ISoundEventButton eventButton){
+        this.eventButton = eventButton;
     }
     public void target(Component c){
         c.setBackground(new Color(192,188,185));

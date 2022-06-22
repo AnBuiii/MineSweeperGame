@@ -1,6 +1,7 @@
 package Controller;
 
 import Interfaces.IHomeListener;
+import Interfaces.ISoundEventButton;
 import Interfaces.IStartGameListener;
 import Models.GameDifficulty;
 
@@ -17,7 +18,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
 
-public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener {
+public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton {
     private HomePanel   homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
@@ -76,6 +77,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         homePanel.setBounds(0,0,400,600);
         homePanel.setBackground(new Color(239,235,232));
         homePanel.addListener(this);
+        homePanel.addEventButtonListener(this);
 
         newGameMenu = new NewGamePanel();
         newGameMenu.setBounds(50,160, 300,150);
@@ -83,6 +85,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         newGameMenu.setForeground(new Color(104,159,57));
         newGameMenu.setVisible(false);
         newGameMenu.addListener(this);
+        newGameMenu.addEventButtonListener(this);
 
         add(newGameMenu);
         add(homePanel);
@@ -166,7 +169,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
         reDrawHome();
         this.setVisible(false);
-        mineTriangleSweeperGame.setTriangleForm(this);
+        mineTriangleSweeperGame.setHome(this);
         mineTriangleSweeperGame.setVisible(true);
         playInGameMusic();
     }
@@ -189,10 +192,10 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame.dispose();
         }
          mineSweeperGame = switch (gameDifficulty){
-             case BEGINNER -> new MineSweeperGame(9,9,10, 1);
-             case INTERMEDIATE -> new MineSweeperGame(16,16,40, 2);
-             case EXPERT -> new MineSweeperGame(16,30,99, 3);
-             default -> new MineSweeperGame(0,0,0, 0);
+             case BEGINNER -> new MineSweeperGame(9,9,10);
+             case INTERMEDIATE -> new MineSweeperGame(16,16,40);
+             case EXPERT -> new MineSweeperGame(16,30,99);
+             default -> new MineSweeperGame(0,0,0);
         };
 
         reDrawHome();
@@ -272,5 +275,21 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         closeMusic();
         musicPlayer = musicGame.SoundWinGame();
         musicPlayer.start();
+    }
+
+    @Override
+    public void playSoundHoverButton() {
+       Clip soundHoverCell = musicGame.SoundHoverButton();
+            soundHoverCell.start();
+
+    }
+
+    @Override
+    public void playSoundClickButton() {
+        Clip soundClickCell = musicGame.SoundClickButton();
+            soundClickCell.start();
+    }
+    public ISoundEventButton getSoundEventButton(){
+        return this;
     }
 }

@@ -3,6 +3,7 @@ package Views;
 import Controller.FinishGame;
 import Controller.MineSweeperGame;
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
 import Models.GameDifficulty;
 import Models.MineGrid;
@@ -32,6 +33,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private GridBagConstraints gbc;
 
     private IStatusPanelListener listener;
+    private ISoundEventButton eventButton;
     public int time;
     public long sec;
 
@@ -146,8 +148,9 @@ public class StatusPanel extends JPanel implements IPanel {
     @Override
     public void addEvent() {
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
 
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+               eventButton.playSoundHoverButton();
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
 
@@ -155,6 +158,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.back();
 
             }
@@ -164,6 +168,9 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void addListener(IStatusPanelListener event) {
         listener = event;
+    }
+    public void addEventButtonListener(ISoundEventButton eventButton){
+        this.eventButton = eventButton;
     }
 
     public void updateStatus(int numSquareUnrevealed) {

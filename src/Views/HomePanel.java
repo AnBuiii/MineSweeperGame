@@ -2,6 +2,7 @@ package Views;
 
 import Interfaces.IHomeListener;
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Views.custom.RoundedButton;
 
 import javax.swing.*;
@@ -52,6 +53,7 @@ public class HomePanel extends JPanel implements IPanel {
 
 
     private IHomeListener listener;
+    private ISoundEventButton eventButton;
     private JLabel titleLb;
     private RoundedButton newGameBtn;
     private RoundedButton continueBtn;
@@ -157,6 +159,7 @@ public class HomePanel extends JPanel implements IPanel {
         continueBtn.addMouseListener(new java.awt.event.MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent e) {
+                eventButton.playSoundHoverButton();
                 target(continueBtn);
             }
 
@@ -167,12 +170,14 @@ public class HomePanel extends JPanel implements IPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                eventButton.playSoundClickButton();
                 listener.continueGame();
             }
         });
 
         newGameBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(newGameBtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -183,6 +188,8 @@ public class HomePanel extends JPanel implements IPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                eventButton.playSoundClickButton(); // phát âm ở button
+
                 if(!newGameBtnIsClick){
                     newGameBtnIsClick = true;
                     super.mouseClicked(e);
@@ -239,6 +246,7 @@ public class HomePanel extends JPanel implements IPanel {
         });
         statisticbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
                 target(statisticbtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -249,6 +257,7 @@ public class HomePanel extends JPanel implements IPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                eventButton.playSoundClickButton();
                 listener.openStatistic();
                 super.mouseClicked(e);
             }
@@ -256,6 +265,7 @@ public class HomePanel extends JPanel implements IPanel {
 
         tutorialbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+               eventButton.playSoundHoverButton();
                 target(tutorialbtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -264,6 +274,7 @@ public class HomePanel extends JPanel implements IPanel {
             }
             @Override
             public void mouseClicked(MouseEvent e) {
+                eventButton.playSoundClickButton();
                 super.mouseClicked(e);
             }
         });
@@ -279,5 +290,8 @@ public class HomePanel extends JPanel implements IPanel {
     }
     public void addListener(IHomeListener event){
         listener = event;
+    }
+    public void addEventButtonListener(ISoundEventButton eventButton){
+        this.eventButton = eventButton;
     }
 }

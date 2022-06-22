@@ -107,6 +107,38 @@ public class Music implements Serializable { // implements Serializable để l�
         }
         return clip;
     }
+    public Clip SoundHoverButton(){
+        Clip clip;
+        AudioInputStream audioInputStream = null;
+        try {
+
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundHoverButton.wav");
+            // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        return clip;
+    }
+
+    public Clip SoundClickButton(){
+        Clip clip;
+        AudioInputStream audioInputStream = null;
+        try {
+
+            URL urlSound = this.getClass().getClassLoader().getResource("Music/SoundClickButton.wav");
+            // File soundFile = new File("C:\\Users\\trant\\Downloads\\StartGameMusic.wav");
+            if(urlSound != null) audioInputStream = AudioSystem.getAudioInputStream(urlSound);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        return clip;
+    }
+
 
 
 

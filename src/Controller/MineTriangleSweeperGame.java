@@ -194,8 +194,9 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     public boolean isFinished(){
         return isFinish;
     }
-    public void setTriangleForm(Home home){
+    public void setHome(Home home){
         this.home = home;
+        statusPanel.addEventButtonListener(home.getSoundEventButton());
     }
 
     @Override

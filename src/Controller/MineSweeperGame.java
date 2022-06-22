@@ -38,12 +38,11 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     int gameMode;
 
 
-    public MineSweeperGame(int num_rows, int num_columns, int num_bombs, int gameMode) {
+    public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
-        this.gameMode = gameMode;
 
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
@@ -197,6 +196,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
     public void setHome(Home home){
         this.home = home;
+        statusPanel.addEventButtonListener(home.getSoundEventButton());
     }
     public boolean isVictory(){
         return mineGrid.isVictory();
