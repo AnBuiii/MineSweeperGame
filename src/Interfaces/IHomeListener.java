@@ -7,6 +7,7 @@ public interface IHomeListener {
     void reDrawHome();
     boolean isGameFinish();
     void openStatistic();
+    void openTutorial();
 
     NewGamePanel getNewGameMenu();
 }

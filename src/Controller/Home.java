@@ -155,6 +155,12 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         statistics.setHome(this);
         this.setVisible(false);
     }
+    public void openTutorial() {
+        Tutorial tutorial = new Tutorial();
+        tutorial.setVisible(true);
+        tutorial.setHome(this);
+        this.setVisible(false);
+    }
 
     @Override
     public void startTriangleGame() {

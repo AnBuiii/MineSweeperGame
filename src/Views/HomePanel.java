@@ -271,16 +271,17 @@ public class HomePanel extends JPanel implements IPanel {
 
         tutorialbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-               eventButton.playSoundHoverButton();
+                eventButton.playSoundHoverButton();
                 target(tutorialbtn);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-
                 unTarget(tutorialbtn);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 eventButton.playSoundClickButton();
+                listener.openTutorial();
                 super.mouseClicked(e);
             }
         });
