@@ -156,6 +156,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
 
     @Override
+    public boolean isReviewMode() {
+        return false;
+    }
+
+    @Override
     public void restart() {
         mineTriangleGrid = new MineTriangleGrid(num_rows, num_columns,num_bombs);
         mineTriangleGridPanel.updateTriangleGridPanel();
@@ -163,6 +168,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reviewNext() {
+
+    }
+
+    @Override
+    public void reviewPrevious() {
 
     }
 
