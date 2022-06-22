@@ -8,6 +8,7 @@ import Interfaces.IStatusPanelListener;
 import Models.MineGrid;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.Thread;
 import static Views.custom.Theme.*;
@@ -171,6 +172,27 @@ public class StatusPanel extends JPanel implements IPanel {
             lbNotify.setText("THUA");
             lbNotify.setForeground(Color.red);
        }*/
+    }
+    public void reviewMode(){
+        clockLb.setText(">");
+        timeLb.setVisible(false);
+        flagLb.setVisible(false);
+        numFlagLb.setText("<");
+        clockLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.reviewNext();
+            }
+        });
+        numFlagLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+//                reviewPrevious();
+            }
+        });
+
     }
 
     public void load() {

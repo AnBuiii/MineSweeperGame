@@ -37,12 +37,15 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public Home home;
     int gameMode;
 
+    int[] playHistory;
+
 
     public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
+        this.playHistory = new int[2];
 
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
@@ -61,6 +64,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         isFinish = old.isFinish;
         mineGrid = old.mineGrid;
         gameMode = old.gameMode;
+        playHistory = old.playHistory;
 
         init();
         addView();
@@ -140,12 +144,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         }
         if(isVictory()){
             isFinish = true;
-
         }
         if(isFinish){
             openFinishGame();
         }
-
         mineGridPanel.updateGrid();
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
@@ -177,6 +179,11 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void restart() {
         mineGrid = new MineGrid(num_rows, num_columns,num_bombs);
         mineGridPanel.updateGrid();
+    }
+
+    @Override
+    public void reviewNext() {
+
     }
 
     @Override
@@ -217,5 +224,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         home.closeMusic();
         dispose();
         home.startGame(GameDifficulty.BEGINNER);
+    }
+
+    @Override
+    public void reviewMode() {
+        statusPanel.reviewMode();
+        mineGrid.unRevealAllCells();
+        mineGridPanel.updateGrid();
     }
 }

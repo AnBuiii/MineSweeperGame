@@ -5,4 +5,5 @@ public interface IStatusPanelListener {
     void hint();
     void restart();
 
+    void reviewNext();
 }

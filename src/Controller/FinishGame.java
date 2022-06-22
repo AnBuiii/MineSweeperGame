@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import static Views.custom.Theme.*;
 
@@ -21,6 +20,7 @@ public class FinishGame extends JDialog implements IPanel {
     JLabel result2Lb;
     RoundedButton newGameBtn;
     RoundedButton someThingBtn;
+    RoundedButton reviewBtn;
 
     IFinishGameListener listener;
     ISoundEventButton eventButton;
@@ -50,6 +50,7 @@ public class FinishGame extends JDialog implements IPanel {
         result2Lb = new JLabel();
         newGameBtn = new RoundedButton(10);
         someThingBtn = new RoundedButton(10);
+        reviewBtn = new RoundedButton(10);
 
     }
 
@@ -78,7 +79,7 @@ public class FinishGame extends JDialog implements IPanel {
         newGameBtn.setFont(new Font("VNI", Font.PLAIN, 20));
         newGameBtn.setBounds(20,130,160,40);
         newGameBtn.setFocusPainted(false);
-        newGameBtn.setText("New game");
+        newGameBtn.setText("New Game");
         newGameBtn.setHorizontalAlignment(SwingConstants.CENTER);
         newGameBtn.setBackground(FOREGROUND);
         newGameBtn.setForeground(BACKGROUND);
@@ -87,15 +88,22 @@ public class FinishGame extends JDialog implements IPanel {
         someThingBtn.setFont(new Font("VNI", Font.PLAIN, 20));
         someThingBtn.setBounds(20,180,160,40);
         someThingBtn.setFocusPainted(false);
-        if(isVictory) someThingBtn.setText("STATISTICS");
-        else someThingBtn.setText("TUTORIAL");
+        if(isVictory) someThingBtn.setText("Statistics");
+        else someThingBtn.setText("Tutorial");
         someThingBtn.setHorizontalAlignment(SwingConstants.CENTER);
         someThingBtn.setBackground(FOREGROUND);
         someThingBtn.setForeground(BACKGROUND);
         add(someThingBtn);
-        
-        
-        
+
+        reviewBtn.setFont(new Font("VNI", Font.PLAIN, 20));
+        reviewBtn.setBounds(20,230,160,40);
+        reviewBtn.setFocusPainted(false);
+        reviewBtn.setText("Review Game");
+        reviewBtn.setHorizontalAlignment(SwingConstants.CENTER);
+        reviewBtn.setBackground(FOREGROUND);
+        reviewBtn.setForeground(BACKGROUND);
+        add(reviewBtn);
+
     }
 
     @Override
@@ -129,6 +137,14 @@ public class FinishGame extends JDialog implements IPanel {
                 listener.closeFinishGame();
                 listener.reGame();
                 super.mouseClicked(e);
+            }
+        });
+        reviewBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.closeFinishGame();
+                listener.reviewMode();
             }
         });
     }

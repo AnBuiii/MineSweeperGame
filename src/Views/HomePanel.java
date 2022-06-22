@@ -96,7 +96,7 @@ public class HomePanel extends JPanel implements IPanel {
         titleLb.setForeground(Color.BLACK);
         titleLb.setBackground(new Color(239,235,232));
 
-        continueBtn.setFont(FONT);
+        continueBtn.setFont(font);
         continueBtn.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
         continueBtn.setFocusPainted(false);
         continueBtn.setText("Continue");
@@ -140,9 +140,9 @@ public class HomePanel extends JPanel implements IPanel {
                 continueBtn.setVisible(false);
             }
             else {
-                newGameBtn_bound.y = 200;
-                statisticsGame_bound.y = 270;
-                tutorialGame_bound.y = 270;
+                newGameBtn_bound.y = 210;
+                statisticsGame_bound.y = 280;
+                tutorialGame_bound.y = 350;
                 continueBtn.setVisible(true);
             }
         }
@@ -223,8 +223,6 @@ public class HomePanel extends JPanel implements IPanel {
                                 }
                             }
                         }).start();
-
-
 
                     } else {
                         if(continueBtn.isVisible()) newGameMenu_bound.y -= 60;
