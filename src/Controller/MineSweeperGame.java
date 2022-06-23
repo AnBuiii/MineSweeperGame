@@ -189,6 +189,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             home.playSoundSocketFlag();
         }
         mineGrid.flag(x, y);
+        if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineGridPanel.updateGrid();
     }
 
@@ -205,7 +206,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void revealHint(int x, int y) {
         mineGrid.revealHint(x,y);
-        playHistory.add(new History(x, y, 2));
+        if(!hintMode && !reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
 
     }
@@ -221,6 +222,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         if(reviewStep == playHistory.size()) return;
         if(playHistory.get(reviewStep).move == 1) reveal(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
         if(playHistory.get(reviewStep).move == 2) revealHint(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        if(playHistory.get(reviewStep).move == 3) flag(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
         reviewStep++;
         if(reviewStep == playHistory.size()) return;
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);

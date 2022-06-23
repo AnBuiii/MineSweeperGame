@@ -148,8 +148,10 @@ public class MineGrid implements Serializable {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 cells[i][j].setRevealed(false);
+                cells[i][j].setFlagged(false);
             }
         }
+
     }
 
     public void revealHint(int x, int y) {

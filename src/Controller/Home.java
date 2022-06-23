@@ -49,6 +49,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             FileInputStream fileIn = new FileInputStream("oldGame.txt");
             ObjectInputStream ojIn = new ObjectInputStream(fileIn);
             MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
+
             mineSweeperGame = new MineSweeperGame(obj);
             mineSweeperGame.setHome(this);
             mineSweeperGame.dispose();
@@ -57,6 +58,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         } catch (Exception ex) {
             mineSweeperGame = null;
         }
+
         try{
             FileInputStream fileIn = new FileInputStream("PlayerRecord.txt");
             ObjectInputStream ojIn = new ObjectInputStream(fileIn);
