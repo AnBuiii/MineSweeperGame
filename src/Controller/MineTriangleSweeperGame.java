@@ -7,6 +7,7 @@ import Interfaces.IStatusPanelListener;
 import Models.Cell;
 import Models.GameDifficulty;
 import Models.MineTriangleGrid;
+import Views.FinishGamePanel;
 import Views.MineTriangleGridPanel;
 import Views.StatusPanel;
 
@@ -201,10 +202,10 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     void openFinishGame(){
         //home.closeMusic();
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
-        FinishGame finishGame = new FinishGame(isVictory());
-        finishGame.setVisible(true);
-        finishGame.addListener(this);
-        finishGame.addEventButtonListener(this.home.getSoundEventButton());
+        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
+        finishGamePanel.setVisible(true);
+        finishGamePanel.addListener(this);
+        finishGamePanel.addEventButtonListener(this.home.getEventSoundButton());
         if(isVictory()){
             home.playSoundWinGame();
         }else {
@@ -222,7 +223,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
     public void setHome(Home home){
         this.home = home;
-        statusPanel.addEventButtonListener(home.getSoundEventButton());
+        statusPanel.addEventButtonListener(home.getEventSoundButton());
     }
 
     @Override

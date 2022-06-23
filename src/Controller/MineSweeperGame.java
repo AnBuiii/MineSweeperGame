@@ -8,6 +8,7 @@ import Models.Cell;
 import Models.GameDifficulty;
 import Models.MineGrid;
 import Interfaces.IPanel;
+import Views.FinishGamePanel;
 import Views.MineGridPanel;
 import Views.StatusPanel;
 
@@ -20,7 +21,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 //import static Views.HomePanel.*;
 
@@ -171,10 +171,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
     void openFinishGame(){
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
-        FinishGame finishGame = new FinishGame(isVictory());
-        finishGame.setVisible(true);
-        finishGame.addListener(this);
-        finishGame.addEventButtonListener(this.home.getSoundEventButton());
+        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
+        finishGamePanel.setVisible(true);
+        finishGamePanel.addListener(this);
+        finishGamePanel.addEventButtonListener(this.home.getEventSoundButton());
         if(isVictory()){
             home.playSoundWinGame();
         }else {
@@ -259,7 +259,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
     public void setHome(Home home){
         this.home = home;
-        statusPanel.addEventButtonListener(home.getSoundEventButton());
+        statusPanel.addEventButtonListener(home.getEventSoundButton());
     }
     public boolean isVictory(){
         return mineGrid.isVictory();

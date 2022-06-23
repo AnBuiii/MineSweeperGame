@@ -1,11 +1,7 @@
 package Controller;
 
-import Controller.Tutorial;
-import Interfaces.IHomeListener;
-import Interfaces.ISoundEventButton;
 import Interfaces.IPanel;
 import Interfaces.ITutorialPanelListener;
-import Models.Player;
 import Views.TutorialPanel;
 
 import javax.swing.*;
@@ -62,7 +58,7 @@ public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
     }
     public void setHome(Home home){
         this.home = home;
-        tutorialPanel.addEventButtonListener(home.getSoundEventButton());
+        tutorialPanel.addEventButtonListener(home.getEventSoundButton());
     }
 
 }

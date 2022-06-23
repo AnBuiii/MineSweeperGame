@@ -10,14 +10,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static Views.custom.Theme.*;
 
 public class HomePanel extends JPanel implements IPanel {
-    public static final String TITLE = "\uD83D\uDCA3 MINESWEEPER";
+    public static final String TITLE = BOMB + "MINESWEEPER";
     public static int WINDOW_WIDTH = 400;
     public static int WINDOW_HEIGHT = 600;
+
+    public static class setting_bound{
+        static int x = 330;
+        static int y = 10;
+        static int width = 40;
+        static int height = 40;
+    }
     public static class title_bound{
          static int x = 50;
          static int y = 40;
@@ -68,6 +76,7 @@ public class HomePanel extends JPanel implements IPanel {
     private RoundedButton statisticbtn;
     private RoundedButton tutorialbtn;
     private RotateLabel bombArt;
+    private JLabel settingLb;
     private boolean newGameBtnIsClick;
 
     public HomePanel(){
@@ -78,7 +87,7 @@ public class HomePanel extends JPanel implements IPanel {
 
     @Override
     public void init() {
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        //setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLayout(null);
         titleLb = new JLabel(TITLE);
         continueBtn = new RoundedButton(10);
@@ -87,12 +96,19 @@ public class HomePanel extends JPanel implements IPanel {
         tutorialbtn = new RoundedButton(10);
         bombArt = new RotateLabel(BOMB);
         newGameBtnIsClick = false;
+        settingLb = new JLabel(SETTING);
 
     }
 
     @Override
     public void addView() {
+
         Font font = new Font("Arial", Font.PLAIN, 20);
+
+        settingLb.setFont(new Font("VNI",Font.BOLD,40));
+        settingLb.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        settingLb.setForeground(BACKGROUND);
+        settingLb.setBackground(new Color(239,235,232));
 
         titleLb.setFont(new Font("VNI",Font.BOLD,25));
         titleLb.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
@@ -150,14 +166,14 @@ public class HomePanel extends JPanel implements IPanel {
                 continueBtn.setVisible(true);
             }
         }
-
+        settingLb.setBounds(setting_bound.x,setting_bound.y,setting_bound.width,setting_bound.height);
         titleLb.setBounds(title_bound.x,title_bound.y,title_bound.width,title_bound.height);
         continueBtn.setBounds(continueBtn_bound.x,continueBtn_bound.y,continueBtn_bound.width,continueBtn_bound.height);
         newGameBtn.setBounds(newGameBtn_bound.x, newGameBtn_bound.y, newGameBtn_bound.width, newGameBtn_bound.height);
         statisticbtn.setBounds(statisticsGame_bound.x, statisticsGame_bound.y, statisticsGame_bound.width, statisticsGame_bound.height);
         tutorialbtn.setBounds(tutorialGame_bound.x, tutorialGame_bound.y, tutorialGame_bound.width, tutorialGame_bound.height);
 
-
+        add(settingLb);
         add(titleLb);
         add(continueBtn);
         add(newGameBtn);
@@ -170,6 +186,27 @@ public class HomePanel extends JPanel implements IPanel {
     @Override
     public void addEvent() {
 
+        settingLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+                settingLb.setForeground(Color.green);
+               // target(settingLb);
+
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                unTarget(settingLb);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                eventButton.playSoundClickButton();
+                listener.openSetting();
+            }
+        });
         continueBtn.addMouseListener(new java.awt.event.MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent e) {

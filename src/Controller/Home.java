@@ -39,7 +39,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void init() {
-        setSize(400,600);
+         setSize(400,600);
         setUndecorated(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -148,6 +148,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             return mineTriangleSweeperGame.isFinished();
         }
         return true;
+    }
+
+    @Override
+    public void openSetting() {
+      Setting setting = new Setting();
+        setting.setVisible(true);
+        setting.setHome(this);
+        setting.setBounds(this.getBounds());
+        this.setVisible(false);
     }
 
     @Override
@@ -297,7 +306,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         Clip soundClickCell = musicGame.SoundClickButton();
             soundClickCell.start();
     }
-    public ISoundEventButton getSoundEventButton(){
+    public ISoundEventButton getEventSoundButton(){
         return this;
     }
 }

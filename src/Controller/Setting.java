@@ -1,31 +1,26 @@
 package Controller;
 
 import Interfaces.IPanel;
-import Interfaces.IStatisticPanelListener;
-import Models.Player;
-import Views.StatisticsPanel;
+import Interfaces.ISettingPanelListener;
+import Views.SettingPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class Statistics extends JFrame implements IPanel, IStatisticPanelListener {
-    public static int WIDTH = 500;
-    public static int HEIGHT = 500;
+public class Setting extends JFrame implements IPanel, ISettingPanelListener {
+    public static int WIDTH = 400;
+    public static int HEIGHT = 600;
     public Home home;
-    Player player;
-    private StatisticsPanel statisticspanel;
+    SettingPanel settingPanel;
 
-
-    Statistics(Player player){
-        this.player = player;
+    Setting(){
         init();
         addView();
         addEvent();
-
     }
-
     @Override
     public void init() {
-        setSize(WIDTH, HEIGHT);
+        //setSize(WIDTH, HEIGHT);
         setUndecorated(true);
         setLocationRelativeTo(null);
         setResizable(true);
@@ -40,37 +35,27 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
 
     @Override
     public void addView() {
-        statisticspanel = new StatisticsPanel(player);
-        statisticspanel.setBounds(0,0,WIDTH,HEIGHT);
-        statisticspanel.addListener(this);
-        add(statisticspanel);
+        settingPanel = new SettingPanel();
+        settingPanel.setBounds(0, 0, 400, 600);
+        settingPanel.addListener(this);
+        add(settingPanel);
     }
 
     @Override
     public void addEvent() {
 
     }
-
     @Override
     public void back() {
         this.setVisible(false);
-        home.reDrawHome();
+        //home.reDrawHome();
         home.setVisible(true);
-    }
-
-    @Override
-    public void delete(int mode) {
-
-    }
-
-    @Override
-    public Player getPlayer() {
-        return player;
     }
 
     public void setHome(Home home){
         this.home = home;
-        statisticspanel.addEventButtonListener(home.getEventSoundButton());
+        settingPanel.addEventButtonListener(home.getEventSoundButton());
     }
+
 
 }

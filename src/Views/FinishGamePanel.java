@@ -1,4 +1,4 @@
-package Controller;
+package Views;
 
 import Interfaces.IFinishGameListener;
 import Interfaces.IPanel;
@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 import static Views.custom.Theme.*;
 
-public class FinishGame extends JDialog implements IPanel {
+public class FinishGamePanel extends JDialog implements IPanel {
 
      boolean isVictory;
     JLabel closeBtn;
@@ -24,7 +24,7 @@ public class FinishGame extends JDialog implements IPanel {
 
     IFinishGameListener listener;
     ISoundEventButton eventButton;
-    FinishGame(boolean isVictory){
+    public FinishGamePanel(boolean isVictory){
         this.isVictory = isVictory;
         init();
         addView();
