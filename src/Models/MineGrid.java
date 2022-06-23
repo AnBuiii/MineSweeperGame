@@ -151,4 +151,9 @@ public class MineGrid implements Serializable {
             }
         }
     }
+
+    public void revealHint(int x, int y) {
+        cells[x][y].setRevealed(true);
+        numCellPlayed++;
+    }
 }

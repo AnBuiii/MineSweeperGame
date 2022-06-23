@@ -40,7 +40,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void init() {
         setSize(400,600);
-//        setUndecorated(true);
+        setUndecorated(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 

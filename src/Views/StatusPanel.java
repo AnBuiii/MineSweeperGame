@@ -23,6 +23,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private JLabel flagLb;
     private JLabel numFlagLb;
     private JLabel hintBtn;
+    private boolean hintMode;
 
     private GridBagConstraints gbc;
 
@@ -35,6 +36,7 @@ public class StatusPanel extends JPanel implements IPanel {
         init();
         addView();
         addEvent();
+        hintMode = false;
     }
     public class Clock extends Thread{
         public Clock(){	}
@@ -138,7 +140,6 @@ public class StatusPanel extends JPanel implements IPanel {
     @Override
     public void addEvent() {
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                eventButton.playSoundHoverButton();
             }
@@ -150,7 +151,16 @@ public class StatusPanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
                 listener.back();
-
+            }
+        });
+        hintBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.hint();
+                hintMode = !hintMode;
+                if(hintMode) hintBtn.setForeground(new Color(255,255,0));
+                else hintBtn.setForeground(Color.BLACK);
             }
         });
 

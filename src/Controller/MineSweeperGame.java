@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     int gameMode;
     private boolean reviewMode;
     private int reviewStep;
+    private boolean hintMode;
 
 
     ArrayList<History> playHistory;
@@ -99,6 +101,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         }
         isFinish = false;
         reviewMode = false;
+        hintMode = false;
         reviewStep = 0;
     }
 
@@ -140,12 +143,20 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void reveal(int x, int y) {
         if(!isReviewMode()) playHistory.add(new History(x,y));
-        System.out.println(playHistory.get(playHistory.size()-1).x +" " + playHistory.get(playHistory.size()-1).y);
         if(!mineGrid.isCellRevealed(x,y)){
             home.playSoundClickCell();
         }
-        if(mineGrid.numCellPlayed == 0) mineGrid.firstMove(x, y);
-        boolean check = mineGrid.reveal(x, y);
+        if(mineGrid.numCellPlayed == 0) {
+            System.out.println("ok");
+            mineGrid.firstMove(x, y);
+        }
+        boolean check;
+        if(!hintMode){
+            check = mineGrid.reveal(x, y);
+        } else{
+            mineGrid.revealHint(x,y);
+            check = true;
+        }
         if (!check ) {
             mineGrid.revealAllCell();
             isFinish = true;
@@ -157,6 +168,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             openFinishGame();
         }
         mineGridPanel.updateGrid();
+
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
     }
@@ -227,7 +239,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void hint() {
-
+        hintMode = !hintMode;
     }
     public boolean isFinished(){
         return isFinish;
@@ -264,7 +276,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.updateGrid();
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
-    class History{
+    class History implements Serializable {
         int x;
         int y;
         History(int x, int y){
