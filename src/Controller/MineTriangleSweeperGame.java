@@ -161,6 +161,16 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
 
     @Override
+    public boolean isHintMode() {
+        return false;
+    }
+
+    @Override
+    public void revealHint(int x, int y) {
+
+    }
+
+    @Override
     public void restart() {
         mineTriangleGrid = new MineTriangleGrid(num_rows, num_columns,num_bombs);
         mineTriangleGridPanel.updateTriangleGridPanel();

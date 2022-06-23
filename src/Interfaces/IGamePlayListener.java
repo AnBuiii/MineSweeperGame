@@ -8,4 +8,8 @@ public interface IGamePlayListener {
     void flag(int x, int y);
 
     boolean isReviewMode();
+
+    boolean isHintMode();
+
+    void revealHint(int x, int y);
 }

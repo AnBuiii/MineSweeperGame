@@ -142,7 +142,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reveal(int x, int y) {
-        if(!isReviewMode()) playHistory.add(new History(x,y));
+        if(!isReviewMode()) {
+            playHistory.add(new History(x, y, 1));
+        }
         if(!mineGrid.isCellRevealed(x,y)){
             home.playSoundClickCell();
         }
@@ -151,12 +153,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             mineGrid.firstMove(x, y);
         }
         boolean check;
-        if(!hintMode){
-            check = mineGrid.reveal(x, y);
-        } else{
-            mineGrid.revealHint(x,y);
-            check = true;
-        }
+        check = mineGrid.reveal(x, y);
         if (!check ) {
             mineGrid.revealAllCell();
             isFinish = true;
@@ -201,6 +198,19 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     }
 
     @Override
+    public boolean isHintMode() {
+        return hintMode;
+    }
+
+    @Override
+    public void revealHint(int x, int y) {
+        mineGrid.revealHint(x,y);
+        playHistory.add(new History(x, y, 2));
+        mineGridPanel.updateGrid();
+
+    }
+
+    @Override
     public void restart() {
         mineGrid = new MineGrid(num_rows, num_columns,num_bombs);
         mineGridPanel.updateGrid();
@@ -209,7 +219,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void reviewNext() {
         if(reviewStep == playHistory.size()) return;
-        reveal(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        if(playHistory.get(reviewStep).move == 1) reveal(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        if(playHistory.get(reviewStep).move == 2) revealHint(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
         reviewStep++;
         if(reviewStep == playHistory.size()) return;
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
@@ -279,9 +290,11 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     class History implements Serializable {
         int x;
         int y;
-        History(int x, int y){
+        int move; // 1: play, 2: hint, 3: flag
+        History(int x, int y, int move){
             this.x = x;
             this.y = y;
+            this.move = move;
         }
     }
 }

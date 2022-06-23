@@ -68,7 +68,8 @@ public class MineGridPanel extends JPanel implements IPanel {
                         if(listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
                         if (e.getButton() == MouseEvent.BUTTON1) {
-                            listener.reveal(label.x, label.y);
+                            if(listener.isHintMode()) listener.revealHint(label.x, label.y);
+                            else listener.reveal(label.x, label.y);
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
                             listener.flag(label.x, label.y);
                         }
