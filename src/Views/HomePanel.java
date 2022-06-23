@@ -3,6 +3,7 @@ package Views;
 import Interfaces.IHomeListener;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
+import Views.custom.RotateLabel;
 import Views.custom.RoundedButton;
 
 import javax.swing.*;
@@ -66,6 +67,7 @@ public class HomePanel extends JPanel implements IPanel {
     private RoundedButton continueBtn;
     private RoundedButton statisticbtn;
     private RoundedButton tutorialbtn;
+    private RotateLabel bombArt;
     private boolean newGameBtnIsClick;
 
     public HomePanel(){
@@ -83,6 +85,7 @@ public class HomePanel extends JPanel implements IPanel {
         newGameBtn = new RoundedButton(10);
         statisticbtn = new RoundedButton(10);
         tutorialbtn = new RoundedButton(10);
+        bombArt = new RotateLabel(BOMB);
         newGameBtnIsClick = false;
 
     }
@@ -101,8 +104,7 @@ public class HomePanel extends JPanel implements IPanel {
         continueBtn.setFocusPainted(false);
         continueBtn.setText("Continue");
         continueBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        continueBtn.setForeground(BACKGROUND);
-        continueBtn.setBackground(FOREGROUND);
+        unTarget(continueBtn);
         continueBtn.setVisible(false);
 
         newGameBtn.setFont(font);
@@ -110,24 +112,26 @@ public class HomePanel extends JPanel implements IPanel {
         newGameBtn.setFocusPainted(false);
         newGameBtn.setText("New game");
         newGameBtn.setHorizontalAlignment(SwingConstants.LEFT);
-        newGameBtn.setBackground(FOREGROUND);
-        newGameBtn.setForeground(BACKGROUND);
+        unTarget(newGameBtn);
 
         statisticbtn.setFont(font);
         statisticbtn.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
         statisticbtn.setFocusPainted(false);
         statisticbtn.setText("Statistics");
         statisticbtn.setHorizontalAlignment(SwingConstants.LEFT);
-        statisticbtn.setBackground(FOREGROUND);
-        statisticbtn.setForeground(BACKGROUND);
+        unTarget(statisticbtn);
 
         tutorialbtn.setFont(font);
         tutorialbtn.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
         tutorialbtn.setFocusPainted(false);
         tutorialbtn.setText("Tutorial");
         tutorialbtn.setHorizontalAlignment(SwingConstants.LEFT);
-        tutorialbtn.setBackground(FOREGROUND);
-        tutorialbtn.setForeground(BACKGROUND);
+        unTarget(tutorialbtn);
+
+        bombArt.setBounds(-100,200,1000,1000);
+        bombArt.setFont(new Font("VNI",Font.BOLD,400));
+
+
 
         // check continue btn
         if(listener != null){
@@ -159,6 +163,7 @@ public class HomePanel extends JPanel implements IPanel {
         add(newGameBtn);
         add(statisticbtn);
         add(tutorialbtn);
+        add(bombArt,BorderLayout.CENTER);
 
     }
 
@@ -292,7 +297,7 @@ public class HomePanel extends JPanel implements IPanel {
         c.setForeground(FOREGROUND);
     }
     public void unTarget(Component c){
-        c.setBackground(FOREGROUND);
+        c.setBackground(new Color(0,0,0,0));
         c.setForeground(BACKGROUND);
     }
     public void addListener(IHomeListener event){

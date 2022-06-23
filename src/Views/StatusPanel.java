@@ -142,9 +142,11 @@ public class StatusPanel extends JPanel implements IPanel {
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                eventButton.playSoundHoverButton();
+               target(backBtn);
+
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-
+                unTarget(backBtn);
             }
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -152,6 +154,7 @@ public class StatusPanel extends JPanel implements IPanel {
                 eventButton.playSoundClickButton();
                 listener.back();
             }
+
         });
         hintBtn.addMouseListener(new MouseAdapter() {
             @Override
@@ -161,6 +164,18 @@ public class StatusPanel extends JPanel implements IPanel {
                 hintMode = !hintMode;
                 if(hintMode) hintBtn.setForeground(new Color(255,255,0));
                 else hintBtn.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                targetHint(hintBtn);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                if(!hintMode) unTarget(hintBtn);
             }
         });
 
@@ -194,6 +209,18 @@ public class StatusPanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 listener.reviewNext();
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                target(clockLb);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(clockLb);
+            }
         });
         numFlagLb.addMouseListener(new MouseAdapter() {
             @Override
@@ -201,9 +228,31 @@ public class StatusPanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 listener.reviewPrevious();
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                target(numFlagLb);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(numFlagLb);
+            }
         });
 
     }
+    public void target(Component c){
+        c.setForeground(Color.RED);
+    }
+    public void unTarget(Component c){
+        c.setForeground(Color.BLACK);
+    }
+    public void targetHint(Component c){
+        c.setForeground(new Color(255,255,0));
+    }
+
 
     public void load() {
         addEvent();
