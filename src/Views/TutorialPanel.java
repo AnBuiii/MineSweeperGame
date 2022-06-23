@@ -67,7 +67,7 @@ public class TutorialPanel extends JPanel implements IPanel {
 
         backBtn.setText(BACK);
         backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
-        backBtn.setForeground(BACKGROUND);
+        backBtn.setForeground(Color.BLACK);
 
         backBtn.setBounds(10,10,30,30);
         windowName.setBounds(70,10,200,30);
@@ -87,6 +87,13 @@ public class TutorialPanel extends JPanel implements IPanel {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 eventButton.playSoundHoverButton();
+                target(backBtn);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(backBtn);
             }
 
             @Override
@@ -115,7 +122,7 @@ public class TutorialPanel extends JPanel implements IPanel {
         jLabel.setForeground(BACKGROUND);
     }
     private void createTextAreaView(JTextArea jTextArea, String text, float alignment){
-        Font font = new Font("VNI", Font.PLAIN, 20);
+        Font font = new Font("VNI", Font.PLAIN, 18);
         jTextArea.setText(text);
         jTextArea.setFont(font);
         jTextArea.setMinimumSize(new Dimension(500, 500));
@@ -123,7 +130,7 @@ public class TutorialPanel extends JPanel implements IPanel {
         //jTextField.setVerticalAlignment(JLabel.CENTER);
         jTextArea.setOpaque(true);
         jTextArea.setBackground(FOREGROUND);
-        jTextArea.setForeground(BACKGROUND);
+        jTextArea.setForeground(Color.BLACK);
         jTextArea.setWrapStyleWord(true);
         jTextArea.setLineWrap(true);
         jTextArea.setSize(new Dimension(500, 500));
@@ -131,6 +138,12 @@ public class TutorialPanel extends JPanel implements IPanel {
         add(new JScrollPane(new JTextArea(50, 50)), BorderLayout.PAGE_START);
         jTextArea.setEditable(false);
         //JScrollPane scrollPane = new JScrollPane(jTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    }
+    public void target(Component c){
+        c.setForeground(Color.RED);
+    }
+    public void unTarget(Component c){
+        c.setForeground(Color.BLACK);
     }
 
 }

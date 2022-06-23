@@ -96,14 +96,14 @@ public class StatisticsPanel extends JPanel implements IPanel {
 
         backBtn.setText(BACK);
         backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
-        backBtn.setForeground(BACKGROUND);
+        backBtn.setForeground(Color.BLACK);
 
         deleteBtn.setText(BIN);
         deleteBtn.setFont(new Font("VNI", Font.PLAIN, 30));
-        deleteBtn.setForeground(BACKGROUND);
+        deleteBtn.setForeground(Color.BLACK);
 
         windowName.setText("STATISTICS");
-        windowName.setFont(new Font("VNI", Font.PLAIN, 30));
+        windowName.setFont(new Font("VNI", Font.BOLD, 30));
         windowName.setForeground(BACKGROUND);
 
 
@@ -143,6 +143,13 @@ public class StatisticsPanel extends JPanel implements IPanel {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 eventButton.playSoundHoverButton();
+                target(backBtn);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(backBtn);
             }
 
             @Override
@@ -157,6 +164,13 @@ public class StatisticsPanel extends JPanel implements IPanel {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 eventButton.playSoundHoverButton();
+                target(deleteBtn);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(deleteBtn);
             }
 
             @Override
@@ -170,6 +184,13 @@ public class StatisticsPanel extends JPanel implements IPanel {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 eventButton.playSoundHoverButton();
+                target(mode);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(mode);
             }
 
             @Override
@@ -188,7 +209,8 @@ public class StatisticsPanel extends JPanel implements IPanel {
         jLabel.setVerticalAlignment(JLabel.CENTER);
         jLabel.setOpaque(true);
         jLabel.setBackground(FOREGROUND);
-        jLabel.setForeground(BACKGROUND);
+        if(alignment == JLabel.LEFT) jLabel.setForeground(Color.BLACK);
+        else jLabel.setForeground(BACKGROUND);
     }
     public void addListener(IStatisticPanelListener listener){
         this.listener = listener;
@@ -203,5 +225,11 @@ public class StatisticsPanel extends JPanel implements IPanel {
         minTime.setText(player.shortestFinishTime[gameMode]/60 + ":" + player.shortestFinishTime[gameMode]%60);
         perform.setText(player.performance[gameMode]*100 + "%");
         victory.setText(String.valueOf(player.totalVictoryGame[gameMode]));
+    }
+    public void target(Component c){
+        c.setForeground(Color.RED);
+    }
+    public void unTarget(Component c){
+        c.setForeground(Color.BLACK);
     }
 }
