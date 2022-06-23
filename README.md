@@ -8,7 +8,7 @@
 |:-----|:-------------------|:----------|:------------|
 |  1   |  Bùi Lê Hoài An    |  20520808 | Trưởng nhóm |
 |  2   |  Trần Trọng Hoàng  |  20520521 |             |
-|  3   |  Dương Hoàng Mai   |           |             |
+|  3   |  Dương Hoàng Mai   |  20520626 |             |
   ## Tên đồ án <a name = "info"></a>
   Game dò min
   ## Mô tả <a name = "info"></a>
