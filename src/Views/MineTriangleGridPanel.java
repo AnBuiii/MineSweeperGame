@@ -11,21 +11,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 import static Views.custom.Theme.*;
 
 
 public class MineTriangleGridPanel extends JPanel implements IPanel {
-    private TriangleLabel[][] lbCell;
     private IGamePlayListener listener;
     private int numCellUnRevealed;
     private TriangleShapeItem[][] triangleShape;
-    private Graphics2D grp;
-    private int gridWidth;
-    private int gridHeight;
+    private final int gridWidth;
+    private final int gridHeight;
     private Cell[][] cells;
 
     public MineTriangleGridPanel(int gridHeight, int gridWidth){
@@ -85,7 +81,6 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                 if(cells == null){
                     //khởi tạo
                    if(triangleShape[i][j].isMouseMoved){
-                       // g2d.setColor(new Color(176,213,88, 50));
                        g2d.setColor(new Color(195,223,129));
                         g2d.fill(triangleShape[i][j].getTriangleShape());
                     }
@@ -96,13 +91,8 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                         else {
                             g2d.setColor(new Color(176,213,88));
                         }
-                       // g2d.setColor(Color.gray);
                         g2d.fill(triangleShape[i][j].getTriangleShape());
-                      //  g2d.setColor(Color.black);
-                       // g2d.draw(triangleShape[i][j].getTriangleShape());
-
                     }
-                    //System.out.println("lô");
                 }
                 else{
                     Point center = pointCenterOfTriangle(triangleShape[i][j].getA(),triangleShape[i][j].getB(),triangleShape[i][j].getC());
@@ -179,7 +169,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-       grp = (Graphics2D) g.create();
+        Graphics2D grp = (Graphics2D) g.create();
            doDrawing(grp);
 
     }
@@ -232,7 +222,6 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
                     //System.out.println(i + " " + j);
                     if(event.getButton() == MouseEvent.BUTTON1){
                         listener.reveal(i, j);
-                        System.out.println("left clicked!");
                     }
                     else if(event.getButton() == MouseEvent.BUTTON3){
                         listener.flag(i, j);

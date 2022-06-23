@@ -6,11 +6,15 @@ import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
 import Models.MineGrid;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.Thread;
+import java.util.Objects;
+
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
@@ -31,6 +35,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private ISoundEventButton eventButton;
     public int time;
     public long sec;
+    private JLabel btnSetting;
 
     public StatusPanel() {
         init();
@@ -72,6 +77,9 @@ public class StatusPanel extends JPanel implements IPanel {
             clock.stop();
         }
         hintBtn = new JLabel(HINT);
+
+        btnSetting = new JLabel(SETTING);
+
         gbc = new GridBagConstraints();
     }
     @Override
@@ -106,6 +114,10 @@ public class StatusPanel extends JPanel implements IPanel {
         hintBtn.setBackground(BACKGROUND);
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 25));
 
+        btnSetting.setOpaque(true);
+        btnSetting.setBackground(BACKGROUND);
+        btnSetting.setFont(new Font("VNI", Font.PLAIN, 25));
+
 
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.CENTER;
@@ -134,6 +146,8 @@ public class StatusPanel extends JPanel implements IPanel {
         gbc.gridx = 7;
         add(hintBtn, gbc);
 
+        gbc.gridx = 8;
+        add(btnSetting, gbc);
 
     }
 
