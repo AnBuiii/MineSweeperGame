@@ -49,7 +49,7 @@ public class StatusPanel extends JPanel implements IPanel {
             do {
                 sec++;
                 String S = String.valueOf(sec);
-                timeLb.setText(S);
+                clockLb.setText(CLOCK + " " + S);
                 try {
                     Thread.sleep(1000);
                 } catch (Exception ex) {
@@ -64,11 +64,12 @@ public class StatusPanel extends JPanel implements IPanel {
         setLayout(new GridBagLayout());
         setBackground(BACKGROUND);
         backBtn = new JLabel(BACK);
-        flagLb = new JLabel(FLAG);
-        //numFlagLb = new JLabel("00");
+
+        
         String mine = String.valueOf(MineGrid.num_mines);
         numFlagLb = new JLabel(mine);
-        clockLb = new JLabel(CLOCK);
+        flagLb = new JLabel(FLAG + mine);
+        clockLb = new JLabel(CLOCK + "0");
         timeLb = new JLabel();
         Clock clock = new Clock();
         clock.start();
@@ -125,28 +126,28 @@ public class StatusPanel extends JPanel implements IPanel {
         gbc.gridy = 0;
         add(backBtn,gbc);
 
-        gbc.gridx = 1;
-        add(new JLabel(), gbc);
+      //  gbc.gridx = 1;
+        //add(new JLabel(), gbc);
 
-        gbc.gridx = 2;
+        gbc.gridx = 1;
         add(flagLb,gbc);
 
-        gbc.gridx = 3;
-        add(numFlagLb,gbc);
+       // gbc.gridx = 3;
+        //add(numFlagLb, gbc);
 
-        gbc.gridx = 4;
+        gbc.gridx = 2;
         add(clockLb, gbc);
 
-        gbc.gridx = 5;
-        add(timeLb, gbc);
+        //gbc.gridx = 5;
+        //add(timeLb, gbc);
 
-        gbc.gridx = 6;
-        add(new JLabel(), gbc);
+       // gbc.gridx = 6;
+        //add(new JLabel(), gbc);
 
-        gbc.gridx = 7;
+        gbc.gridx = 3;
         add(hintBtn, gbc);
 
-        gbc.gridx = 8;
+        gbc.gridx = 4;
         add(btnSetting, gbc);
 
     }

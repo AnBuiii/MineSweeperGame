@@ -21,11 +21,11 @@ import static Views.custom.Theme.*;
 import static Views.custom.Theme.BOMB;
 
 public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener, IFinishGameListener {
-    private int WINDOW_WIDTH;
-    private int WINDOW_HEIGHT;
-    private int num_rows;
-    private int num_columns;
-    private int num_bombs;
+    private final int WINDOW_WIDTH;
+    private final int WINDOW_HEIGHT;
+    private final int num_rows;
+    private final int num_columns;
+    private final int num_bombs;
     private boolean isFinish;
     private MineTriangleGridPanel mineTriangleGridPanel;
     private StatusPanel statusPanel;
@@ -143,8 +143,6 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             openFinishGame();
         }
         mineTriangleGridPanel.updateTriangleGridPanel();
-      //  int numSquareClosed = mineTriangleGridPanel.getNumCellUnRevealed();
-      //  statusPanel.updateStatus(numSquareClosed);
     }
 
     @Override
@@ -242,7 +240,6 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reviewMode() {
-
 
     }
 }
