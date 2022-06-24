@@ -104,6 +104,20 @@ public class NewGamePanel extends JPanel implements IPanel {
         expertInfoLb.setOpaque(true);
         unTarget(expertInfoLb);
 
+        triangleLb.setText("Triangle");
+        triangleLb.setFont(font);
+        triangleLb.setHorizontalAlignment(JLabel.LEFT);
+        triangleLb.setVerticalAlignment(JLabel.CENTER);
+        triangleLb.setOpaque(true);
+        unTarget(triangleLb);
+
+        triangleInfoLb.setText("16x31 - 45");
+        triangleInfoLb.setFont(font);
+        triangleInfoLb.setHorizontalAlignment(JLabel.RIGHT);
+        triangleInfoLb.setVerticalAlignment(JLabel.CENTER);
+        triangleInfoLb.setOpaque(true);
+        unTarget(triangleInfoLb);
+
         customLb.setText("Custom");
         customLb.setFont(font);
         customLb.setHorizontalAlignment(JLabel.LEFT);
@@ -114,26 +128,16 @@ public class NewGamePanel extends JPanel implements IPanel {
         customInfoLb.setOpaque(true);
         unTarget(customInfoLb);
 
-        triangleLb.setText("Triangle");
-        triangleLb.setFont(font);
-        triangleLb.setHorizontalAlignment(JLabel.LEFT);
-        triangleLb.setVerticalAlignment(JLabel.CENTER);
-        triangleLb.setOpaque(true);
-        unTarget(triangleLb);
-
-        triangleInfoLb.setOpaque(true);
-        unTarget(triangleInfoLb);
-
         contentPn.add(beginnerLb);
         contentPn.add(beginnerInfoLb);
         contentPn.add(intermediateLb);
         contentPn.add(intermediateInfoLb);
         contentPn.add(expertLb);
         contentPn.add(expertInfoLb);
-        contentPn.add(customLb);
-        contentPn.add(customInfoLb);
         contentPn.add(triangleLb);
         contentPn.add(triangleInfoLb);
+        contentPn.add(customLb);
+        contentPn.add(customInfoLb);
         contentPn.setBounds(0,0, 300, 150);
         contentPn.setBackground(Theme.FOREGROUND);
         contentPn.setForeground(Theme.BACKGROUND);

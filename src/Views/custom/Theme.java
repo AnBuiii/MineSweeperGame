@@ -14,7 +14,10 @@ public class Theme {
     public final static String BIN = "\uD83D\uDDD1";
     public final static String BACK = "\u2190";
     public final static String CLOCK =  "⏰";
+    public final static String CLOSE = "\u2716";
 
+    public final static String SMILE =  "\uD83D\uDE01";
+    public final static String CRY = "\uD83D\uDE22";
     public final static String LOUD_SOUND = "\uD83D\uDD0A";
 
     public final static String MUTE_SOUND = "\uD83D\uDD07";
