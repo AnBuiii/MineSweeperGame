@@ -6,6 +6,7 @@ import Interfaces.IGamePlayListener;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
 import Models.GameDifficulty;
+import Models.History;
 import Models.MineGrid;
 import Interfaces.IPanel;
 import Views.FinishGamePanel;
@@ -209,9 +210,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void revealHint(int x, int y) {
         mineGrid.revealHint(x,y);
-        if(!hintMode && !reviewMode) playHistory.add(new History(x, y, 2));
+        if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
-
     }
 
     @Override
@@ -302,14 +302,5 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.updateGrid();
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
-    class History implements Serializable {
-        int x;
-        int y;
-        int move; // 1: play, 2: hint, 3: flag
-        History(int x, int y, int move){
-            this.x = x;
-            this.y = y;
-            this.move = move;
-        }
-    }
+
 }

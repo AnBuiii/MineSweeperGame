@@ -180,7 +180,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
         }
-        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 50); // nhớ nhập số cột là số lẻ mới vẽ đúng được
+        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 45); // nhớ nhập số cột là số lẻ mới vẽ đúng được
 
         reDrawHome();
         this.setVisible(false);
@@ -315,5 +315,22 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void closeCustomPanel() {
         enable();
         requestFocus();
+    }
+
+    @Override
+    public void startCustomGame(int rows, int columns, int mines) {
+        mineSweeperGame = new MineSweeperGame(rows,columns,mines,0);
+        reDrawHome();
+        this.setVisible(false);
+        mineSweeperGame.setHome(this);
+        mineSweeperGame.setVisible(true);
+        playInGameMusic();
+    }
+
+    public void deletePlayer() {
+        player = new Player();
+        Statistics statistics = new Statistics(player);
+        statistics.setVisible(true);
+        statistics.setHome(this);
     }
 }

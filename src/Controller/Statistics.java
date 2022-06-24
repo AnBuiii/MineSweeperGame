@@ -68,6 +68,12 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
         return player;
     }
 
+    @Override
+    public void deletePlayer() {
+        dispose();
+        home.deletePlayer();
+    }
+
     public void setHome(Home home){
         this.home = home;
         statisticspanel.addEventButtonListener(home.getEventSoundButton());

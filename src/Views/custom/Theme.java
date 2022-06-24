@@ -19,6 +19,9 @@ public class Theme {
     public final static Color FOREGROUND = new Color(239,235,232);
     public final static Color BACKGROUND = new Color(104,159,57);
 
+    public final static String RIGHT_ARROW = "\u25B6";
+    public final static String LEFT_ARROW = "\u25C0";
+
 
   //  public final static Font FONT = new Font("Arial", Font.PLAIN, 20); // cái font Arial vẽ cờ bị lỗi
 
