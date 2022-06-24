@@ -22,7 +22,7 @@ public class HomePanel extends JPanel implements IPanel {
 
     public static class setting_bound{
         static int x = 330;
-        static int y = 10;
+        static int y = 55;
         static int width = 40;
         static int height = 40;
     }

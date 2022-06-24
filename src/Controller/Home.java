@@ -7,6 +7,7 @@ import Models.Music;
 import Models.Player;
 import Views.CustomGamePanel;
 import Views.HomePanel;
+import Views.ToolBarPanel;
 import Views.NewGamePanel;
 
 import javax.sound.sampled.Clip;
@@ -18,10 +19,11 @@ import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.*;
 
-import static Views.custom.Theme.ARCH_FORM;
-import static Views.custom.Theme.ARCW_FORM;
+import static Views.custom.Theme.*;
 
-public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton, ICustomGameListener {
+public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton, ICustomGameListener, IToolBarListener {
+
+    private ToolBarPanel toolBarPanel;
     private HomePanel   homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
@@ -42,7 +44,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void init() {
-         setSize(400,600);
+         setSize(400,640);
          setUndecorated(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -79,20 +81,29 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void addView() {
 
+        toolBarPanel = new ToolBarPanel();
+        toolBarPanel.setBounds(0,0,400,40);
+        toolBarPanel.setBackground(BACKGROUND);
+        toolBarPanel.addListener(this);
+        toolBarPanel.addEventButtonListener(this);
+        toolBarPanel.setParentFrame(this);
+
+
         homePanel = new HomePanel();
-        homePanel.setBounds(0,0,400,600);
+        homePanel.setBounds(0,toolBarPanel.getY(),400,this.getHeight() - toolBarPanel.getHeight());
         homePanel.setBackground(new Color(239,235,232));
         homePanel.addListener(this);
         homePanel.addEventButtonListener(this);
 
         newGameMenu = new NewGamePanel();
-        newGameMenu.setBounds(50,160, 300,150);
+        newGameMenu.setBounds(50,160 + toolBarPanel.getY(), 300,150);
         newGameMenu.setBackground(new Color(239,235,232));
         newGameMenu.setForeground(new Color(104,159,57));
         newGameMenu.setVisible(false);
         newGameMenu.addListener(this);
         newGameMenu.addEventButtonListener(this);
 
+        add(toolBarPanel);
         add(newGameMenu);
         add(homePanel);
 
@@ -100,6 +111,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void addEvent() {
+
         WindowListener wd = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -344,5 +356,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         Statistics statistics = new Statistics(player);
         statistics.setVisible(true);
         statistics.setHome(this);
+    }
+
+    @Override
+    public void minimizeWindow() {
+        this.setState(Frame.ICONIFIED);
+    }
+
+    @Override
+    public void quitGame() {
+
     }
 }

@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.lang.Thread;
 
 import static Models.MineGrid.num_mines;
@@ -30,6 +31,13 @@ public class StatusPanel extends JPanel implements IPanel {
 
     private GridBagConstraints gbc;
 
+    private int xDrag;
+    private int yDrag;
+
+    private int xPress;
+    private int yPress;
+
+    private JFrame parentFrame = new JFrame();
     private IStatusPanelListener listener;
     private ISoundEventButton eventButton;
     public int time;
@@ -166,6 +174,23 @@ public class StatusPanel extends JPanel implements IPanel {
 
     @Override
     public void addEvent() {
+       this.addMouseMotionListener(new MouseMotionAdapter() {
+           @Override
+           public void mouseDragged(MouseEvent e) {
+               super.mouseDragged(e);
+               xDrag = e.getX();
+               yDrag = e.getY();
+               parentFrame.setLocation(parentFrame.getLocation().x+xDrag-xPress, parentFrame.getLocation().y+yDrag-yPress);
+
+           }
+
+           @Override
+           public void mouseMoved(MouseEvent e) {
+               super.mouseMoved(e);
+               xPress = e.getX();
+               yPress = e.getY();
+           }
+       });
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 eventButton.playSoundHoverButton();
@@ -213,6 +238,7 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void addListener(IStatusPanelListener event) {
         listener = event;
+
     }
     public void addEventButtonListener(ISoundEventButton eventButton){
         this.eventButton = eventButton;
@@ -283,18 +309,21 @@ public class StatusPanel extends JPanel implements IPanel {
         });
 
     }
-    public void target(Component c){
+    private void target(Component c){
         c.setForeground(Color.RED);
     }
-    public void unTarget(Component c){
+    private void unTarget(Component c){
         c.setForeground(Color.BLACK);
     }
-    public void targetHint(Component c){
+    private void targetHint(Component c){
         c.setForeground(new Color(255,255,0));
     }
 
-
+    public void setParentFrame(JFrame jFrame){
+        this.parentFrame = jFrame;
+    }
     public void load() {
         addEvent();
     }
+
 }

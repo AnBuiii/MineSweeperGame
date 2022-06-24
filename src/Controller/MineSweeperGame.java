@@ -115,6 +115,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
+        statusPanel.setParentFrame(this);
 
 
         mineGridPanel = new MineGridPanel(num_rows, num_columns);

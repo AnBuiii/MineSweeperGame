@@ -14,6 +14,8 @@ public class Theme {
     public final static String BIN = "\uD83D\uDDD1";
     public final static String BACK = "\u2190";
     public final static String CLOCK =  "⏰";
+
+    public final static String MINIMIZE = "\uD83D\uDDD5";
     public final static String CLOSE = "\u2716";
 
     public final static String SMILE =  "\uD83D\uDE01";
