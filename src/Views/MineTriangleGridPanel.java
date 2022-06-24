@@ -205,12 +205,16 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
     }
 
     public void findTriangleCellClicked(Point2D mouse, MouseEvent event){
+        if(listener.isReviewMode()) return;
         for(int i = 0; i < triangleShape.length; i ++){
             for(int j = 0; j < triangleShape[0].length; j ++){
                 if(pointInTriangle(mouse, triangleShape[i][j].getA(), triangleShape[i][j].getB(), triangleShape[i][j].getC())){
                     //System.out.println(i + " " + j);
                     if(event.getButton() == MouseEvent.BUTTON1){
-                        listener.reveal(i, j);
+//                        listener.reveal(i, j);
+
+                        if(listener.isHintMode()) listener.revealHint(i, j);
+                        else listener.reveal(i, j);
                     }
                     else if(event.getButton() == MouseEvent.BUTTON3){
                         listener.flag(i, j);
@@ -235,4 +239,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         return new Point((a.x + b.x + c.x) / 3, (a. y + b.y + c.y) / 3);
     }
 
+    public void mark(int x, int y) {
+//        lbCell[x][y].setBackground(new Color(195,223,129));
+    }
 }
