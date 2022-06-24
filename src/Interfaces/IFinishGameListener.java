@@ -7,4 +7,5 @@ public interface IFinishGameListener {
 
     void reviewMode();
 
+    void openTutorial();
 }

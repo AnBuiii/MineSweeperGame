@@ -312,6 +312,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
+    @Override
+    public void openTutorial() {
+        back();
+        home.openTutorial();
+    }
+
     public void startClock() {
         statusPanel.startClock();
     }
