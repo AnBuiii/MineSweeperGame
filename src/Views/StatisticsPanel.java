@@ -18,7 +18,7 @@ import static Views.custom.Theme.*;
 public class StatisticsPanel extends JPanel implements IPanel {
     IStatisticPanelListener listener;
     ISoundEventButton eventButton;
-    JComboBox<String> gameMode ;
+
     JPanel displayPn;
 
     JLabel gamesLb;
@@ -40,19 +40,21 @@ public class StatisticsPanel extends JPanel implements IPanel {
     JLabel deleteBtn;
 
     Player player;
+    int gameMode;
+    String[] header = {"CUSTOM","BEGINNER", "INTERMEDIATE", "EXPERT", "TRIANGLE"};
     public StatisticsPanel(Player player){
         this.player = player;
         init();
         addView();
         addEvent();
+        gameMode = 1;
     }
     @Override
     public void init() {
         setLayout(null);
         setBackground(FOREGROUND);
 
-        String[] header = {"BEGINNER", "INTERMEDIATE", "EXPERT", "TRIANGLE"};
-        gameMode = new JComboBox<>(header);
+
 
         gamesLb = new JLabel();
         games = new JLabel();
@@ -94,7 +96,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
         createJLabelView(victoryLb, "Victory", JLabel.LEFT);
         createJLabelView(victory, "0", JLabel.RIGHT);
         createJLabelView(backBtn, BACK, JLabel.CENTER);
-        viewPlayerRecord(1);
+        viewPlayerRecord(gameMode);
 
         backBtn.setText(BACK);
         backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
@@ -179,6 +181,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
+                listener.deletePlayer();
             }
         });
         mode.addMouseListener(new MouseAdapter() {
@@ -199,6 +202,10 @@ public class StatisticsPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
+                gameMode++;
+                if(gameMode == 5) gameMode = 0;
+                modeLb.setText(header[gameMode]);
+                viewPlayerRecord(gameMode);
             }
         });
 

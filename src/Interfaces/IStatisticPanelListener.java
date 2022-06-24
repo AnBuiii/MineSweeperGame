@@ -7,4 +7,6 @@ public interface IStatisticPanelListener{
     void delete(int mode);
 
     Player getPlayer();
+
+    void deletePlayer();
 }
