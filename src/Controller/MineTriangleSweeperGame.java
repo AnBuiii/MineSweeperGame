@@ -281,4 +281,17 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         mineTriangleGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
+    @Override
+    public void openTutorial() {
+        back();
+        home.openTutorial();
+    }
+
+    public void killClock() {
+        statusPanel.killClock();
+    }
+
+    public void startClock() {
+        statusPanel.startClock();
+    }
 }

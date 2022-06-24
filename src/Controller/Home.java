@@ -131,6 +131,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         playInGameMusic();
         if(mineTriangleSweeperGame != null) {
             mineTriangleSweeperGame.setVisible(true);
+            mineTriangleSweeperGame.startClock();
 
         };
         if(mineSweeperGame != null) {
@@ -191,6 +192,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         }
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
+            mineTriangleSweeperGame.killClock();
         }
         mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 45); // nhớ nhập số cột là số lẻ mới vẽ đúng được
 
@@ -334,6 +336,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void startCustomGame(int rows, int columns, int mines) {
+        if(mineTriangleSweeperGame != null){
+            mineTriangleSweeperGame.dispose();
+            mineTriangleSweeperGame = null;
+
+        }
+        if(mineSweeperGame != null){
+            mineSweeperGame.dispose();
+            mineSweeperGame.killClock();
+        }
         mineSweeperGame = new MineSweeperGame(rows,columns,mines,0);
         reDrawHome();
         this.setVisible(false);
