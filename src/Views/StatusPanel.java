@@ -5,8 +5,7 @@ import Controller.MineSweeperGame;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
-import Models.MineGrid;
-import Models.Cell;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -38,8 +37,10 @@ public class StatusPanel extends JPanel implements IPanel {
     public static int hour;
     public static int min;
     public static boolean stopClock;
+    public int numFlag;
     public static Clock clock;
-    public StatusPanel() {
+    public StatusPanel(int numFlag) {
+        this.numFlag = numFlag;
         init();
         addView();
         addEvent();
@@ -65,6 +66,10 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public boolean isClockExist() {
         return clock.isAlive();
+    }
+
+    public void setNumFlag(int numFlag) {
+        numFlagLb.setText(String.valueOf(numFlag));
     }
 
     public static class Clock extends Thread implements Serializable {
@@ -103,8 +108,7 @@ public class StatusPanel extends JPanel implements IPanel {
         backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
         //numFlagLb = new JLabel("00");
-        String mine = String.valueOf(num_mines);
-        numFlagLb = new JLabel(mine);
+        numFlagLb = new JLabel(String.valueOf(numFlag));
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
         clock = new Clock();

@@ -5,7 +5,6 @@ import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
-import Models.GameDifficulty;
 import Models.History;
 import Models.MineTriangleGrid;
 import Views.FinishGamePanel;
@@ -18,7 +17,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import static Views.custom.Theme.*;
@@ -39,7 +37,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     boolean reviewMode;
     boolean hintMode;
     private int reviewStep;
-
+    private int numFlag;
 
 
     public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs) {
@@ -96,11 +94,12 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         isFinish = false;
         reviewMode = false;
         hintMode = false;
+        numFlag = num_bombs;
     }
 
     @Override
     public void addView() {
-        statusPanel = new StatusPanel();
+        statusPanel = new StatusPanel(num_bombs);
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
@@ -168,6 +167,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         if(!mineTriangleGrid.isCellRevealed(x,y)){
             home.playSoundSocketFlag();
         }
+        if(!getListCell()[x][y].isFlagged() && numFlag == 0) return;
+        if(!getListCell()[x][y].isFlagged()) numFlag--;
+        else numFlag++;
+        statusPanel.setNumFlag(numFlag);
+
         mineTriangleGrid.flag(x, y);
         if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineTriangleGridPanel.updateTriangleGridPanel();

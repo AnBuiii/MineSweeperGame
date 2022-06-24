@@ -21,7 +21,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 //import static Views.HomePanel.*;
@@ -44,6 +43,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private boolean reviewMode;
     private int reviewStep;
     private boolean hintMode;
+    private int numFlag;
 
 
     ArrayList<History> playHistory;
@@ -110,12 +110,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         reviewMode = false;
         hintMode = false;
         reviewStep = 0;
+        numFlag = num_bombs;
 
     }
 
     @Override
     public void addView() {
-        statusPanel = new StatusPanel();
+        statusPanel = new StatusPanel(num_bombs);
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
@@ -196,10 +197,16 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void flag(int x, int y) {
+
         if(!mineGrid.isCellRevealed(x,y)){
             home.playSoundSocketFlag();
         }
+        if(!getListCell()[x][y].isFlagged() && numFlag ==0 ) return;
         mineGrid.flag(x, y);
+        if(!getListCell()[x][y].isFlagged()) numFlag++;
+        else numFlag--;
+        statusPanel.setNumFlag(numFlag);
+
         if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineGridPanel.updateGrid();
 
