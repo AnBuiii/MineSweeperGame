@@ -7,13 +7,10 @@ import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
 import Models.MineGrid;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.Thread;
-import java.util.Objects;
 
 import static Views.custom.Theme.*;
 
@@ -65,10 +62,11 @@ public class StatusPanel extends JPanel implements IPanel {
         setBackground(BACKGROUND);
         backBtn = new JLabel(BACK);
 
-        
+
         String mine = String.valueOf(MineGrid.num_mines);
         numFlagLb = new JLabel(mine);
-        flagLb = new JLabel(FLAG + mine);
+        flagLb = new JLabel("<html><left><font color=red>" + FLAG+ "</font><font>" + mine+ "</font></html>");
+
         clockLb = new JLabel(CLOCK + "0");
         timeLb = new JLabel();
         Clock clock = new Clock();
@@ -128,14 +126,13 @@ public class StatusPanel extends JPanel implements IPanel {
 
       //  gbc.gridx = 1;
         //add(new JLabel(), gbc);
-
         gbc.gridx = 1;
         add(flagLb,gbc);
 
-       // gbc.gridx = 3;
+        //gbc.gridx = 2;
         //add(numFlagLb, gbc);
 
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         add(clockLb, gbc);
 
         //gbc.gridx = 5;
@@ -144,10 +141,10 @@ public class StatusPanel extends JPanel implements IPanel {
        // gbc.gridx = 6;
         //add(new JLabel(), gbc);
 
-        gbc.gridx = 3;
+        gbc.gridx = 4;
         add(hintBtn, gbc);
 
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         add(btnSetting, gbc);
 
     }
