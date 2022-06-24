@@ -191,7 +191,7 @@ public class HomePanel extends JPanel implements IPanel {
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 eventButton.playSoundHoverButton();
-                settingLb.setForeground(Color.green);
+                settingLb.setForeground(Color.RED);
                // target(settingLb);
 
             }
