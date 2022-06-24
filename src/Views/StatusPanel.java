@@ -157,6 +157,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.hint();
                 hintMode = !hintMode;
                 if(hintMode) hintBtn.setForeground(new Color(255,255,0));
@@ -166,6 +167,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
                 targetHint(hintBtn);
             }
 
@@ -204,12 +206,14 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.reviewNext();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
                 target(clockLb);
             }
 
@@ -223,12 +227,14 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                eventButton.playSoundClickButton();
                 listener.reviewPrevious();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
                 target(numFlagLb);
             }
 

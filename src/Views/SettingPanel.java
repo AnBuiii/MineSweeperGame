@@ -213,11 +213,11 @@ public class SettingPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                eventButton.playSoundClickButton();
                 if(isMuteSoundEffect){
                     isMuteSoundEffect = false;
                     soundEffectSLD.setEnabled(true);
                     soundEffectLb.setText(LOUD_SOUND);
+                    eventButton.playSoundClickButton();
                 }else {
                     isMuteSoundEffect = true;
                     soundEffectSLD.setEnabled(false);

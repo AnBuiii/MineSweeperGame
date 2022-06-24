@@ -3,6 +3,7 @@ package Views;
 import Interfaces.IGamePlayListener;
 import Controller.MineSweeperGame;
 import Interfaces.IPanel;
+import Interfaces.ISoundEventButton;
 import Models.Cell;
 import Models.MineGrid;
 
@@ -19,6 +20,8 @@ public class MineGridPanel extends JPanel implements IPanel {
     private int num_columns;
     private Label[][] lbCell;
     private IGamePlayListener listener;
+
+    private ISoundEventButton eventButton;
     private int numCellUnRevealed;
 
     public MineGridPanel(int rows, int columns) {
@@ -106,6 +109,9 @@ public class MineGridPanel extends JPanel implements IPanel {
 
     public void addListener(IGamePlayListener event) {
         listener = event;
+    }
+    public void addSoundEventButton(ISoundEventButton eventButton){
+        eventButton = eventButton;
     }
 
     public void updateGrid() {

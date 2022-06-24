@@ -183,6 +183,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void revealHint(int x, int y) {
+        home.playSoundClickCell();
         mineTriangleGrid.revealHint(x,y);
         if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineTriangleGridPanel.updateTriangleGridPanel();

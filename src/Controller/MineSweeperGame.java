@@ -207,6 +207,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void revealHint(int x, int y) {
+        home.playSoundClickCell();
         mineGrid.revealHint(x,y);
         if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
