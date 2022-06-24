@@ -36,30 +36,44 @@ public class StatusPanel extends JPanel implements IPanel {
     public static long sec;
     public static int hour;
     public static int min;
-
+    public static boolean stopClock;
+    Clock clock;
     public StatusPanel() {
         init();
         addView();
         addEvent();
         hintMode = false;
+        stopClock = false;
     }
+
+    public int getTime() {
+        return (int) (sec + min*60 + hour*3600);
+    }
+
+    public void startClock() {
+        stopClock = false;
+        System.out.println("ua");
+    }
+
     public static class Clock extends Thread{
         public Clock(){	}
         public void run() {
             do {
-                sec++;
-                if (sec==60)
-                {
-                    min+=1;
-                    sec=1;
+                if(!stopClock){
+                    sec++;
+                    if (sec==60)
+                    {
+                        min+=1;
+                        sec=1;
+                    }
+                    if (min==60)
+                    {
+                        hour+=1;
+                        min=1;
+                    }
+                    String S = String.valueOf(  + hour+ ":" + min +":"+ sec);
+                    timeLb.setText(S);
                 }
-                if (min==60)
-                {
-                    hour+=1;
-                    min=1;
-                }
-                String S = String.valueOf(  + hour+ ":" + min +":"+ sec);
-                timeLb.setText(S);
                 try {
                     Thread.sleep(1000);
                 } catch (Exception ex) {
@@ -69,7 +83,7 @@ public class StatusPanel extends JPanel implements IPanel {
         }
 
     }
-    Clock clock = new Clock();
+
     @Override
     public void init() {
         setLayout(new GridBagLayout());
@@ -81,6 +95,7 @@ public class StatusPanel extends JPanel implements IPanel {
         numFlagLb = new JLabel(mine);
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
+        clock = new Clock();
         clock.start();
         if (MineSweeperGame.isFinish)
         {
@@ -153,23 +168,6 @@ public class StatusPanel extends JPanel implements IPanel {
     public void addEvent() {
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-               eventButton.playSoundHoverButton();
-               target(backBtn);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                unTarget(backBtn);
-            }
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                eventButton.playSoundClickButton();
-                    clock.stop();
-                listener.back();
-            }
-
-        });
-        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 eventButton.playSoundHoverButton();
                 target(backBtn);
             }
@@ -180,7 +178,8 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                clock.stop();
+//                clock.stop();
+                stopClock = true;
                 listener.back();
             }
 

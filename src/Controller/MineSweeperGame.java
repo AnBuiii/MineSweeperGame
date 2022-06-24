@@ -271,7 +271,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         return mineGrid.isVictory();
     }
     public int getTime(){
-        return statusPanel.time;
+        return statusPanel.getTime();
     }
 
     @Override
@@ -306,4 +306,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
+    public void startClock() {
+        statusPanel.startClock();
+    }
 }
