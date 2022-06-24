@@ -36,7 +36,7 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     @Override
     public void addView() {
         settingPanel = new SettingPanel();
-        settingPanel.setBounds(0, 0, 400, 600);
+        settingPanel.setBounds(0, 0, WIDTH, HEIGHT);
         settingPanel.addListener(this);
         add(settingPanel);
     }

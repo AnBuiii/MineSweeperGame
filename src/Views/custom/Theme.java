@@ -11,6 +11,9 @@ public class Theme {
     public final static String BACK = "\u2190";
     public final static String CLOCK =  "⏰";
 
+    public final static String LOUD_SOUND = "\uD83D\uDD0A";
+
+    public final static String MUTE_SOUND = "\uD83D\uDD07";
     public final static String SETTING = "\u2699";
     public final static String HINT = "\uD83D\uDCA1";
     public final static Color FOREGROUND = new Color(239,235,232);

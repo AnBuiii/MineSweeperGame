@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
 import static Views.custom.Theme.*;
 
 public class StatisticsPanel extends JPanel implements IPanel {
@@ -82,7 +84,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
         createJLabelView(gamesLb, "Games", JLabel.LEFT);
         createJLabelView(games, String.valueOf(player.totalGames[0]), JLabel.RIGHT);
         createJLabelView(minesLb, "Mines", JLabel.LEFT);
-        createJLabelView(mines, String.valueOf(player.totalBomb), JLabel.RIGHT);
+        createJLabelView(mines, Arrays.toString(player.totalBomb), JLabel.RIGHT);
         createJLabelView(totalTimeLb, "Total Time", JLabel.LEFT);
         createJLabelView(totalTime, "0:0", JLabel.RIGHT);
         createJLabelView(minTimeLb, "Shortest Time", JLabel.LEFT);
