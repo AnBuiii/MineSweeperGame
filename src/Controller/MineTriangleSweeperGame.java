@@ -6,6 +6,7 @@ import Interfaces.IPanel;
 import Interfaces.IStatusPanelListener;
 import Models.Cell;
 import Models.GameDifficulty;
+import Models.History;
 import Models.MineTriangleGrid;
 import Views.FinishGamePanel;
 import Views.MineTriangleGridPanel;
@@ -16,6 +17,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import static Views.custom.Theme.*;
 import static Views.custom.Theme.BOMB;
@@ -31,6 +34,10 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     private StatusPanel statusPanel;
     private MineTriangleGrid mineTriangleGrid;
     public Home home;
+    ArrayList<History> playHistory;
+    boolean reviewMode;
+    boolean hintMode;
+    private int reviewStep;
 
 
 
@@ -39,6 +46,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         this.num_rows = num_rows;
         this.num_columns = num_columns;
         this.num_bombs = num_bombs;
+        this.playHistory = new ArrayList<>();
 
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
         if(num_columns % 2 == 0){
@@ -84,6 +92,8 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             e.printStackTrace();
         }
         isFinish = false;
+        reviewMode = false;
+        hintMode = false;
     }
 
     @Override
@@ -124,14 +134,20 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reveal(int x, int y) {
-
+        if(!isReviewMode()){
+            playHistory.add(new History(x, y, 1));
+        }
         if(!mineTriangleGrid.isCellRevealed(x,y)){
             home.playSoundClickCell();
+        }
+        if(mineTriangleGrid.numCellPlayed == 0) {
+            System.out.println("ok");
+            mineTriangleGrid.firstMove(x, y);
         }
 
         if(!mineTriangleGrid.isPlayed) mineTriangleGrid.firstMove(x, y);
         boolean check = mineTriangleGrid.reveal(x, y);
-        if (!check) {
+        if (!check ) {
             mineTriangleGrid.revealAllCell();
             isFinish = true;
         }
@@ -139,7 +155,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             isFinish = true;
 
         }
-        if(isFinish){
+        if(isFinish && !isReviewMode()){
             openFinishGame();
         }
         mineTriangleGridPanel.updateTriangleGridPanel();
@@ -151,22 +167,25 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             home.playSoundSocketFlag();
         }
         mineTriangleGrid.flag(x, y);
+        if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineTriangleGridPanel.updateTriangleGridPanel();
     }
 
     @Override
     public boolean isReviewMode() {
-        return false;
+        return reviewMode;
     }
 
     @Override
     public boolean isHintMode() {
-        return false;
+        return hintMode;
     }
 
     @Override
     public void revealHint(int x, int y) {
-
+        mineTriangleGrid.revealHint(x,y);
+        if(!reviewMode) playHistory.add(new History(x, y, 2));
+        mineTriangleGridPanel.updateTriangleGridPanel();
     }
 
     @Override
@@ -177,12 +196,25 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reviewNext() {
-
+        if(reviewStep == playHistory.size()) return;
+        if(playHistory.get(reviewStep).move == 1) reveal(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        if(playHistory.get(reviewStep).move == 2) revealHint(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        if(playHistory.get(reviewStep).move == 3) flag(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
+        reviewStep++;
+        if(reviewStep == playHistory.size()) return;
+        mineTriangleGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
     @Override
     public void reviewPrevious() {
-
+        if(reviewStep == 0) return;
+        mineTriangleGrid.unRevealAllCells();
+        mineTriangleGridPanel.updateTriangleGridPanel();
+        reviewStep--;
+        for(int i = 0; i < reviewStep; i++){
+            reveal(playHistory.get(i).x, playHistory.get(i).y);
+        }
+        mineTriangleGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
     @Override
@@ -195,7 +227,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void hint() {
-
+        hintMode = !hintMode;
     }
     void openFinishGame(){
         //home.closeMusic();
@@ -239,6 +271,11 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reviewMode() {
-
+        reviewMode = true;
+        statusPanel.reviewMode();
+        mineTriangleGrid.unRevealAllCells();
+        mineTriangleGridPanel.updateTriangleGridPanel();
+        mineTriangleGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
+
 }
