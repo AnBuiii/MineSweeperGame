@@ -207,6 +207,7 @@ public class HomePanel extends JPanel implements IPanel {
                 listener.openSetting();
             }
         });
+        //StatusPanel.Clock clockCTN = new StatusPanel.Clock();
         continueBtn.addMouseListener(new java.awt.event.MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -222,6 +223,7 @@ public class HomePanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 eventButton.playSoundClickButton();
+
                 listener.continueGame();
             }
         });

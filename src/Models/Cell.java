@@ -6,7 +6,7 @@ public class Cell implements Serializable {
     private boolean isRevealed;
     private boolean isMine;
     private int numMineAround;
-    private boolean isFlagged;
+    public boolean isFlagged;
     private boolean isUp; // xác định ô tam giác là đứng hay úp
 
 

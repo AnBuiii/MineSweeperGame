@@ -172,6 +172,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
         int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
         statusPanel.updateStatus(numSquareClosed);
+
     }
     void openFinishGame(){
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
@@ -195,6 +196,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGrid.flag(x, y);
         if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineGridPanel.updateGrid();
+
     }
 
     @Override
