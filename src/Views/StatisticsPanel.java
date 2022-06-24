@@ -47,7 +47,6 @@ public class StatisticsPanel extends JPanel implements IPanel {
         init();
         addView();
         addEvent();
-        gameMode = 1;
     }
     @Override
     public void init() {
@@ -96,7 +95,6 @@ public class StatisticsPanel extends JPanel implements IPanel {
         createJLabelView(victoryLb, "Victory", JLabel.LEFT);
         createJLabelView(victory, "0", JLabel.RIGHT);
         createJLabelView(backBtn, BACK, JLabel.CENTER);
-        viewPlayerRecord(gameMode);
 
         backBtn.setText(BACK);
         backBtn.setFont(new Font("VNI", Font.PLAIN, 30));
@@ -137,6 +135,8 @@ public class StatisticsPanel extends JPanel implements IPanel {
         displayPn.setBackground(FOREGROUND);
         displayPn.setForeground(BACKGROUND);
         add(displayPn);
+
+        viewPlayerRecord(1);
 
     }
 
