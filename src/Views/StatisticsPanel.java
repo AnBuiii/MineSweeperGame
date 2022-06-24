@@ -80,7 +80,7 @@ public class StatisticsPanel extends JPanel implements IPanel {
     public void addView() {
 
         createJLabelView(modeLb, "BEGINNER", JLabel.LEFT);
-        createJLabelView(mode, ">" , JLabel.LEFT    );
+        createJLabelView(mode, RIGHT_ARROW , JLabel.LEFT    );
         createJLabelView(gamesLb, "Games", JLabel.LEFT);
         createJLabelView(games, String.valueOf(player.totalGames[0]), JLabel.RIGHT);
         createJLabelView(minesLb, "Mines", JLabel.LEFT);

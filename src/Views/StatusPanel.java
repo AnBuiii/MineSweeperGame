@@ -196,10 +196,10 @@ public class StatusPanel extends JPanel implements IPanel {
        }*/
     }
     public void reviewMode(){
-        clockLb.setText(">");
+        clockLb.setText(RIGHT_ARROW);
         timeLb.setVisible(false);
         flagLb.setVisible(false);
-        numFlagLb.setText("<");
+        numFlagLb.setText(LEFT_ARROW);
         clockLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
