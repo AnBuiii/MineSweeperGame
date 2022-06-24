@@ -60,6 +60,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
 
+
+
         init();
         addView();
         addEvent();
@@ -79,6 +81,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         init();
         addView();
         addEvent();
+
 
 
         //System.out.println(mineGrid.getCells().length);
@@ -107,6 +110,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         reviewMode = false;
         hintMode = false;
         reviewStep = 0;
+
     }
 
     @Override
@@ -121,6 +125,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH , WINDOW_HEIGHT - STATUS_PANEL_HEIGHT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
+
+
 
     }
 
@@ -308,5 +314,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     public void startClock() {
         statusPanel.startClock();
+    }
+
+    public void killClock() {
+        statusPanel.killClock();
     }
 }

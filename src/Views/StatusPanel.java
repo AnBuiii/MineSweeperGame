@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.lang.Thread;
 
 import static Models.MineGrid.num_mines;
@@ -37,13 +38,16 @@ public class StatusPanel extends JPanel implements IPanel {
     public static int hour;
     public static int min;
     public static boolean stopClock;
-    Clock clock;
+    public static Clock clock;
     public StatusPanel() {
         init();
         addView();
         addEvent();
         hintMode = false;
         stopClock = false;
+        sec = 0;
+        min = 0;
+        hour = 0;
     }
 
     public int getTime() {
@@ -55,7 +59,15 @@ public class StatusPanel extends JPanel implements IPanel {
         System.out.println("ua");
     }
 
-    public static class Clock extends Thread{
+    public void killClock() {
+        clock.stop();
+    }
+
+    public boolean isClockExist() {
+        return clock.isAlive();
+    }
+
+    public static class Clock extends Thread implements Serializable {
         public Clock(){	}
         public void run() {
             do {

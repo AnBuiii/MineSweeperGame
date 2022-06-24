@@ -217,6 +217,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         }
         if(mineSweeperGame != null){
             mineSweeperGame.dispose();
+            mineSweeperGame.killClock();
         }
          mineSweeperGame = switch (gameDifficulty){
              case INTERMEDIATE -> new MineSweeperGame(16,16,40,2);
@@ -246,7 +247,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
 
     public void savingData(MineSweeperGame game){
+
         if(!game.isFinished()) return;
+        game.killClock();
         System.out.println("saving...");
         if(player == null){
             player = new Player();
