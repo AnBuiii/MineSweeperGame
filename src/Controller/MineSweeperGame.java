@@ -21,7 +21,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 //import static Views.HomePanel.*;
@@ -44,6 +43,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private boolean reviewMode;
     private int reviewStep;
     private boolean hintMode;
+    private int numFlag;
 
 
     ArrayList<History> playHistory;
@@ -59,6 +59,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
         WINDOW_WIDTH = num_columns * CELL_SIZE;
         WINDOW_HEIGHT = num_rows * CELL_SIZE + STATUS_PANEL_HEIGHT;
+
+
 
         init();
         addView();
@@ -79,6 +81,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         init();
         addView();
         addEvent();
+
 
 
         //System.out.println(mineGrid.getCells().length);
@@ -107,11 +110,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         reviewMode = false;
         hintMode = false;
         reviewStep = 0;
+        numFlag = num_bombs;
+
     }
 
     @Override
     public void addView() {
-        statusPanel = new StatusPanel();
+        statusPanel = new StatusPanel(num_bombs);
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
@@ -122,6 +127,8 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.setBounds(0, STATUS_PANEL_HEIGHT, WINDOW_WIDTH , WINDOW_HEIGHT - STATUS_PANEL_HEIGHT);
         add(mineGridPanel);
         mineGridPanel.addListener(this);
+
+
 
     }
 
@@ -191,10 +198,16 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void flag(int x, int y) {
+
         if(!mineGrid.isCellRevealed(x,y)){
             home.playSoundSocketFlag();
         }
+        if(!getListCell()[x][y].isFlagged() && numFlag ==0 ) return;
         mineGrid.flag(x, y);
+        if(!getListCell()[x][y].isFlagged()) numFlag++;
+        else numFlag--;
+        statusPanel.setNumFlag(numFlag);
+
         if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineGridPanel.updateGrid();
 
@@ -307,7 +320,17 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
 
+    @Override
+    public void openTutorial() {
+        back();
+        home.openTutorial();
+    }
+
     public void startClock() {
         statusPanel.startClock();
+    }
+
+    public void killClock() {
+        statusPanel.killClock();
     }
 }

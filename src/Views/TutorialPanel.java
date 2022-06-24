@@ -4,12 +4,18 @@ import Controller.Tutorial;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.ITutorialPanelListener;
+
+import javax.imageio.ImageIO;
+import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import javax.swing.JScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import static Views.custom.Theme.*;
 
@@ -21,6 +27,7 @@ public class TutorialPanel extends JPanel implements IPanel {
     JPanel displayPn;
     JLabel backBtn;
     JLabel windowName;
+    JLabel flag_tutorial;
     private GridBagConstraints gbc;
     public TutorialPanel(){
         init();
@@ -33,6 +40,7 @@ public class TutorialPanel extends JPanel implements IPanel {
 
         //tutorialLb = new JLabel();
         tutorialTa = new JTextArea();
+        flag_tutorial = new JLabel(FLAG);
         backBtn = new JLabel();
         displayPn = new JPanel();
         displayPn.setLayout(new GridLayout(1,5));
@@ -49,11 +57,17 @@ public class TutorialPanel extends JPanel implements IPanel {
                 "\nTo win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it. " +
                 "\nUsing this information, you can determine cells that are safe, and cells that contain mines. " +
                 "\nCells suspected of being mines can be marked with a flag using the right mouse button.",JLabel.CENTER);*/
-        String textTutorial = "Minesweeper rules are very simple." +
-                "\nThe board is divided into cells, with mines randomly distributed." +
-                "\nTo win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it." +
-                "\nUsing this information, you can determine cells that are safe, and cells that contain mines." +
-                "\nCells suspected of being mines can be marked with a flag using the right mouse button.";
+        String textTutorial ="Some terms:" +
+                "\nFlag: Put a flag in a zone when you have confirmed that there is a mine. " +
+                "\nHint: When you use hint, if you open a clock which is mine, you will not lose. But you just can use the 3 times." +
+                "\nSafe squares have numbers telling you how many mines touch the square. " +
+                "\nYou can use the number clues to solve the game by opening all of the safe squares. If you click on a mine you lose the game! " +
+                "\nYou open squares with the left mouse button and put flags on mines with the right mouse button. " +
+                "\nWhen you open a square that does not touch any mines." +
+                "\nHowever, if you place the correct number of flags on the wrong squares, chording will explode the mines. " +
+                "\nThe three difficulty levels are Beginner (8x8 or 9x9 with 10 mines), Intermediate (16x16 with 40 mines) and Expert (30x16 with 99 mines). " +
+                "\nThe game ends when all safe squares have been opened. A counter shows the number of mines without flags, and a clock shows your time. ";
+
         /*createTextAreaView(tutorialTa, "Minesweeper rules are very simple. " +
                 "The board is divided into cells, with mines randomly distributed. " +
                 "To win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it. " +
@@ -76,10 +90,12 @@ public class TutorialPanel extends JPanel implements IPanel {
         add(backBtn);
         add(windowName);
         //displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20,Tutorial.HEIGHT - 80 - 20);
-        displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20 ,Tutorial.HEIGHT - 80 - 20);
+        displayPn.setBounds(20,50, Tutorial.WIDTH - 2*20 ,Tutorial.HEIGHT - 60 - 20);
         displayPn.setBackground(FOREGROUND);
         displayPn.setForeground(BACKGROUND);
         add(displayPn);
+
+
     }
     public void addEvent(){
         backBtn.addMouseListener(new MouseAdapter() {
@@ -122,12 +138,12 @@ public class TutorialPanel extends JPanel implements IPanel {
         jLabel.setForeground(BACKGROUND);
     }
     private void createTextAreaView(JTextArea jTextArea, String text, float alignment){
-        Font font = new Font("VNI", Font.PLAIN, 18);
+        Font font = new Font("VNI", Font.PLAIN, 16);
         jTextArea.setText(text);
         jTextArea.setFont(font);
         jTextArea.setMinimumSize(new Dimension(500, 500));
         //jTextArea.setHorizontalAlignment(alignment);
-        //jTextField.setVerticalAlignment(JLabel.CENTER);
+        //jTextArea.setVerticalAlignment(JLabel.CENTER);
         jTextArea.setOpaque(true);
         jTextArea.setBackground(FOREGROUND);
         jTextArea.setForeground(Color.BLACK);
@@ -135,10 +151,17 @@ public class TutorialPanel extends JPanel implements IPanel {
         jTextArea.setLineWrap(true);
         jTextArea.setSize(new Dimension(500, 500));
         jTextArea.setPreferredSize(new Dimension(500, 500));
-        add(new JScrollPane(new JTextArea(50, 50)), BorderLayout.PAGE_START);
+        add(new JScrollPane(new JTextArea(20, 20)), BorderLayout.PAGE_START);
         jTextArea.setEditable(false);
+        add(flag_tutorial,gbc);
         //JScrollPane scrollPane = new JScrollPane(jTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     }
+    /*private void createImageView(JPEGImageReadParam jImage) throws IOException {
+        BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        add(picLabel);
+    }*/
+
     public void target(Component c){
         c.setForeground(Color.RED);
     }
