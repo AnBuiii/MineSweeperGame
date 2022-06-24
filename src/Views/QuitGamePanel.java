@@ -59,7 +59,7 @@ public class QuitGamePanel extends JDialog implements IPanel {
         add(closeBtn);
 
 
-        noticeTA.setFont(new Font("VNI", Font.PLAIN, 20));
+        noticeTA.setFont(new Font("VNI", Font.BOLD, 20));
         noticeTA.setBounds(70,50,200,30);
         noticeTA.setText("DO YOU WANT TO EXIT?");
         noticeTA.setSize(245,noticeTA.getHeight());

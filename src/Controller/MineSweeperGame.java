@@ -157,7 +157,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         if(!isReviewMode()) {
             playHistory.add(new History(x, y, 1));
         }
-        if(!mineGrid.isCellRevealed(x,y)){
+        if(!mineGrid.isCellRevealed(x,y) && !mineGrid.isCellFlagged(x, y)){
             home.playSoundClickCell();
         }
         if(mineGrid.numCellPlayed == 0) {
@@ -199,7 +199,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void flag(int x, int y) {
 
-        if(!mineGrid.isCellRevealed(x,y)){
+        if(!mineGrid.isCellRevealed(x,y) && numFlag != 0){
             home.playSoundSocketFlag();
         }
         if(!getListCell()[x][y].isFlagged() && numFlag ==0 ) return;
