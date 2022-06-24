@@ -1,6 +1,7 @@
 package Views;
 
 import Interfaces.IPanel;
+import Interfaces.IQuitGamePanelListener;
 import Interfaces.ISoundEventButton;
 import Interfaces.IToolBarListener;
 import org.w3c.dom.Text;
@@ -13,7 +14,7 @@ import java.awt.event.MouseMotionAdapter;
 
 import static Views.custom.Theme.*;
 
-public class ToolBarPanel extends JPanel implements IPanel {
+public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListener {
     private static JLabel minimizeLb;
     private JLabel closeLb;
     private GridBagConstraints gbc;
@@ -115,6 +116,7 @@ public class ToolBarPanel extends JPanel implements IPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 eventButton.playSoundClickButton();
+                openQuitGamePanel();
                 super.mouseClicked(e);
 
             }
@@ -134,6 +136,15 @@ public class ToolBarPanel extends JPanel implements IPanel {
         });
 
 
+    }
+
+    private void openQuitGamePanel(){
+        this.setForeground(new Color(1.0f,1.0f,1.0f,0));
+        QuitGamePanel quitGamePanel = new QuitGamePanel();
+        quitGamePanel.setVisible(true);
+        quitGamePanel.addListener(this);
+        quitGamePanel.addEventButtonListener(eventButton);
+        parentFrame.setEnabled(false);
     }
 
     public void addListener(IToolBarListener event) {
@@ -158,5 +169,20 @@ public class ToolBarPanel extends JPanel implements IPanel {
 
     public void setParentFrame(JFrame jFrame){
         this.parentFrame = jFrame;
+    }
+
+    @Override
+    public void closeBtnClicked() {
+        parentFrame.setEnabled(true);
+    }
+
+    @Override
+    public void noBtnClicked() {
+        parentFrame.setEnabled(true);
+    }
+
+    @Override
+    public void yesBtnClicked() {
+        listener.quitGame();
     }
 }

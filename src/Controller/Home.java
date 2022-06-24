@@ -178,7 +178,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
       Setting setting = new Setting();
         setting.setVisible(true);
         setting.setHome(this);
-        setting.setBounds(this.getBounds());
         this.setVisible(false);
     }
 
@@ -379,6 +378,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void quitGame() {
-
+        System.exit(0);
     }
 }

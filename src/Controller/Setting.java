@@ -22,7 +22,7 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     }
     @Override
     public void init() {
-        //setSize(WIDTH, HEIGHT);
+        setSize(WIDTH, HEIGHT);
         setUndecorated(true);
         setLocationRelativeTo(null);
         setResizable(true);
