@@ -6,11 +6,14 @@ import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
 import Models.MineGrid;
+import Models.Cell;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.Thread;
+
+import static Models.MineGrid.num_mines;
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
@@ -19,7 +22,7 @@ public class StatusPanel extends JPanel implements IPanel {
     private JButton btnRestart;
     private JLabel backBtn;
     private JLabel clockLb;
-    private JLabel timeLb;
+    private static JLabel timeLb;
     private JLabel flagLb;
     private JLabel numFlagLb;
     private JLabel hintBtn;
@@ -30,7 +33,9 @@ public class StatusPanel extends JPanel implements IPanel {
     private IStatusPanelListener listener;
     private ISoundEventButton eventButton;
     public int time;
-    public long sec;
+    public static long sec;
+    public static int hour;
+    public static int min;
 
     public StatusPanel() {
         init();
@@ -38,12 +43,22 @@ public class StatusPanel extends JPanel implements IPanel {
         addEvent();
         hintMode = false;
     }
-    public class Clock extends Thread{
+    public static class Clock extends Thread{
         public Clock(){	}
         public void run() {
             do {
                 sec++;
-                String S = String.valueOf(sec);
+                if (sec==60)
+                {
+                    min+=1;
+                    sec=1;
+                }
+                if (min==60)
+                {
+                    hour+=1;
+                    min=1;
+                }
+                String S = String.valueOf(  + hour+ ":" + min +":"+ sec);
                 timeLb.setText(S);
                 try {
                     Thread.sleep(1000);
@@ -54,6 +69,7 @@ public class StatusPanel extends JPanel implements IPanel {
         }
 
     }
+    Clock clock = new Clock();
     @Override
     public void init() {
         setLayout(new GridBagLayout());
@@ -61,11 +77,10 @@ public class StatusPanel extends JPanel implements IPanel {
         backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
         //numFlagLb = new JLabel("00");
-        String mine = String.valueOf(MineGrid.num_mines);
+        String mine = String.valueOf(num_mines);
         numFlagLb = new JLabel(mine);
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
-        Clock clock = new Clock();
         clock.start();
         if (MineSweeperGame.isFinish)
         {
@@ -140,7 +155,6 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                eventButton.playSoundHoverButton();
                target(backBtn);
-
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(backBtn);
@@ -149,6 +163,24 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
+                    clock.stop();
+                listener.back();
+            }
+
+        });
+        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                eventButton.playSoundHoverButton();
+                target(backBtn);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                unTarget(backBtn);
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                eventButton.playSoundClickButton();
+                clock.stop();
                 listener.back();
             }
 
@@ -194,6 +226,12 @@ public class StatusPanel extends JPanel implements IPanel {
             lbNotify.setText("THUA");
             lbNotify.setForeground(Color.red);
        }*/
+        /*if (num_mines< numSquareUnrevealed)
+        {
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "Error");
+        }*/
+
     }
     public void reviewMode(){
         clockLb.setText(">");

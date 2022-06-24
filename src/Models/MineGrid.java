@@ -1,5 +1,8 @@
 package Models;
 
+import Views.StatusPanel;
+
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.Random;
 
