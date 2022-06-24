@@ -1,13 +1,11 @@
 package Controller;
 
-import Interfaces.IHomeListener;
-import Interfaces.ISoundEventButton;
-import Interfaces.IStartGameListener;
+import Interfaces.*;
 import Models.GameDifficulty;
 
 import Models.Player;
+import Views.CustomGamePanel;
 import Views.HomePanel;
-import Interfaces.IPanel;
 import Views.NewGamePanel;
 
 import javax.sound.sampled.Clip;
@@ -18,7 +16,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
 
-public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton {
+public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton, ICustomGameListener {
     private HomePanel   homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
@@ -209,10 +207,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame.dispose();
         }
          mineSweeperGame = switch (gameDifficulty){
-             case BEGINNER -> new MineSweeperGame(9,9,10,1);
              case INTERMEDIATE -> new MineSweeperGame(16,16,40,2);
              case EXPERT -> new MineSweeperGame(16,30,99,3);
-             default -> new MineSweeperGame(0,0,0,0);
+             default -> new MineSweeperGame(9,9,10,1);
         };
 
         reDrawHome();
@@ -227,6 +224,15 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void closeHomePanel() {
         this.setVisible(false);
     }
+
+    @Override
+    public void openCustomPanel() {
+        CustomGamePanel customGamePanel = new CustomGamePanel();
+        customGamePanel.setVisible(true);
+        customGamePanel.addListener(this);
+        this.disable();
+    }
+
     public void savingData(MineSweeperGame game){
         if(!game.isFinished()) return;
         System.out.println("saving...");
@@ -308,5 +314,11 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
     public ISoundEventButton getEventSoundButton(){
         return this;
+    }
+
+    @Override
+    public void closeCustomPanel() {
+        enable();
+        requestFocus();
     }
 }

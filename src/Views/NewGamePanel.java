@@ -219,7 +219,7 @@ public class NewGamePanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                listener.startGame(GameDifficulty.CUSTOM);
+                listener.openCustomPanel();
             }
         });
         customInfoLb.addMouseListener(customLb.getMouseListeners()[0]);
