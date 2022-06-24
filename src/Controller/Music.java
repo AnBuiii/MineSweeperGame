@@ -166,6 +166,7 @@ public class Music implements Serializable { // implements Serializable để l�
         if(!isMuteMusic){
             FloatControl fc = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
             fc.setValue(curMusicVolume);
+            music.loop( Clip.LOOP_CONTINUOUSLY);
             restart(music);
         }
     }

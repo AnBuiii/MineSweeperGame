@@ -277,7 +277,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void reGame() {
-        home.closeMusic();
+        home.playInGameMusic();
         dispose();
         switch (gameMode){
             case 1:

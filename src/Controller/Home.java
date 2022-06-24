@@ -266,12 +266,16 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
     public void playInGameMusic(){
         //play in game music
-        musicGame.startGameMusic.stop();
+        if(musicGame.startGameMusic != null){
+            musicGame.startGameMusic.stop();
+        }
         musicGame.startMusicGame(musicGame.inGameMusic);
     }
     public void playStartGameMusic(){
 
-        musicGame.inGameMusic.stop();
+        if(musicGame.inGameMusic != null){
+            musicGame.inGameMusic.stop();
+        }
         musicGame.startMusicGame(musicGame.startGameMusic);
 
     }
