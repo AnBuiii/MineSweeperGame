@@ -6,12 +6,11 @@ import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
 import Models.MineGrid;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.lang.Thread;
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
@@ -32,7 +31,6 @@ public class StatusPanel extends JPanel implements IPanel {
     private ISoundEventButton eventButton;
     public int time;
     public long sec;
-    private JLabel btnSetting;
 
     public StatusPanel() {
         init();
@@ -46,7 +44,7 @@ public class StatusPanel extends JPanel implements IPanel {
             do {
                 sec++;
                 String S = String.valueOf(sec);
-                clockLb.setText(CLOCK + " " + S);
+                timeLb.setText(S);
                 try {
                     Thread.sleep(1000);
                 } catch (Exception ex) {
@@ -61,13 +59,11 @@ public class StatusPanel extends JPanel implements IPanel {
         setLayout(new GridBagLayout());
         setBackground(BACKGROUND);
         backBtn = new JLabel(BACK);
-
-
+        flagLb = new JLabel(FLAG);
+        //numFlagLb = new JLabel("00");
         String mine = String.valueOf(MineGrid.num_mines);
         numFlagLb = new JLabel(mine);
-        flagLb = new JLabel("<html><left><font color=red>" + FLAG+ "</font><font>" + mine+ "</font></html>");
-
-        clockLb = new JLabel(CLOCK + "0");
+        clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
         Clock clock = new Clock();
         clock.start();
@@ -76,9 +72,6 @@ public class StatusPanel extends JPanel implements IPanel {
             clock.stop();
         }
         hintBtn = new JLabel(HINT);
-
-        btnSetting = new JLabel(SETTING);
-
         gbc = new GridBagConstraints();
     }
     @Override
@@ -113,10 +106,6 @@ public class StatusPanel extends JPanel implements IPanel {
         hintBtn.setBackground(BACKGROUND);
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 25));
 
-        btnSetting.setOpaque(true);
-        btnSetting.setBackground(BACKGROUND);
-        btnSetting.setFont(new Font("VNI", Font.PLAIN, 25));
-
 
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.CENTER;
@@ -124,28 +113,27 @@ public class StatusPanel extends JPanel implements IPanel {
         gbc.gridy = 0;
         add(backBtn,gbc);
 
-      //  gbc.gridx = 1;
-        //add(new JLabel(), gbc);
         gbc.gridx = 1;
+        add(new JLabel(), gbc);
+
+        gbc.gridx = 2;
         add(flagLb,gbc);
 
-        //gbc.gridx = 2;
-        //add(numFlagLb, gbc);
-
         gbc.gridx = 3;
-        add(clockLb, gbc);
-
-        //gbc.gridx = 5;
-        //add(timeLb, gbc);
-
-       // gbc.gridx = 6;
-        //add(new JLabel(), gbc);
+        add(numFlagLb,gbc);
 
         gbc.gridx = 4;
-        add(hintBtn, gbc);
+        add(clockLb, gbc);
 
         gbc.gridx = 5;
-        add(btnSetting, gbc);
+        add(timeLb, gbc);
+
+        gbc.gridx = 6;
+        add(new JLabel(), gbc);
+
+        gbc.gridx = 7;
+        add(hintBtn, gbc);
+
 
     }
 
