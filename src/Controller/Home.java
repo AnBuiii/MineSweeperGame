@@ -129,8 +129,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void continueGame() {
         setVisible(false);
         playInGameMusic();
-        if(mineTriangleSweeperGame != null) mineTriangleSweeperGame.setVisible(true);
-        if(mineSweeperGame != null) mineSweeperGame.setVisible(true);
+        if(mineTriangleSweeperGame != null) {
+            mineTriangleSweeperGame.setVisible(true);
+
+        };
+        if(mineSweeperGame != null) {
+            mineSweeperGame.setVisible(true);
+            mineSweeperGame.startClock();
+        }
     }
 
     @Override

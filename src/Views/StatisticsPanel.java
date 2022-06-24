@@ -53,8 +53,6 @@ public class StatisticsPanel extends JPanel implements IPanel {
         setLayout(null);
         setBackground(FOREGROUND);
 
-
-
         gamesLb = new JLabel();
         games = new JLabel();
         minesLb = new JLabel();
