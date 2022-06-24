@@ -209,10 +209,10 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame.dispose();
         }
          mineSweeperGame = switch (gameDifficulty){
-             case BEGINNER -> new MineSweeperGame(9,9,10);
-             case INTERMEDIATE -> new MineSweeperGame(16,16,40);
-             case EXPERT -> new MineSweeperGame(16,30,99);
-             default -> new MineSweeperGame(0,0,0);
+             case BEGINNER -> new MineSweeperGame(9,9,10,1);
+             case INTERMEDIATE -> new MineSweeperGame(16,16,40,2);
+             case EXPERT -> new MineSweeperGame(16,30,99,3);
+             default -> new MineSweeperGame(0,0,0,0);
         };
 
         reDrawHome();

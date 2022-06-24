@@ -47,7 +47,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     ArrayList<History> playHistory;
 
 
-    public MineSweeperGame(int num_rows, int num_columns, int num_bombs) {
+    public MineSweeperGame(int num_rows, int num_columns, int num_bombs, int gameMode) {
         mineGrid = new MineGrid(num_rows, num_columns, num_bombs);
         this.num_rows = num_rows;
         this.num_columns = num_columns;

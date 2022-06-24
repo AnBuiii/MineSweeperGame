@@ -132,10 +132,10 @@ public class FinishGamePanel extends JDialog implements IPanel {
             }
             @Override
             public void mouseClicked(MouseEvent e) {
-                dispose();
                 eventButton.playSoundClickButton();
                 listener.closeFinishGame();
                 listener.reGame();
+                dispose();
                 super.mouseClicked(e);
             }
         });

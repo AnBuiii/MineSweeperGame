@@ -77,33 +77,27 @@ public class StatusPanel extends JPanel implements IPanel {
     @Override
     public void addView() {
         //backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        backBtn.setOpaque(true);
-        backBtn.setBackground(BACKGROUND);
+
         backBtn.setFont(new Font("VNI", Font.BOLD, 30));
 
         //flagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        flagLb.setOpaque(true);
-        flagLb.setBackground(BACKGROUND);
+
         flagLb.setFont(new Font("VNI", Font.PLAIN, 25));
 
         //numFlagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        numFlagLb.setOpaque(true);
-        numFlagLb.setBackground(BACKGROUND);
+
         numFlagLb.setFont(new Font("VNI", Font.PLAIN, 23));
 
         //clockLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        clockLb.setOpaque(true);
-        clockLb.setBackground(BACKGROUND);
+
         clockLb.setFont(new Font("VNI", Font.PLAIN, 25));
 
         //timeLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        timeLb.setOpaque(true);
-        timeLb.setBackground(BACKGROUND);
+
         timeLb.setFont(new Font("VNI", Font.PLAIN, 25));
 
         //hintBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        hintBtn.setOpaque(true);
-        hintBtn.setBackground(BACKGROUND);
+
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 25));
 
 
@@ -123,15 +117,18 @@ public class StatusPanel extends JPanel implements IPanel {
         add(numFlagLb,gbc);
 
         gbc.gridx = 4;
-        add(clockLb, gbc);
-
-        gbc.gridx = 5;
-        add(timeLb, gbc);
-
-        gbc.gridx = 6;
         add(new JLabel(), gbc);
 
+        gbc.gridx = 5;
+        add(clockLb, gbc);
+
+        gbc.gridx = 6;
+        add(timeLb, gbc);
+
         gbc.gridx = 7;
+        add(new JLabel(), gbc);
+
+        gbc.gridx = 8;
         add(hintBtn, gbc);
 
 
