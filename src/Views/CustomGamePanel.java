@@ -2,6 +2,7 @@ package Views;
 
 import Interfaces.ICustomGameListener;
 import Interfaces.IPanel;
+import Views.custom.RoundedButton;
 
 import javax.swing.*;
 
@@ -16,12 +17,13 @@ public class CustomGamePanel extends JDialog implements IPanel {
     ICustomGameListener listener;
     JLabel closeBtn;
     JLabel newGameLb;
-    JLabel widthLb;
-    JLabel heightLb;
+    JLabel rowLb;
+    JLabel columnLb;
     JLabel mineLb;
-    JTextField widthTf;
-    JTextField heightTf;
+    JTextField rowTf;
+    JTextField columnTf;
     JTextField mineTf;
+    RoundedButton playBtn;
 
     public CustomGamePanel(){
         init();
@@ -44,12 +46,13 @@ public class CustomGamePanel extends JDialog implements IPanel {
         }
         closeBtn = new JLabel("x");
         newGameLb = new JLabel("New Game");
-        widthLb = new JLabel("Width");
-        heightLb = new JLabel("Height");
+        rowLb = new JLabel("Rows");
+        columnLb = new JLabel("Columns");
         mineLb = new JLabel("Mines");
-        widthTf = new JTextField("9");
-        heightTf = new JTextField("9");
+        rowTf = new JTextField("9");
+        columnTf = new JTextField("9");
         mineTf = new JTextField("9");
+        playBtn = new RoundedButton(10);
     }
 
     @Override
@@ -58,21 +61,46 @@ public class CustomGamePanel extends JDialog implements IPanel {
         closeBtn.setFont(new Font("VNI", Font.PLAIN, 20));
         add(closeBtn);
 
-        newGameLb.setBounds(10,10,100,30);
-        newGameLb.setFont(new Font("VNI", Font.PLAIN, 20));
-        add(newGameLb);
+//        newGameLb.setBounds(10,10,100,30);
+//        newGameLb.setFont(new Font("VNI", Font.PLAIN, 20));
+//        add(newGameLb);
 
-        widthLb.setBounds(20,50,100,30);
-        widthLb.setFont(new Font("VNI", Font.PLAIN, 20));
-        add(widthLb);
+        rowLb.setBounds(100,15,100,30);
+        rowLb.setFont(new Font("VNI", Font.PLAIN, 20));
+        add(rowLb);
 
-        heightLb.setBounds(80,50,100,30);
-        heightLb.setFont(new Font("VNI", Font.PLAIN, 20));
-        add(heightLb);
+        rowTf.setBounds(100,50,50,30);
+        rowTf.setBackground(BACKGROUND);
+        rowTf.setHorizontalAlignment(SwingConstants.CENTER);
+        rowTf.setFont(new Font("VNI", Font.PLAIN, 20));
+        add(rowTf);
 
-        mineLb.setBounds(50,100,100,30);
+        columnLb.setBounds(250,15,100,30);
+        columnLb.setFont(new Font("VNI", Font.PLAIN, 20));
+        add(columnLb);
+
+        columnTf.setBounds(250,50,50,30);
+        columnTf.setFont(new Font("VNI", Font.PLAIN, 20));
+        columnTf.setBackground(BACKGROUND);
+        columnTf.setHorizontalAlignment(SwingConstants.CENTER);
+        add(columnTf);
+
+        mineLb.setBounds(175,100,100,30);
         mineLb.setFont(new Font("VNI", Font.PLAIN, 20));
         add(mineLb);
+
+        mineTf.setBounds(175,135,50,30);
+        mineTf.setFont(new Font("VNI", Font.PLAIN, 20));
+        mineTf.setBackground(BACKGROUND);
+        mineTf.setHorizontalAlignment(SwingConstants.CENTER);
+        add(mineTf);
+
+        playBtn.setBounds(150,200,100,50);
+        playBtn.setBackground(BACKGROUND);
+        playBtn.setFont(new Font("VNI", Font.BOLD, 25));
+        playBtn.setText("Play");
+        playBtn.setHorizontalAlignment(SwingConstants.CENTER);
+        add(playBtn);
 
 //        newGameLb.setBounds(10,10,100,30);
 //        newGameLb.setFont(new Font("VNI", Font.PLAIN, 20));
@@ -95,8 +123,32 @@ public class CustomGamePanel extends JDialog implements IPanel {
                 listener.closeCustomPanel();
             }
         });
+        playBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                listener.startCustomGame(Integer.parseInt(rowTf.getText()), Integer.parseInt(columnTf.getText()), Integer.parseInt(mineTf.getText()));
+                dispose();
+                listener.closeCustomPanel();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                playBtn.setBackground(FOREGROUND);
+                playBtn.setForeground(BACKGROUND);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                playBtn.setForeground(FOREGROUND);
+                playBtn.setBackground(BACKGROUND);
+            }
+        });
     }
     public void addListener(ICustomGameListener listener){
         this.listener = listener;
     }
+
 }

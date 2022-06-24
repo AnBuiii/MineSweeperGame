@@ -316,4 +316,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         enable();
         requestFocus();
     }
+
+    @Override
+    public void startCustomGame(int rows, int columns, int mines) {
+        mineSweeperGame = new MineSweeperGame(rows,columns,mines,0);
+        reDrawHome();
+        this.setVisible(false);
+        mineSweeperGame.setHome(this);
+        mineSweeperGame.setVisible(true);
+        playInGameMusic();
+    }
 }
