@@ -5,6 +5,7 @@ import Interfaces.ITutorialPanelListener;
 import Views.TutorialPanel;
 
 import javax.swing.*;
+import java.awt.geom.RoundRectangle2D;
 
 public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
     public static int WIDTH = 500;
@@ -26,6 +27,7 @@ public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
         setLayout(null);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

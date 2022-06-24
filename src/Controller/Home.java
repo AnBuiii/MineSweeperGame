@@ -3,6 +3,7 @@ package Controller;
 import Interfaces.*;
 import Models.GameDifficulty;
 
+import Models.Music;
 import Models.Player;
 import Views.CustomGamePanel;
 import Views.HomePanel;
@@ -14,7 +15,11 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.geom.RoundRectangle2D;
 import java.io.*;
+
+import static Views.custom.Theme.ARCH_FORM;
+import static Views.custom.Theme.ARCW_FORM;
 
 public class Home extends JFrame implements IPanel, IHomeListener, IStartGameListener, ISoundEventButton, ICustomGameListener {
     private HomePanel   homePanel;
@@ -38,9 +43,10 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void init() {
          setSize(400,600);
-        setUndecorated(true);
+         setUndecorated(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
 
 
         try {

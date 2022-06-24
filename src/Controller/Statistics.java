@@ -6,6 +6,10 @@ import Models.Player;
 import Views.StatisticsPanel;
 
 import javax.swing.*;
+import java.awt.geom.RoundRectangle2D;
+
+import static Views.custom.Theme.ARCH_FORM;
+import static Views.custom.Theme.ARCW_FORM;
 
 public class Statistics extends JFrame implements IPanel, IStatisticPanelListener {
     public static int WIDTH = 500;
@@ -30,6 +34,7 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
         setLayout(null);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

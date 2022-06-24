@@ -5,6 +5,10 @@ import Interfaces.ISettingPanelListener;
 import Views.SettingPanel;
 
 import javax.swing.*;
+import java.awt.geom.RoundRectangle2D;
+
+import static Views.custom.Theme.ARCH_FORM;
+import static Views.custom.Theme.ARCW_FORM;
 
 public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     public static int WIDTH = 400;
@@ -23,6 +27,7 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
         setLayout(null);
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

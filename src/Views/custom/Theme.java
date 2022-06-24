@@ -1,9 +1,13 @@
 package Views.custom;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.util.Locale;
 
 public class Theme {
+
+    public final static Double ARCH_FORM = 20D;
+    public final static Double ARCW_FORM = 20D;
     public final static String TITLE = "MINESWEEPER";
     public final static String BOMB = "\uD83D\uDCA3";
     public final static String FLAG = "\uD83D\uDEA9";
@@ -21,9 +25,6 @@ public class Theme {
 
     public final static String RIGHT_ARROW = "\u25B6";
     public final static String LEFT_ARROW = "\u25C0";
-
-
-  //  public final static Font FONT = new Font("Arial", Font.PLAIN, 20); // cái font Arial vẽ cờ bị lỗi
 
     public final static Font FONT = new Font("VNI", Font.PLAIN, 18);
     public final static int CELL_SIZE = 40;
