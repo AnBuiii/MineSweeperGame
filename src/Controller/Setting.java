@@ -5,7 +5,6 @@ import Interfaces.ISettingPanelListener;
 import Views.SettingPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     public static int WIDTH = 400;
@@ -15,7 +14,6 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
 
     Setting(){
         init();
-        addView();
         addEvent();
     }
     @Override
@@ -35,7 +33,7 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
 
     @Override
     public void addView() {
-        settingPanel = new SettingPanel();
+        settingPanel = new SettingPanel(home.musicGame.isMuteMusic(), home.musicGame.isMuteSoundEffect(), home.musicGame.getCurMusicVolume(), home.musicGame.getCurSoundEffectVolume());
         settingPanel.setBounds(0, 0, WIDTH, HEIGHT);
         settingPanel.addListener(this);
         add(settingPanel);
@@ -52,8 +50,29 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
         home.setVisible(true);
     }
 
+    @Override
+    public void muteMusic(boolean check) {
+        home.musicGame.pauseMusic(check);
+    }
+
+    @Override
+    public void muteSoundEffect(boolean check) {
+        home.musicGame.pauseSoundEffect(check);
+    }
+
+    @Override
+    public void changeVolumeMusic(float volume) {
+        home.musicGame.volumeMusicChanged(volume);
+    }
+
+    @Override
+    public void changeVolumeEffect(float volume) {
+        home.musicGame.volumeSoundEffectChanged(volume);
+    }
+
     public void setHome(Home home){
         this.home = home;
+        addView();
         settingPanel.addEventButtonListener(home.getEventSoundButton());
     }
 

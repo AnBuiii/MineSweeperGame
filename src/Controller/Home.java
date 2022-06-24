@@ -23,7 +23,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private MineTriangleSweeperGame mineTriangleSweeperGame;
     private Player player;
 
-    private Music musicGame = new Music();;
+    public Music musicGame = new Music();;
     private Clip musicPlayer;
 
     public Home(){
@@ -262,56 +262,76 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     }
 
     public void closeMusic(){
-        if(musicPlayer!= null &&  (musicPlayer.isOpen() || musicPlayer.isActive() || musicPlayer.isRunning())){
+       /* if(musicPlayer!= null &&  (musicPlayer.isOpen() || musicPlayer.isActive() || musicPlayer.isRunning())){
             musicPlayer.stop();
             musicPlayer.close();
         }
-        musicPlayer = null;
+        musicPlayer = null;*/
+        musicGame.closeMusic();
     }
     public void playInGameMusic(){
         //play in game music
-        closeMusic();
-        musicPlayer = musicGame.InGameMusic();
-        musicPlayer.start();
+        //closeMusic();
+
+      //  musicPlayer = musicGame.InGameMusic();
+       // musicPlayer.start();
+        musicGame.startGameMusic.stop();
+        musicGame.startMusicGame(musicGame.inGameMusic);
+       // musicGame.restart(musicGame.inGameMusic);
+
     }
     public void playStartGameMusic(){
-        closeMusic();
-        musicPlayer = musicGame.startGameMusic();
-        musicPlayer.start();
+       // closeMusic();
+        //musicPlayer = musicGame.startGameMusic();
+        //musicPlayer.start();
+        musicGame.inGameMusic.stop();
+        musicGame.startMusicGame(musicGame.startGameMusic);
+        //musicGame.restart(musicGame.startGameMusic);
     }
     public void playSoundClickCell(){
-        Clip soundClickCell = musicGame.SoundClickCell();
-        soundClickCell.start();
+       // Clip soundClickCell = musicGame.SoundClickCell();
+      //  soundClickCell.start();
+        musicGame.startSoundEffect(musicGame.soundClickCell);
     }
 
     public void playSoundSocketFlag(){
-        Clip soundClickCell = musicGame.SoundSocketFlag();
-        soundClickCell.start();
+       // Clip soundClickCell = musicGame.SoundSocketFlag();
+        //soundClickCell.start();
+        musicGame.startSoundEffect(musicGame.soundSocketFlag);
     }
     public void playSoundLoseGame(){
-        closeMusic();
-        musicPlayer = musicGame.SoundLoseGame();
-        musicPlayer.start();
+        //closeMusic();
+       // musicPlayer = musicGame.SoundLoseGame();
+        //musicPlayer.start();
+        musicGame.inGameMusic.stop();
+        musicGame.startSoundEffect(musicGame.soundLoseGame);
     }
 
     public void playSoundWinGame(){
         closeMusic();
-        musicPlayer = musicGame.SoundWinGame();
-        musicPlayer.start();
+        //musicPlayer = musicGame.SoundWinGame();
+       // musicPlayer.start();
+        musicGame.startSoundEffect(musicGame.soundWinGame);
     }
 
     @Override
     public void playSoundHoverButton() {
-       Clip soundHoverCell = musicGame.SoundHoverButton();
-            soundHoverCell.start();
+      // Clip soundHoverCell = musicGame.SoundHoverButton();
+          //  soundHoverCell.start();
+         //Clip soundHoverCell = musicGame.soundHoverButton;
+          //soundHoverCell.start();
+        musicGame.startSoundEffect(musicGame.soundHoverButton);
 
     }
 
     @Override
     public void playSoundClickButton() {
-        Clip soundClickCell = musicGame.SoundClickButton();
-            soundClickCell.start();
+        //Clip soundClickCell = musicGame.SoundClickButton();
+           // soundClickCell.start();
+       // Clip soundClickCell = musicGame.soundClickButton;
+        musicGame.startSoundEffect(musicGame.soundClickButton);
     }
+
     public ISoundEventButton getEventSoundButton(){
         return this;
     }

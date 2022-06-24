@@ -6,6 +6,8 @@ import Interfaces.ISettingPanelListener;
 import Interfaces.ISoundEventButton;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -26,13 +28,21 @@ public class SettingPanel extends JPanel implements IPanel {
 
     JSlider soundMusicSLD;
     JSlider soundEffectSLD;
-
     JLabel nameSoundMusicLb;
     JLabel nameSoundEffectLb;
     JLabel windowName;
 
+    private boolean isMuteMusic;
+    private boolean isMuteSoundEffect;
 
-    public SettingPanel(){
+    private final float currVolumeMusic;
+    private final float currVolumeEffect;
+
+    public SettingPanel(boolean isMuteSoundMusic, boolean isMuteSoundEffect, float volumeMusic, float volumeEffect){
+        this.isMuteMusic = isMuteSoundMusic;
+        this.isMuteSoundEffect = isMuteSoundEffect;
+        this.currVolumeMusic = volumeMusic;
+        this.currVolumeEffect = volumeEffect;
         init();
         addView();
         addEvent();
@@ -43,10 +53,16 @@ public class SettingPanel extends JPanel implements IPanel {
         setBackground(FOREGROUND);
         backBtn = new JLabel();
         windowName = new JLabel();
-        soundMusicLb = new JLabel(LOUD_SOUND);
-        soundEffectLb = new JLabel(LOUD_SOUND);
-        soundEffectSLD = new JSlider(0, 100);
-        soundMusicSLD = new JSlider(0, 100);
+
+        soundMusicLb = setSoundLb(isMuteMusic);
+        soundEffectLb = setSoundLb(isMuteSoundEffect);
+
+        soundMusicSLD = new JSlider(-30, 6);
+        soundMusicSLD.setValue((int) currVolumeMusic);
+
+        soundEffectSLD = new JSlider(-30, 6);
+        soundEffectSLD.setValue((int)currVolumeEffect);
+
         nameSoundMusicLb = new JLabel();
         nameSoundEffectLb = new JLabel();
         displayPn = new JPanel();
@@ -123,16 +139,14 @@ public class SettingPanel extends JPanel implements IPanel {
 
     }
 
-    private void createJLabelView(JLabel jLabel, String text, int alignment){
-        Font font = new Font("VNI", Font.PLAIN, 20);
-        jLabel.setText(text);
-        jLabel.setFont(font);
-        jLabel.setHorizontalAlignment(alignment);
-        jLabel.setVerticalAlignment(JLabel.CENTER);
-        jLabel.setOpaque(true);
-        jLabel.setBackground(FOREGROUND);
-        if(alignment == JLabel.LEFT) jLabel.setForeground(Color.BLACK);
-        else jLabel.setForeground(BACKGROUND);
+    private JLabel setSoundLb (boolean check){
+        JLabel jLabel = new JLabel();
+        if(!check){
+           jLabel.setText(LOUD_SOUND);
+        }else {
+            jLabel.setText(MUTE_SOUND);
+        }
+        return jLabel;
     }
 
     @Override
@@ -156,6 +170,105 @@ public class SettingPanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
                 listener.back();
+            }
+        });
+
+        soundMusicLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                target(soundMusicLb);
+                eventButton.playSoundHoverButton();
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                eventButton.playSoundClickButton();
+                if(isMuteMusic){
+                    isMuteMusic = false;
+                    soundMusicSLD.setEnabled(true);
+                    soundMusicLb.setText(LOUD_SOUND);
+
+                }else {
+                    isMuteMusic = true;
+                    soundMusicSLD.setEnabled(false);
+                    soundMusicLb.setText(MUTE_SOUND);
+                }
+                listener.muteMusic(isMuteMusic);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(soundMusicLb);
+            }
+        });
+
+        soundEffectLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                target(soundEffectLb);
+                eventButton.playSoundHoverButton();
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                eventButton.playSoundClickButton();
+                if(isMuteSoundEffect){
+                    isMuteSoundEffect = false;
+                    soundEffectSLD.setEnabled(true);
+                    soundEffectLb.setText(LOUD_SOUND);
+                }else {
+                    isMuteSoundEffect = true;
+                    soundEffectSLD.setEnabled(false);
+                    soundEffectLb.setText(MUTE_SOUND);
+                }
+                listener.muteSoundEffect(isMuteSoundEffect); // thuc hien giam tieng hieu ung am thanh
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                unTarget(soundEffectLb);
+            }
+        });
+
+        soundMusicSLD.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                eventButton.playSoundClickButton();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+        });
+        soundMusicSLD.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                listener.changeVolumeMusic(soundMusicSLD.getValue());
+            }
+        });
+
+        soundEffectSLD.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                eventButton.playSoundClickButton();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                eventButton.playSoundHoverButton();
+            }
+        });
+        soundEffectSLD.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                listener.changeVolumeEffect(soundEffectSLD.getValue());
             }
         });
 
