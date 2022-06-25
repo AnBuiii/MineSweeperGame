@@ -3,7 +3,6 @@ package Views;
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Models.Cell;
-import Models.TriangleLabel;
 import Models.TriangleShapeItem;
 
 import javax.swing.*;
