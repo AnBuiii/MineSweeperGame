@@ -45,6 +45,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private boolean hintMode;
     private int numFlag;
     private boolean isVictory;
+    private boolean isSave;
 
 
     ArrayList<History> playHistory;
@@ -113,6 +114,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         reviewStep = 0;
         numFlag = num_bombs;
         isVictory = true;
+        isSave = false;
 
     }
 
@@ -185,7 +187,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     }
     void openFinishGame(){
-        home.savingData(this);
+        if(!isSave) {
+            home.savingData(this);
+            isSave = true;
+        }
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory);
         finishGamePanel.setVisible(true);
