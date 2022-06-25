@@ -44,6 +44,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private int reviewStep;
     private boolean hintMode;
     private int numFlag;
+    private boolean isVictory;
 
 
     ArrayList<History> playHistory;
@@ -111,6 +112,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         hintMode = false;
         reviewStep = 0;
         numFlag = num_bombs;
+        isVictory = true;
 
     }
 
@@ -167,12 +169,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         boolean check;
         check = mineGrid.reveal(x, y);
         if (!check ) {
+            isVictory = false;
+            openFinishGame();
             mineGrid.revealAllCell();
             isFinish = true;
         }
-        if(isVictory()){
-            isFinish = true;
-        }
+        if(isVictory()) isFinish = true;
+
         if(isFinish && !reviewMode){
             openFinishGame();
         }
@@ -183,13 +186,14 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     }
     void openFinishGame(){
+        home.savingData(this);
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
-        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
+        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory);
         finishGamePanel.setVisible(true);
         finishGamePanel.addListener(this);
         finishGamePanel.setLocationRelativeTo(this);
         finishGamePanel.addEventButtonListener(this.home.getEventSoundButton());
-        if(isVictory()){
+        if(isVictory){
             home.playSoundWinGame();
         }else {
             home.playSoundLoseGame();
@@ -276,7 +280,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         home.reDrawHome();
         home.playStartGameMusic();
         home.setVisible(true);
-        home.savingData(this);
     }
 
     @Override
@@ -333,6 +336,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     public void openTutorial() {
         back();
         home.openTutorial();
+    }
+
+    @Override
+    public void openStatistic() {
+        back();
+        home.openStatistic();
     }
 
     public void startClock() {

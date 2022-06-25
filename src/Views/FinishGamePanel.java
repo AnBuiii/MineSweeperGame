@@ -190,6 +190,7 @@ public class FinishGamePanel extends JDialog implements IPanel {
                 dispose();
                 eventButton.playSoundClickButton();
                 listener.closeFinishGame();
+                if(isVictory) listener.openStatistic();
                 listener.openTutorial();
                 super.mouseClicked(e);
             }

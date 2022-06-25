@@ -295,6 +295,12 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         home.openTutorial();
     }
 
+    @Override
+    public void openStatistic() {
+        back();
+        home.openStatistic();
+    }
+
     public void killClock() {
         statusPanel.killClock();
     }
