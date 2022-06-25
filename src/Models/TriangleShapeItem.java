@@ -2,11 +2,11 @@ package Models;
 
 import java.awt.*;
 
-public class TriangleShapeItem {
-    private Shape triangleShape;
-    private Point a;
-    private Point b;
-    private Point c;
+public class    TriangleShapeItem {
+    private final Shape triangleShape;
+    private final Point a;
+    private final Point b;
+    private final Point c;
 
     public boolean isMouseMoved = false;
 
