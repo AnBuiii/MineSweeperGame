@@ -199,6 +199,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void startTriangleGame() {
         if(mineSweeperGame != null){
             mineSweeperGame.dispose();
+            mineSweeperGame.killClock();
             mineSweeperGame = null;
         }
         if(mineTriangleSweeperGame != null){
@@ -225,6 +226,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void startGame(GameDifficulty gameDifficulty) {
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
+            mineTriangleSweeperGame.killClock();
             mineTriangleSweeperGame = null;
 
         }
@@ -350,6 +352,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(mineTriangleSweeperGame != null){
             mineTriangleSweeperGame.dispose();
             mineTriangleSweeperGame = null;
+            mineTriangleSweeperGame.killClock();
 
         }
         if(mineSweeperGame != null){
