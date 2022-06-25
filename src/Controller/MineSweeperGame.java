@@ -170,7 +170,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         check = mineGrid.reveal(x, y);
         if (!check ) {
             isVictory = false;
-            openFinishGame();
             mineGrid.revealAllCell();
             isFinish = true;
         }
