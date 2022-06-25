@@ -137,6 +137,7 @@ public class StatusPanel extends JPanel implements IPanel {
         //flagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         flagLb.setFont(new Font("VNI", Font.PLAIN, 25));
+        flagLb.setForeground(Color.RED);
 
         //numFlagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 

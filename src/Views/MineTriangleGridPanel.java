@@ -75,6 +75,7 @@ public class MineTriangleGridPanel extends JPanel implements IPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         Font font = FONT;
         g2d.setFont(font);
+
         // vẽ
         for(int i = 0; i < this.gridHeight; i ++){
             for (int j = 0; j < this.gridWidth; j ++){
