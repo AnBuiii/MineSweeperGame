@@ -123,8 +123,14 @@ public class MineGrid implements Serializable {
     }
 
     public boolean isVictory(){
-        if(numCellPlayed == num_columns*num_rows - num_mines) return true;
-        return false;
+
+
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                if(!cells[i][j].isMine() && !cells[i][j].isRevealed()) return false;
+            }
+        }
+        return true;
     }
 
     public boolean isCellRevealed(int x, int y){
@@ -159,6 +165,7 @@ public class MineGrid implements Serializable {
 
     public void revealHint(int x, int y) {
         cells[x][y].setRevealed(true);
-        numCellPlayed++;
+        if(!cells[x][y].isMine()) numCellPlayed++;
+        System.out.println(numCellPlayed);
     }
 }
