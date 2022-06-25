@@ -259,34 +259,31 @@ public class Music implements Serializable { // implements Serializable để l�
             inGameMusic.close();
             startGameMusic = null;
         }
-        if(soundClickCell .isOpen()){
-            soundClickCell .stop();
-            soundClickCell .close();
-            soundClickCell  = null;
+        if(soundClickCell.isOpen()){
+            soundClickCell.stop();
+            soundClickCell.close();
+            soundClickCell = null;
         }
-        if( soundSocketFlag  .isOpen()){
-            soundSocketFlag  .stop();
-            soundSocketFlag  .close();
-            soundSocketFlag   = null;
+        if( soundSocketFlag.isOpen()){
+            soundSocketFlag.stop();
+            soundSocketFlag.close();
+            soundSocketFlag = null;
         }
-        if( soundClickButton  .isOpen()){
-            soundClickButton  .stop();
-            soundClickButton  .close();
-            soundClickButton   = null;
+        if( soundClickButton.isOpen()){
+            soundClickButton.stop();
+            soundClickButton.close();
+            soundClickButton = null;
         }
-        if( soundWinGame  .isOpen()){
-            soundWinGame .stop();
+        if( soundWinGame.isOpen()){
+            soundWinGame.stop();
             soundWinGame.close();
             soundWinGame = null;
         }
 
-        if( soundLoseGame .isOpen()){
-            soundLoseGame .stop();
-            soundLoseGame .close();
-            soundLoseGame  = null;
+        if( soundLoseGame.isOpen()){
+            soundLoseGame.stop();
+            soundLoseGame.close();
+            soundLoseGame = null;
         }
     }
-
-
-
 }

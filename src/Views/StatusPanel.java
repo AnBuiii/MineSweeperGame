@@ -65,7 +65,6 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void startClock() {
         stopClock = false;
-        System.out.println("ua");
     }
 
     public void killClock() {
@@ -82,6 +81,7 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public static class Clock extends Thread implements Serializable {
         public Clock(){	}
+
         public void run() {
             do {
                 if(!stopClock){
