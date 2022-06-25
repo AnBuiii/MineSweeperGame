@@ -103,6 +103,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
         statusPanel.addListener(this);
+        statusPanel.setParentFrame(this);
 
         setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         mineTriangleGridPanel = new MineTriangleGridPanel(num_rows, num_columns);
