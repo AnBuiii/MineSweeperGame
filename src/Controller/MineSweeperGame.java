@@ -324,6 +324,10 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             case 3:
                 home.startGame(GameDifficulty.EXPERT);
                 break;
+            case 0:
+                System.out.println("?");
+                home.startCustomGame(num_rows,num_columns,num_bombs);
+                break;
         }
     }
 
