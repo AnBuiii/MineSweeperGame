@@ -230,6 +230,12 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGrid.revealHint(x,y);
         if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
+        if(isVictory()){
+            isFinish = true;
+        }
+        if(isFinish && !reviewMode){
+            openFinishGame();
+        }
     }
 
     @Override
