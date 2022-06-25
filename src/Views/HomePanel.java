@@ -80,9 +80,12 @@ public class HomePanel extends JPanel implements IPanel {
     private boolean newGameBtnIsClick;
 
     public HomePanel(){
+
         init();
         addView();
         addEvent();
+
+
     }
 
     @Override
