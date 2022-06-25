@@ -203,11 +203,11 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         if(!mineGrid.isCellRevealed(x,y) && numFlag != 0){
             home.playSoundSocketFlag();
         }
-        if(!getListCell()[x][y].isFlagged() && numFlag ==0 ) return;
+        if(!getListCell()[x][y].isFlagged() && numFlag ==0 && !reviewMode ) return;
         mineGrid.flag(x, y);
         if(!getListCell()[x][y].isFlagged()) numFlag++;
         else numFlag--;
-        statusPanel.setNumFlag(numFlag);
+        if(!reviewMode)statusPanel.setNumFlag(numFlag);
 
         if(!reviewMode) playHistory.add(new History(x, y, 3));
         mineGridPanel.updateGrid();
@@ -257,7 +257,9 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         mineGridPanel.updateGrid();
         reviewStep--;
         for(int i = 0; i < reviewStep; i++){
-            reveal(playHistory.get(i).x, playHistory.get(i).y);
+            if(playHistory.get(i).move == 1) reveal(playHistory.get(i).x, playHistory.get(i).y);
+            if(playHistory.get(i).move == 2) revealHint(playHistory.get(i).x, playHistory.get(i).y);
+            if(playHistory.get(i).move == 3) flag(playHistory.get(i).x, playHistory.get(i).y);
         }
         mineGridPanel.mark(playHistory.get(reviewStep).x, playHistory.get(reviewStep).y);
     }
