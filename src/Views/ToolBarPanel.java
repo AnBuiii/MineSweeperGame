@@ -141,6 +141,7 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     private void openQuitGamePanel(){
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         QuitGamePanel quitGamePanel = new QuitGamePanel();
+        quitGamePanel.setLocationRelativeTo(parentFrame);
         quitGamePanel.setVisible(true);
         quitGamePanel.addListener(this);
         quitGamePanel.addEventButtonListener(eventButton);

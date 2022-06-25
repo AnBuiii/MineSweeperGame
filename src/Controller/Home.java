@@ -176,6 +176,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void openSetting() {
       Setting setting = new Setting();
+      setting.setLocationRelativeTo(this);
         setting.setVisible(true);
         setting.setHome(this);
         this.setVisible(false);
@@ -184,12 +185,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void openStatistic() {
         Statistics statistics = new Statistics(player);
+        statistics.setLocationRelativeTo(this);
         statistics.setVisible(true);
         statistics.setHome(this);
         this.setVisible(false);
     }
     public void openTutorial() {
         Tutorial tutorial = new Tutorial();
+        tutorial.setLocationRelativeTo(this);
         tutorial.setVisible(true);
         tutorial.setHome(this);
         this.setVisible(false);
