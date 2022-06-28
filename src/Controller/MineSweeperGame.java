@@ -113,7 +113,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         hintMode = false;
         reviewStep = 0;
         numFlag = num_bombs;
-        isVictory = true;
+        isVictory = false;
         isSave = false;
 
     }
@@ -222,7 +222,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         finishGamePanel.addListener(this);
         finishGamePanel.setLocationRelativeTo(this);
         finishGamePanel.addEventButtonListener(this.home.getEventSoundButton());
-        if(isVictory){
+        if(isVictory()){
             home.playSoundWinGame();
         }else {
             home.playSoundLoseGame();
