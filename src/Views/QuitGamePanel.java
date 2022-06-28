@@ -30,7 +30,7 @@ public class QuitGamePanel extends JDialog implements IPanel {
     @Override
     public void init() {
         getContentPane().setBackground(BACKGROUND);
-        setSize(400, 200);
+        setSize(380, 200);
         setUndecorated(true);
         setLocationRelativeTo(null);
         setLocation(getX(), getY()+10);
@@ -49,7 +49,7 @@ public class QuitGamePanel extends JDialog implements IPanel {
     @Override
     public void addView() {
         Font font = new Font("VNI", Font.PLAIN, 20);
-        closeBtn.setBounds(345,5,50,35);
+        closeBtn.setBounds(325,5,50,35);
         closeBtn.setFocusPainted(false);
         closeBtn.setFont(font);
         closeBtn.setText(CLOSE);
