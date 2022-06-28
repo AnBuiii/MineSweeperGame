@@ -184,7 +184,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 //
 //        int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
 //        statusPanel.updateStatus(numSquareClosed);
-        if(getListCell()[x][y].isRevealed()) return;
+        if(getListCell()[x][y].isRevealed() && isReviewMode()) return;
         if(!isReviewMode()){
             playHistory.add(new History(x, y, 1));
         }
@@ -216,7 +216,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
             isSave = true;
         }
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
-        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory);
+        FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
         finishGamePanel.setVisible(true);
         finishGamePanel.addListener(this);
         finishGamePanel.setLocationRelativeTo(this);
