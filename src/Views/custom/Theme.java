@@ -34,4 +34,5 @@ public class Theme {
     public final static Font FONT = new Font("VNI", Font.PLAIN, 18);
     public final static int CELL_SIZE = 40;
     public final static int STATUS_PANEL_HEIGHT = 60;
+    public final static String BACK_ARROW = "\u21BA";
 }

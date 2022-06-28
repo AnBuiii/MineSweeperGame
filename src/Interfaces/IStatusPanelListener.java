@@ -8,4 +8,6 @@ public interface IStatusPanelListener {
     void reviewNext();
 
     void reviewPrevious();
+
+    void reGame();
 }

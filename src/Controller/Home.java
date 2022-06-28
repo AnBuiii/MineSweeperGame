@@ -228,14 +228,12 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
         if(mineTriangleSweeperGame != null){
-            savingData(mineTriangleSweeperGame);
             mineTriangleSweeperGame.dispose();
             mineTriangleSweeperGame.killClock();
             mineTriangleSweeperGame = null;
 
         }
         if(mineSweeperGame != null){
-            savingData(mineSweeperGame);
             mineSweeperGame.dispose();
             mineSweeperGame.killClock();
             mineSweeperGame = null;

@@ -247,6 +247,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             home.savingData(this);
             isSave = true;
         }
+
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
         finishGamePanel.setVisible(true);

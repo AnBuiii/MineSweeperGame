@@ -47,6 +47,7 @@ public class StatusPanel extends JPanel implements IPanel {
     public static boolean stopClock;
     public int numFlag;
     public static Clock clock;
+    private boolean gameFinish;
     public StatusPanel(int numFlag) {
         this.numFlag = numFlag;
         init();
@@ -57,6 +58,7 @@ public class StatusPanel extends JPanel implements IPanel {
         sec = 0;
         min = 0;
         hour = 0;
+        gameFinish = false;
     }
 
     public int getTime() {
@@ -77,6 +79,12 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void setNumFlag(int numFlag) {
         numFlagLb.setText(String.valueOf(numFlag));
+    }
+
+    public void finishGame() {
+        hintBtn.setText(BACK_ARROW);
+        hintBtn.setFont(new Font("VNI", Font.PLAIN, 30));
+        gameFinish = true;
     }
 
     public static class Clock extends Thread implements Serializable {
@@ -231,10 +239,14 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                listener.hint();
-                hintMode = !hintMode;
-                if(hintMode) hintBtn.setForeground(new Color(255,255,0));
-                else hintBtn.setForeground(Color.BLACK);
+                if(!gameFinish) {
+                    listener.hint();
+                    hintMode = !hintMode;
+                    if (hintMode) hintBtn.setForeground(new Color(255, 255, 0));
+                    else hintBtn.setForeground(Color.BLACK);
+                } else {
+                    listener.reGame();
+                }
             }
 
             @Override
