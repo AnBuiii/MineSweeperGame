@@ -25,9 +25,9 @@ import static Views.custom.Theme.BOMB;
 public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlayListener, IStatusPanelListener, IFinishGameListener {
     private final int WINDOW_WIDTH;
     private final int WINDOW_HEIGHT;
-    private final int num_rows;
-    private final int num_columns;
-    private final int num_bombs;
+    public final int num_rows;
+    public final int num_columns;
+    public final int num_bombs;
     private boolean isFinish;
     private MineTriangleGridPanel mineTriangleGridPanel;
     private StatusPanel statusPanel;
@@ -38,6 +38,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     boolean hintMode;
     private int reviewStep;
     private int numFlag;
+    private boolean isSave;
 
 
     public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs) {
@@ -95,6 +96,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         reviewMode = false;
         hintMode = false;
         numFlag = num_bombs;
+        isSave = false;
     }
 
     @Override
@@ -136,6 +138,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reveal(int x, int y) {
+        if(getListCell()[x][y].isRevealed()) return;
         if(!isReviewMode()){
             playHistory.add(new History(x, y, 1));
         }
@@ -168,7 +171,8 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
         if(!mineTriangleGrid.isCellRevealed(x,y) && numFlag != 0){
             home.playSoundSocketFlag();
         }
-        if(!getListCell()[x][y].isFlagged() && numFlag == 0 && !reviewMode) return;
+        if((getListCell()[x][y].isRevealed() || numFlag == 0) && !reviewMode) return;
+
         if(!getListCell()[x][y].isFlagged()) numFlag--;
         else numFlag++;
         if(!reviewMode) statusPanel.setNumFlag(numFlag);
@@ -241,6 +245,10 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     }
     void openFinishGame(){
         //home.closeMusic();
+        if(!isSave) {
+            home.savingData(this);
+            isSave = true;
+        }
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
         finishGamePanel.setVisible(true);
@@ -307,5 +315,9 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     public void startClock() {
         statusPanel.startClock();
+    }
+
+    public int getTime() {
+        return statusPanel.getTime();
     }
 }

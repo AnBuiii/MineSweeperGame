@@ -116,21 +116,21 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             @Override
             public void windowClosing(WindowEvent e) {
 
-                try {
-                    closeMusic();
-                    MineSweeperGame save;
-                    FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
-                    ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
-                    if(mineSweeperGame!=null)
-                        if(!mineSweeperGame.isFinished()){
-                            save = mineSweeperGame;
-                            ojOut.writeObject(save);
-                            ojOut.close();
-                            fileOut.close();
-                        }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try {
+//                    closeMusic();
+//                    MineSweeperGame save;
+//                    FileOutputStream fileOut = new FileOutputStream("oldGame.txt");
+//                    ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+//                    if(mineSweeperGame!=null)
+//                        if(!mineSweeperGame.isFinished()){
+//                            save = mineSweeperGame;
+//                            ojOut.writeObject(save);
+//                            ojOut.close();
+//                            fileOut.close();
+//                        }
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
                 System.exit(1);
             }
         };
@@ -228,14 +228,17 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
         if(mineTriangleSweeperGame != null){
+            savingData(mineTriangleSweeperGame);
             mineTriangleSweeperGame.dispose();
             mineTriangleSweeperGame.killClock();
             mineTriangleSweeperGame = null;
 
         }
         if(mineSweeperGame != null){
+            savingData(mineSweeperGame);
             mineSweeperGame.dispose();
             mineSweeperGame.killClock();
+            mineSweeperGame = null;
         }
          mineSweeperGame = switch (gameDifficulty){
              case INTERMEDIATE -> new MineSweeperGame(16,16,40,2);
@@ -249,6 +252,34 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         mineSweeperGame.setVisible(true);
         playInGameMusic();
 
+    }
+
+    public void savingData(MineTriangleSweeperGame game) {
+        if(!game.isFinished()) return;
+        game.killClock();
+        System.out.println("saving...");
+        if(player == null){
+            player = new Player();
+        }
+        player.totalGames[4]++;
+        player.totalBomb[4] += game.num_bombs;
+        player.totalTime[4] += game.getTime();
+        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[4])){
+            player.shortestFinishTime[4] = game.getTime();
+        }
+        if(game.isVictory()) player.totalVictoryGame[4]++;
+        player.performance[4] = (float) player.totalVictoryGame[4]/(float) player.totalGames[4];
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
+            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+            ojOut.writeObject(player);
+            ojOut.close();
+            fileOut.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -272,14 +303,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(player == null){
             player = new Player();
         }
-        player.totalGames[game.gameMode]++;
-        player.totalBomb[game.gameMode] += game.num_bombs;
-        player.totalTime[game.gameMode] += game.getTime();
-        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
-            player.shortestFinishTime[game.gameMode] = game.getTime();
+        player.totalGames[4]++;
+        player.totalBomb[4] += game.num_bombs;
+        player.totalTime[4] += game.getTime();
+        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[4])){
+            player.shortestFinishTime[4] = game.getTime();
         }
-        if(game.isVictory()) player.totalVictoryGame[game.gameMode]++;
-        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode]/(float) player.totalGames[game.gameMode];
+        if(game.isVictory()) player.totalVictoryGame[4]++;
+        player.performance[4] = (float) player.totalVictoryGame[4]/(float) player.totalGames[4];
 
         try {
             FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
