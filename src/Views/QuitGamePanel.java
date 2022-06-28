@@ -77,7 +77,7 @@ public class QuitGamePanel extends JDialog implements IPanel {
         add(yesBtn);
 
         noBtn.setFont(new Font("VNI", Font.PLAIN, 20));
-        noBtn.setBounds(215,100,160,40);
+        noBtn.setBounds(205,100,160,40);
         noBtn.setFocusPainted(false);
          noBtn.setText("NO");
         noBtn.setHorizontalAlignment(SwingConstants.CENTER);
