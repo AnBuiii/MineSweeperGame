@@ -124,13 +124,8 @@ public class MineGrid implements Serializable {
 
     public boolean isVictory(){
 
-
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; j++) {
-                if(!cells[i][j].isMine() && !cells[i][j].isRevealed()) return false;
-            }
-        }
-        return true;
+        if(numCellPlayed == num_columns*num_rows - num_mines) return true;
+        return false;
     }
 
     public boolean isCellRevealed(int x, int y){

@@ -146,11 +146,9 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             home.playSoundClickCell();
         }
         if(mineTriangleGrid.numCellPlayed == 0) {
-            System.out.println("ok");
             mineTriangleGrid.firstMove(x, y);
         }
 
-        if(!mineTriangleGrid.isPlayed) mineTriangleGrid.firstMove(x, y);
         boolean check = mineTriangleGrid.reveal(x, y);
         if (!check ) {
             mineTriangleGrid.revealAllCell();
