@@ -192,7 +192,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 //
 //        int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
 //        statusPanel.updateStatus(numSquareClosed);
-        if(getListCell()[x][y].isRevealed() && !isReviewMode()) return;
+        if(isFinish && !isReviewMode()){
+            openFinishGame();
+            return;
+        }
+        if(getListCell()[x][y].isRevealed() && !isReviewMode()) {
+            return;
+        }
         if(!isReviewMode()){
             playHistory.add(new History(x, y, 1));
         }

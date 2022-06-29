@@ -301,14 +301,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(player == null){
             player = new Player();
         }
-        player.totalGames[4]++;
-        player.totalBomb[4] += game.num_bombs;
-        player.totalTime[4] += game.getTime();
-        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[4])){
-            player.shortestFinishTime[4] = game.getTime();
+        player.totalGames[game.gameMode]++;
+        player.totalBomb[game.gameMode] += game.num_bombs;
+        player.totalTime[game.gameMode] += game.getTime();
+        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
+            player.shortestFinishTime[game.gameMode] = game.getTime();
         }
-        if(game.isVictory()) player.totalVictoryGame[4]++;
-        player.performance[4] = (float) player.totalVictoryGame[4]/(float) player.totalGames[4];
+        if(game.isVictory()) player.totalVictoryGame[game.gameMode]++;
+        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode]/(float) player.totalGames[game.gameMode];
 
         try {
             FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
