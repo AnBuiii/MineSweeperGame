@@ -46,9 +46,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void init() {
          setSize(400,640);
          setUndecorated(true);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
+         setLocationRelativeTo(null);
+         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
 
 
         try {
@@ -400,9 +400,24 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     public void deletePlayer() {
         player = new Player();
-        Statistics statistics = new Statistics(player);
-        statistics.setVisible(true);
-        statistics.setHome(this);
+        try {
+            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
+            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+            ojOut.writeObject(player);
+            ojOut.close();
+            fileOut.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+
+//        Statistics statistics = new Statistics(player);
+//        statistics.setVisible(true);
+//        statistics.setHome(this);
+//        statistics.setLocationRelativeTo(this);
+        openStatistic();
     }
 
     @Override

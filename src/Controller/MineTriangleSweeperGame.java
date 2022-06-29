@@ -39,6 +39,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     private int reviewStep;
     private int numFlag;
     private boolean isSave;
+    JPanel frontPn;
 
 
     public MineTriangleSweeperGame(int num_rows, int num_columns, int num_bombs) {
@@ -101,6 +102,13 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void addView() {
+        frontPn = new JPanel();
+        frontPn.setBounds(0,0,WINDOW_WIDTH, WINDOW_HEIGHT);
+        add(frontPn);
+        frontPn.setOpaque(true);
+        frontPn.setBackground(new Color(0,0,0,100));
+        frontPn.setVisible(false);
+
         statusPanel = new StatusPanel(num_bombs);
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
@@ -247,6 +255,8 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
             home.savingData(this);
             isSave = true;
         }
+        statusPanel.finishGame();
+        frontPn.setVisible(true);
 
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
@@ -277,6 +287,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
     @Override
     public void closeFinishGame() {
         enable();
+        frontPn.setVisible(false);
         requestFocus();
     }
 
