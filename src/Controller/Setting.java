@@ -50,12 +50,12 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     }
     @Override
     public void back() {
+        home.setVisible(true);
         this.setVisible(false);
         //home.reDrawHome();
         home.unTargetSettingLb();
         home.setDim();
         home.setEnabled(true);
-        home.setVisible(true);
     }
 
     @Override

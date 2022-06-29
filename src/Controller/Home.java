@@ -314,9 +314,11 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         player.totalGames[game.gameMode]++;
         player.totalBomb[game.gameMode] += game.num_bombs;
         player.totalTime[game.gameMode] += game.getTime();
-        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
+        if(player.shortestFinishTime[game.gameMode] ==0) player.shortestFinishTime[game.gameMode] = game.getTime();
+        else if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
             player.shortestFinishTime[game.gameMode] = game.getTime();
         }
+
         if(game.isVictory()) player.totalVictoryGame[game.gameMode]++;
         player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode]/(float) player.totalGames[game.gameMode];
 
