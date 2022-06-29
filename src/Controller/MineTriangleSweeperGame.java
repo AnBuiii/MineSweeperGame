@@ -146,7 +146,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void reveal(int x, int y) {
-        if(getListCell()[x][y].isRevealed() && isReviewMode() ) return;
+        if(getListCell()[x][y].isRevealed() && !isReviewMode()) return;
         if(!isReviewMode()){
             playHistory.add(new History(x, y, 1));
         }
@@ -174,6 +174,7 @@ public class MineTriangleSweeperGame extends JFrame implements IPanel, IGamePlay
 
     @Override
     public void flag(int x, int y) {
+        if(getListCell()[x][y].isRevealed() && !isReviewMode()) return;
         if(!mineTriangleGrid.isCellRevealed(x,y) && numFlag != 0){
             home.playSoundSocketFlag();
         }
