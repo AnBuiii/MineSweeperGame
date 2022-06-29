@@ -123,7 +123,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         WindowListener wd = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-
 //                try {
 //                    closeMusic();
 //                    MineSweeperGame save;
