@@ -26,7 +26,7 @@ public class Theme {
     public final static String SETTING = "\u2699";
     public final static String HINT = "\uD83D\uDCA1";
     public final static Color FOREGROUND = new Color(239,235,232);
-    public final static Color BACKGROUND = new Color(81,116,47,255);
+    public final static Color BACKGROUND = new Color(104,159,57);
 
     public final static String RIGHT_ARROW = "\u25B6";
     public final static String LEFT_ARROW = "\u25C0";
