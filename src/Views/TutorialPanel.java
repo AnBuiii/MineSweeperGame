@@ -59,7 +59,7 @@ public class TutorialPanel extends JPanel implements IPanel {
                 "\nCells suspected of being mines can be marked with a flag using the right mouse button.",JLabel.CENTER);*/
         String textTutorial ="Some terms:" +
                 "\nFlag: Put a flag in a zone when you have confirmed that there is a mine. " +
-                "\nHint: When you use hint, if you open a clock which is mine, you will not lose. But you just can use the 3 times." +
+                "\nHint: When you use hint, if you open a square which is mine, you will not lose. But you just can use the 3 times." +
                 "\nSafe squares have numbers telling you how many mines touch the square. " +
                 "\nYou can use the number clues to solve the game by opening all of the safe squares. If you click on a mine you lose the game! " +
                 "\nYou open squares with the left mouse button and put flags on mines with the right mouse button. " +

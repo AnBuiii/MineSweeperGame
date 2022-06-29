@@ -144,6 +144,7 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
         home.setEnabled(false);
 
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
+        JPanel hm = new JPanel();
         QuitGamePanel quitGamePanel = new QuitGamePanel();
         quitGamePanel.setLocationRelativeTo(home);
         quitGamePanel.setVisible(true);

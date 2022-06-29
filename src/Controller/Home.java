@@ -47,9 +47,9 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void init() {
          setSize(400,640);
          setUndecorated(true);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
+         setLocationRelativeTo(null);
+         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
 
 
         try {
@@ -311,14 +311,14 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         if(player == null){
             player = new Player();
         }
-        player.totalGames[4]++;
-        player.totalBomb[4] += game.num_bombs;
-        player.totalTime[4] += game.getTime();
-        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[4])){
-            player.shortestFinishTime[4] = game.getTime();
+        player.totalGames[game.gameMode]++;
+        player.totalBomb[game.gameMode] += game.num_bombs;
+        player.totalTime[game.gameMode] += game.getTime();
+        if(game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])){
+            player.shortestFinishTime[game.gameMode] = game.getTime();
         }
-        if(game.isVictory()) player.totalVictoryGame[4]++;
-        player.performance[4] = (float) player.totalVictoryGame[4]/(float) player.totalGames[4];
+        if(game.isVictory()) player.totalVictoryGame[game.gameMode]++;
+        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode]/(float) player.totalGames[game.gameMode];
 
         try {
             FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
@@ -410,9 +410,24 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     public void deletePlayer() {
         player = new Player();
-        Statistics statistics = new Statistics(player);
-        statistics.setVisible(true);
-        statistics.setHome(this);
+        try {
+            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
+            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+            ojOut.writeObject(player);
+            ojOut.close();
+            fileOut.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+
+//        Statistics statistics = new Statistics(player);
+//        statistics.setVisible(true);
+//        statistics.setHome(this);
+//        statistics.setLocationRelativeTo(this);
+        openStatistic();
     }
     public void setDim(){
         opacity.setVisible(!opacity.isVisible());

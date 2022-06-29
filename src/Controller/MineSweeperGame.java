@@ -46,6 +46,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     private int numFlag;
     private boolean isVictory;
     private boolean isSave;
+    JPanel frontPn;
 
 
     ArrayList<History> playHistory;
@@ -120,6 +121,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void addView() {
+        frontPn = new JPanel();
+        frontPn.setBounds(0,0,WINDOW_WIDTH, WINDOW_HEIGHT);
+        add(frontPn);
+        frontPn.setOpaque(true);
+        frontPn.setBackground(new Color(0,0,0,100));
+        frontPn.setVisible(false);
+
         statusPanel = new StatusPanel(num_bombs);
         statusPanel.setBounds(0, 0, WINDOW_WIDTH, STATUS_PANEL_HEIGHT);
         add(statusPanel);
@@ -184,7 +192,13 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 //
 //        int numSquareClosed = mineGridPanel.getNumCellUnRevealed();
 //        statusPanel.updateStatus(numSquareClosed);
-        if(getListCell()[x][y].isRevealed() && isReviewMode()) return;
+        if(isFinish && !isReviewMode()){
+            openFinishGame();
+            return;
+        }
+        if(getListCell()[x][y].isRevealed() && !isReviewMode()) {
+            return;
+        }
         if(!isReviewMode()){
             playHistory.add(new History(x, y, 1));
         }
@@ -211,11 +225,15 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     }
     void openFinishGame(){
+        hintMode = false;
         if(!isSave) {
             home.savingData(this);
             isSave = true;
         }
         statusPanel.finishGame();
+        frontPn.setVisible(true);
+
+
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         FinishGamePanel finishGamePanel = new FinishGamePanel(isVictory());
         finishGamePanel.setVisible(true);
@@ -232,11 +250,11 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void flag(int x, int y) {
-
+        if(getListCell()[x][y].isRevealed() && !isReviewMode()) return;
+        if(!getListCell()[x][y].isFlagged() && numFlag ==0 && !reviewMode ) return;
         if(!mineGrid.isCellRevealed(x,y) && numFlag != 0){
             home.playSoundSocketFlag();
         }
-        if(!getListCell()[x][y].isFlagged() && numFlag ==0 && !reviewMode ) return;
         mineGrid.flag(x, y);
         if(!getListCell()[x][y].isFlagged()) numFlag++;
         else numFlag--;
@@ -259,11 +277,23 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void revealHint(int x, int y) {
+        if(isFinish && !reviewMode){
+            openFinishGame();
+            return;
+        }
         if(getListCell()[x][y].isRevealed()) return;
         home.playSoundClickCell();
         mineGrid.revealHint(x,y);
         if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
+        if(getListCell()[x][y].isMine() && !reviewMode){
+            numFlag--;
+            statusPanel.setNumFlag(numFlag);
+            if(getListCell()[x][y].isFlagged){
+                numFlag++;
+                statusPanel.setNumFlag(numFlag);
+            }
+        }
         if(isVictory()){
             isFinish = true;
         }
@@ -333,6 +363,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
     @Override
     public void closeFinishGame() {
         enable();
+        frontPn.setVisible(false);
         requestFocus();
     }
 

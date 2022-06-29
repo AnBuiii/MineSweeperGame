@@ -31,7 +31,6 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
     public void init() {
         setSize(WIDTH, HEIGHT);
         setUndecorated(true);
-        setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
