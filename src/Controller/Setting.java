@@ -11,8 +11,8 @@ import static Views.custom.Theme.ARCH_FORM;
 import static Views.custom.Theme.ARCW_FORM;
 
 public class Setting extends JFrame implements IPanel, ISettingPanelListener {
-    public static int WIDTH = 400;
-    public static int HEIGHT = 600;
+    public static int WIDTH = 350;
+    public static int HEIGHT = 260;
     public Home home;
     SettingPanel settingPanel;
 
@@ -52,6 +52,9 @@ public class Setting extends JFrame implements IPanel, ISettingPanelListener {
     public void back() {
         this.setVisible(false);
         //home.reDrawHome();
+        home.unTargetSettingLb();
+        home.setDim();
+        home.setEnabled(true);
         home.setVisible(true);
     }
 

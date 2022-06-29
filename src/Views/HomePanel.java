@@ -78,6 +78,7 @@ public class HomePanel extends JPanel implements IPanel {
     private RotateLabel bombArt;
     private JLabel settingLb;
     private boolean newGameBtnIsClick;
+    private boolean isSettingClicked;
 
     public HomePanel(){
 
@@ -100,6 +101,7 @@ public class HomePanel extends JPanel implements IPanel {
         bombArt = new RotateLabel(BOMB);
         newGameBtnIsClick = false;
         settingLb = new JLabel(SETTING);
+        isSettingClicked = false;
 
     }
 
@@ -186,6 +188,7 @@ public class HomePanel extends JPanel implements IPanel {
 
     }
 
+
     @Override
     public void addEvent() {
 
@@ -200,12 +203,15 @@ public class HomePanel extends JPanel implements IPanel {
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                unTarget(settingLb);
+                if(!isSettingClicked){
+                   unTarget(settingLb);
+                }
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                isSettingClicked = true;
                 eventButton.playSoundClickButton();
                 listener.openSetting();
             }
@@ -347,5 +353,9 @@ public class HomePanel extends JPanel implements IPanel {
     }
     public void addEventButtonListener(ISoundEventButton eventButton){
         this.eventButton = eventButton;
+    }
+    public void reTargetSettingLb(){
+        isSettingClicked = false;
+        unTarget(settingLb);
     }
 }

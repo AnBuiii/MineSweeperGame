@@ -1,10 +1,10 @@
 package Views;
 
+import Controller.Home;
 import Interfaces.IPanel;
 import Interfaces.IQuitGamePanelListener;
 import Interfaces.ISoundEventButton;
 import Interfaces.IToolBarListener;
-import org.w3c.dom.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,6 @@ import static Views.custom.Theme.*;
 public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListener {
     private static JLabel minimizeLb;
     private JLabel closeLb;
-    private GridBagConstraints gbc;
 
     private int xDrag;
     private int yDrag;
@@ -25,7 +24,7 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     private int xPress;
     private int yPress;
 
-    private JFrame parentFrame;
+    private Home home;
     private ISoundEventButton eventButton;
     private IToolBarListener listener;
     public ToolBarPanel() {
@@ -44,6 +43,7 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     }
     @Override
     public void addView() {
+
 
         minimizeLb.setFont(new Font("VNI", Font.PLAIN, 25));
 
@@ -77,7 +77,7 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
                 super.mouseDragged(e);
                 xDrag = e.getX();
                 yDrag = e.getY();
-                parentFrame.setLocation(parentFrame.getLocation().x+xDrag-xPress, parentFrame.getLocation().y+yDrag-yPress);
+                home.setLocation(home.getLocation().x+xDrag-xPress, home.getLocation().y+yDrag-yPress);
 
             }
 
@@ -139,13 +139,17 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     }
 
     private void openQuitGamePanel(){
+
+        home.setDim();
+        home.setEnabled(false);
+
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
         QuitGamePanel quitGamePanel = new QuitGamePanel();
-        quitGamePanel.setLocationRelativeTo(parentFrame);
+        quitGamePanel.setLocationRelativeTo(home);
         quitGamePanel.setVisible(true);
         quitGamePanel.addListener(this);
         quitGamePanel.addEventButtonListener(eventButton);
-        parentFrame.setEnabled(false);
+
     }
 
     public void addListener(IToolBarListener event) {
@@ -168,18 +172,20 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     }
 
 
-    public void setParentFrame(JFrame jFrame){
-        this.parentFrame = jFrame;
+    public void setHome(Home home){
+        this.home = home;
     }
 
     @Override
     public void closeBtnClicked() {
-        parentFrame.setEnabled(true);
+        home.setDim();
+        home.setEnabled(true);
     }
 
     @Override
     public void noBtnClicked() {
-        parentFrame.setEnabled(true);
+        home.setDim();
+        home.setEnabled(true);
     }
 
     @Override

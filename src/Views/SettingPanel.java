@@ -78,7 +78,7 @@ public class SettingPanel extends JPanel implements IPanel {
         backBtn.setForeground(Color.BLACK);
 
         windowName.setText("SETTINGS");
-        windowName.setFont(new Font("VNI", Font.BOLD, 30));
+        windowName.setFont(new Font("VNI", Font.BOLD, 25));
         windowName.setForeground(BACKGROUND);
 
         nameSoundMusicLb.setText("Musics");
@@ -96,8 +96,8 @@ public class SettingPanel extends JPanel implements IPanel {
         displayPn.setBackground(FOREGROUND);
 
         backBtn.setBounds(10,10,30,30);
-        windowName.setBounds(130,10,200,30);
-        displayPn.setBounds(40,80, Setting.WIDTH -80,Setting.HEIGHT - 300);
+        windowName.setBounds(110,10,200,30);
+        displayPn.setBounds(40,0, Setting.WIDTH -80,Setting.HEIGHT);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -170,6 +170,7 @@ public class SettingPanel extends JPanel implements IPanel {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
                 listener.back();
+
             }
         });
 

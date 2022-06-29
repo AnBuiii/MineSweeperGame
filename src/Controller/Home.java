@@ -30,6 +30,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private MineTriangleSweeperGame mineTriangleSweeperGame;
     private Player player;
 
+    private JPanel opacity;
     public Music musicGame = new Music();;
     private Clip musicPlayer;
 
@@ -81,12 +82,17 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     @Override
     public void addView() {
 
+        opacity = new JPanel();
+        opacity.setBounds(0, 0, getWidth(), getHeight());
+        opacity.setVisible(false);
+        opacity.setBackground(new Color(0,0,0,100));
+
         toolBarPanel = new ToolBarPanel();
         toolBarPanel.setBounds(0,0,400,40);
         toolBarPanel.setBackground(BACKGROUND);
         toolBarPanel.addListener(this);
         toolBarPanel.addEventButtonListener(this);
-        toolBarPanel.setParentFrame(this);
+        toolBarPanel.setHome(this);
 
 
         homePanel = new HomePanel();
@@ -103,11 +109,13 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         newGameMenu.addListener(this);
         newGameMenu.addEventButtonListener(this);
 
+        add(opacity);
         add(toolBarPanel);
         add(newGameMenu);
         add(homePanel);
 
     }
+
 
     @Override
     public void addEvent() {
@@ -175,11 +183,13 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void openSetting() {
+        setDim();
+        setEnabled(false);
       Setting setting = new Setting();
       setting.setLocationRelativeTo(this);
         setting.setVisible(true);
         setting.setHome(this);
-        this.setVisible(false);
+      //  this.setVisible(false);
     }
 
     @Override
@@ -403,6 +413,13 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         Statistics statistics = new Statistics(player);
         statistics.setVisible(true);
         statistics.setHome(this);
+    }
+    public void setDim(){
+        opacity.setVisible(!opacity.isVisible());
+    }
+    public void unTargetSettingLb(){
+        homePanel.reTargetSettingLb();
+
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Statistics extends JFrame implements IPanel, IStatisticPanelListene
     public static int HEIGHT = 500;
     public Home home;
     private Player player;
-            private StatisticsPanel statisticspanel;
+    private StatisticsPanel statisticspanel;
 
 
     Statistics(Player player){
