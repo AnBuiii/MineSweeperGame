@@ -225,6 +225,7 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     }
     void openFinishGame(){
+        hintMode = false;
         if(!isSave) {
             home.savingData(this);
             isSave = true;
@@ -276,11 +277,23 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
 
     @Override
     public void revealHint(int x, int y) {
+        if(isFinish && !reviewMode){
+            openFinishGame();
+            return;
+        }
         if(getListCell()[x][y].isRevealed()) return;
         home.playSoundClickCell();
         mineGrid.revealHint(x,y);
         if(!reviewMode) playHistory.add(new History(x, y, 2));
         mineGridPanel.updateGrid();
+        if(getListCell()[x][y].isMine() && !reviewMode){
+            numFlag--;
+            statusPanel.setNumFlag(numFlag);
+            if(getListCell()[x][y].isFlagged){
+                numFlag++;
+                statusPanel.setNumFlag(numFlag);
+            }
+        }
         if(isVictory()){
             isFinish = true;
         }
