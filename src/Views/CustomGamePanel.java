@@ -39,11 +39,6 @@ public class CustomGamePanel extends JDialog implements IPanel {
         setResizable(true);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLayout(null);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         closeBtn = new JLabel("x");
         newGameLb = new JLabel("New Game");
         rowLb = new JLabel("Rows");

@@ -29,11 +29,6 @@ public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
         setLayout(null);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 

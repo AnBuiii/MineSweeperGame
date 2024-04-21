@@ -104,11 +104,6 @@ public class MineSweeperGame extends JFrame implements IPanel, IGamePlayListener
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
         setLayout(null);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         isFinish = false;
         reviewMode = false;
         hintMode = false;

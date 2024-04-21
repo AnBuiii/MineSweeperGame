@@ -42,11 +42,6 @@ public class FinishGamePanel extends JDialog implements IPanel {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),  ARCW_FORM, ARCH_FORM));
         setLayout(null);
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         closeBtn = new JLabel(CLOSE);
         result1Lb = new JLabel();
         result2Lb = new JLabel();
