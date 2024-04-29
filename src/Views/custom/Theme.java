@@ -15,8 +15,9 @@ public class Theme {
     public final static String BACK = "\u2190";
     public final static String CLOCK =  "⏰";
 
-    public final static String MINIMIZE = "\uD83D\uDDD5";
-    public final static String CLOSE = "\u2716";
+    public final static String MINIMIZE = "\u1F4A3";
+    public final static String MINUS = "_";
+    public final static String CLOSE = "✖";
 
     public final static String SMILE =  "\uD83D\uDE01";
     public final static String CRY = "\uD83D\uDE22";
@@ -28,8 +29,8 @@ public class Theme {
     public final static Color FOREGROUND = new Color(239,235,232);
     public final static Color BACKGROUND = new Color(104,159,57);
 
-    public final static String RIGHT_ARROW = "\u25B6";
-    public final static String LEFT_ARROW = "\u25C0";
+    public final static String RIGHT_ARROW = "▶";
+    public final static String LEFT_ARROW = "◀";
 
     public final static Font FONT = new Font("VNI", Font.PLAIN, 18);
     public final static int CELL_SIZE = 40;

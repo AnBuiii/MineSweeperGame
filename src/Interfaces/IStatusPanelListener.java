@@ -1,5 +1,7 @@
 package Interfaces;
 
+import DesignPattern.GameState.State;
+
 public interface IStatusPanelListener {
     void back();
     void hint();
@@ -10,4 +12,6 @@ public interface IStatusPanelListener {
     void reviewPrevious();
 
     void reGame();
+
+    State getGameState();
 }

@@ -37,7 +37,12 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
     public void init() {
         setLayout(null);
         setBackground(BACKGROUND);
-        minimizeLb = new JLabel(MINIMIZE);
+        System.out.println(System.getProperty("os.name") + "asd");
+        if (System.getProperty("os.name").equals("Windows 10")) {
+            minimizeLb = new JLabel(MINIMIZE);
+        } else {
+            minimizeLb = new JLabel(MINUS);
+        }
         closeLb = new JLabel(CLOSE);
 
     }
@@ -64,7 +69,6 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
 
         add(closeLb);
         add(minimizeLb);
-
 
     }
 
@@ -144,7 +148,6 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
         home.setEnabled(false);
 
         this.setForeground(new Color(1.0f,1.0f,1.0f,0));
-        JPanel hm = new JPanel();
         QuitGamePanel quitGamePanel = new QuitGamePanel();
         quitGamePanel.setLocationRelativeTo(home);
         quitGamePanel.setVisible(true);
@@ -194,3 +197,4 @@ public class ToolBarPanel extends JPanel implements IPanel, IQuitGamePanelListen
         listener.quitGame();
     }
 }
+

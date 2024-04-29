@@ -2,7 +2,7 @@ package Models;
 
 import java.awt.*;
 
-public class    TriangleShapeItem {
+public class TriangleShapeItem {
     private final Shape triangleShape;
     private final Point a;
     private final Point b;

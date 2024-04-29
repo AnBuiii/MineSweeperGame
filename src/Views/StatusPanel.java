@@ -14,7 +14,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.Serializable;
 import java.lang.Thread;
 
-import static Models.MineGrid.num_mines;
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
@@ -48,6 +47,7 @@ public class StatusPanel extends JPanel implements IPanel {
     public int numFlag;
     public static Clock clock;
     private boolean gameFinish;
+
     public StatusPanel(int numFlag) {
         this.numFlag = numFlag;
         init();
@@ -62,7 +62,7 @@ public class StatusPanel extends JPanel implements IPanel {
     }
 
     public int getTime() {
-        return (int) (sec + min*60 + hour*3600);
+        return (int) (sec + min * 60 + hour * 3600);
     }
 
     public void startClock() {
@@ -85,26 +85,26 @@ public class StatusPanel extends JPanel implements IPanel {
         hintBtn.setText(BACK_ARROW);
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 30));
         gameFinish = true;
+        clock.stop();
     }
 
     public static class Clock extends Thread implements Serializable {
-        public Clock(){	}
+        public Clock() {
+        }
 
         public void run() {
             do {
-                if(!stopClock){
+                if (!stopClock) {
                     sec++;
-                    if (sec==60)
-                    {
-                        min+=1;
-                        sec=1;
+                    if (sec == 60) {
+                        min += 1;
+                        sec = 1;
                     }
-                    if (min==60)
-                    {
-                        hour+=1;
-                        min=1;
+                    if (min == 60) {
+                        hour += 1;
+                        min = 1;
                     }
-                    String S = String.valueOf(  + hour+ ":" + min +":"+ sec);
+                    String S = String.valueOf(+hour + ":" + min + ":" + sec);
                     timeLb.setText(S);
                 }
                 try {
@@ -129,13 +129,13 @@ public class StatusPanel extends JPanel implements IPanel {
         timeLb = new JLabel();
         clock = new Clock();
         clock.start();
-        if (MineSweeperGame.isFinish)
-        {
+        if (MineSweeperGame.isFinish) {
             clock.stop();
         }
         hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
+
     @Override
     public void addView() {
         //backBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -168,16 +168,16 @@ public class StatusPanel extends JPanel implements IPanel {
         gbc.fill = GridBagConstraints.CENTER;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(backBtn,gbc);
+        add(backBtn, gbc);
 
         gbc.gridx = 1;
         add(new JLabel(), gbc);
 
         gbc.gridx = 2;
-        add(flagLb,gbc);
+        add(flagLb, gbc);
 
         gbc.gridx = 3;
-        add(numFlagLb,gbc);
+        add(numFlagLb, gbc);
 
         gbc.gridx = 4;
         add(new JLabel(), gbc);
@@ -193,38 +193,36 @@ public class StatusPanel extends JPanel implements IPanel {
 
         gbc.gridx = 8;
         add(hintBtn, gbc);
-
-
     }
 
     @Override
     public void addEvent() {
-       this.addMouseMotionListener(new MouseMotionAdapter() {
-           @Override
-           public void mouseDragged(MouseEvent e) {
-               super.mouseDragged(e);
-               xDrag = e.getX();
-               yDrag = e.getY();
-               parentFrame.setLocation(parentFrame.getLocation().x+xDrag-xPress, parentFrame.getLocation().y+yDrag-yPress);
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                xDrag = e.getX();
+                yDrag = e.getY();
+                parentFrame.setLocation(parentFrame.getLocation().x + xDrag - xPress, parentFrame.getLocation().y + yDrag - yPress);
+            }
 
-           }
-
-           @Override
-           public void mouseMoved(MouseEvent e) {
-               super.mouseMoved(e);
-               xPress = e.getX();
-               yPress = e.getY();
-           }
-       });
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+                xPress = e.getX();
+                yPress = e.getY();
+            }
+        });
         backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 eventButton.playSoundHoverButton();
                 target(backBtn);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(backBtn);
             }
-            @Override
+
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
@@ -239,7 +237,7 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                if(!gameFinish) {
+                if (!gameFinish) {
                     listener.hint();
                     hintMode = !hintMode;
                     if (hintMode) hintBtn.setForeground(new Color(255, 255, 0));
@@ -259,7 +257,7 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                if(!hintMode) unTarget(hintBtn);
+                if (!hintMode) unTarget(hintBtn);
             }
         });
 
@@ -269,7 +267,8 @@ public class StatusPanel extends JPanel implements IPanel {
         listener = event;
 
     }
-    public void addEventButtonListener(ISoundEventButton eventButton){
+
+    public void addEventButtonListener(ISoundEventButton eventButton) {
         this.eventButton = eventButton;
     }
 
@@ -289,7 +288,8 @@ public class StatusPanel extends JPanel implements IPanel {
         }*/
 
     }
-    public void reviewMode(){
+
+    public void reviewMode() {
         clockLb.setText(RIGHT_ARROW);
         timeLb.setVisible(false);
         flagLb.setVisible(false);
@@ -299,7 +299,7 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                listener.reviewNext();
+                listener.getGameState().reviewNext();
             }
 
             @Override
@@ -320,7 +320,7 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                listener.reviewPrevious();
+                listener.getGameState().reviewPrevious();
             }
 
             @Override
@@ -338,19 +338,23 @@ public class StatusPanel extends JPanel implements IPanel {
         });
 
     }
-    private void target(Component c){
+
+    private void target(Component c) {
         c.setForeground(Color.RED);
     }
-    private void unTarget(Component c){
+
+    private void unTarget(Component c) {
         c.setForeground(Color.BLACK);
     }
-    private void targetHint(Component c){
-        c.setForeground(new Color(255,255,0));
+
+    private void targetHint(Component c) {
+        c.setForeground(new Color(255, 255, 0));
     }
 
-    public void setParentFrame(JFrame jFrame){
+    public void setParentFrame(JFrame jFrame) {
         this.parentFrame = jFrame;
     }
+
     public void load() {
         addEvent();
     }

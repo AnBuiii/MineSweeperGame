@@ -1,5 +1,6 @@
 package Interfaces;
 
+import DesignPattern.GameState.State;
 import Models.Cell;
 public interface IGamePlayListener {
     Cell[][] getListCell();
@@ -12,4 +13,6 @@ public interface IGamePlayListener {
     boolean isHintMode();
 
     void revealHint(int x, int y);
+
+    State getGameState();
 }

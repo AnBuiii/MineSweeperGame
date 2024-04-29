@@ -5,10 +5,8 @@ import Controller.MineSweeperGame;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Models.Cell;
-import Models.MineGrid;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,7 +17,8 @@ public class MineGridPanel extends JPanel implements IPanel {
     private int num_rows;
     private int num_columns;
     private Label[][] lbCell;
-    private IGamePlayListener listener;
+    private IGamePlayListener listener; //
+    private MineSweeperGame game;
 
     private ISoundEventButton eventButton;
     private int numCellUnRevealed;
@@ -31,7 +30,8 @@ public class MineGridPanel extends JPanel implements IPanel {
         addView();
         addEvent();
     }
-    public MineGridPanel(MineGridPanel old){
+
+    public MineGridPanel(MineGridPanel old) {
 
     }
 
@@ -43,14 +43,14 @@ public class MineGridPanel extends JPanel implements IPanel {
     @Override
     public void addView() {
         lbCell = new Label[num_rows][num_columns];
-        for (int    i = 0; i < lbCell.length; i++) {
+        for (int i = 0; i < lbCell.length; i++) {
             for (int j = 0; j < lbCell[0].length; j++) {
                 lbCell[i][j] = new Label();
                 lbCell[i][j].setOpaque(true);
-                if((i + j) % 2 == 0){
-                    lbCell[i][j].setBackground(new Color(169,207,81));
+                if ((i + j) % 2 == 0) {
+                    lbCell[i][j].setBackground(new Color(169, 207, 81));
                 } else {
-                    lbCell[i][j].setBackground(new Color(176,213,88));
+                    lbCell[i][j].setBackground(new Color(176, 213, 88));
                 }
                 lbCell[i][j].setHorizontalAlignment(JLabel.CENTER);
                 lbCell[i][j].setVerticalAlignment(JLabel.CENTER);
@@ -68,37 +68,36 @@ public class MineGridPanel extends JPanel implements IPanel {
                 lbCell[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        if(listener.isReviewMode()) return;
+                        if (listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
                         if (e.getButton() == MouseEvent.BUTTON1) {
-                            if(listener.isHintMode()) listener.revealHint(label.x, label.y);
-                            else listener.reveal(label.x, label.y);
+                            if (listener.isHintMode()) listener.revealHint(label.x, label.y);
+                            else listener.getGameState().reveal(label.x, label.y);
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
-                            listener.flag(label.x, label.y);
+                            listener.getGameState().flag(label.x, label.y);
                         }
                     }
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         super.mouseEntered(e);
-                        if(listener.isReviewMode()) return;
+                        if (listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
-                        if(!listener.getListCell()[label.x][label.y].isRevealed()){
-                            label.setBackground(new Color(195,223,129));
+                        if (!listener.getListCell()[label.x][label.y].isRevealed()) {
+                            label.setBackground(new Color(195, 223, 129));
                         }
                     }
 
                     @Override
                     public void mouseExited(MouseEvent e) {
                         super.mouseExited(e);
-                        if(listener.isReviewMode()) return;
+                        if (listener.isReviewMode()) return;
                         Label label = (Label) e.getComponent();
-                        if(!listener.getListCell()[label.x][label.y].isRevealed()){
-                           // label.setBackground(new Color(195,223,129));
-                            if((label.x + label.y) % 2 == 0){
-                                label.setBackground(new Color(169,207,81));
+                        if (!listener.getListCell()[label.x][label.y].isRevealed()) {
+                            if ((label.x + label.y) % 2 == 0) {
+                                label.setBackground(new Color(169, 207, 81));
                             } else {
-                                label.setBackground(new Color(176,213,88));
+                                label.setBackground(new Color(176, 213, 88));
                             }
                         }
                     }
@@ -110,7 +109,8 @@ public class MineGridPanel extends JPanel implements IPanel {
     public void addListener(IGamePlayListener event) {
         listener = event;
     }
-    public void addSoundEventButton(ISoundEventButton eventButton){
+
+    public void addSoundEventButton(ISoundEventButton eventButton) {
         eventButton = eventButton;
     }
 
@@ -125,10 +125,10 @@ public class MineGridPanel extends JPanel implements IPanel {
                 lbCell[i][j].removeAll();
                 lbCell[i][j].setForeground(Color.BLACK);
                 if (!listCell[i][j].isRevealed()) {
-                    if((i + j) % 2 == 0){
-                        lbCell[i][j].setBackground(new Color(169,207,81));
+                    if ((i + j) % 2 == 0) {
+                        lbCell[i][j].setBackground(new Color(169, 207, 81));
                     } else {
-                        lbCell[i][j].setBackground(new Color(176,213,88));
+                        lbCell[i][j].setBackground(new Color(176, 213, 88));
                     }
                     numCellUnRevealed++;
                     if (!listCell[i][j].isFlagged()) {
@@ -137,8 +137,7 @@ public class MineGridPanel extends JPanel implements IPanel {
                         lbCell[i][j].setText(FLAG); // 'flag'
                         lbCell[i][j].setForeground(Color.red);
                     }
-                }
-                else {
+                } else {
                     if (listCell[i][j].isMine()) {
                         lbCell[i][j].setText(BOMB); // 'bomb'
                     } else {
@@ -159,58 +158,61 @@ public class MineGridPanel extends JPanel implements IPanel {
                             }
                         }
                     }
-                    
-                    int a= 0, b= 0, c= 0, d = 0;
-                    if(i>0) if(!listCell[i-1][j].isRevealed()) a = 3;
-                    if(j>0) if(!listCell[i][j-1].isRevealed()) b = 3;
-                    if(i<num_rows-1) if(!listCell[i+1][j].isRevealed()) c = 3;
-                    if(j<num_columns-1) if(!listCell[i][j+1].isRevealed()) d = 3;
-                    lbCell[i][j].setBorder(BorderFactory.createMatteBorder(a,b,c,d,new Color(141,173,65) ));
 
-                    if(i>0 && j > 0) if(a == 0 && b == 0 && !listCell[i-1][j-1].isRevealed()){
+                    int a = 0, b = 0, c = 0, d = 0;
+                    if (i > 0) if (!listCell[i - 1][j].isRevealed()) a = 3;
+                    if (j > 0) if (!listCell[i][j - 1].isRevealed()) b = 3;
+                    if (i < num_rows - 1) if (!listCell[i + 1][j].isRevealed()) c = 3;
+                    if (j < num_columns - 1) if (!listCell[i][j + 1].isRevealed()) d = 3;
+                    lbCell[i][j].setBorder(BorderFactory.createMatteBorder(a, b, c, d, new Color(141, 173, 65)));
+
+                    if (i > 0 && j > 0) if (a == 0 && b == 0 && !listCell[i - 1][j - 1].isRevealed()) {
                         JPanel corner = new JPanel();
-                        corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(0,0,3,3);
+                        corner.setBackground(new Color(141, 173, 65));
+                        corner.setBounds(0, 0, 3, 3);
                         lbCell[i][j].add(corner);
                     }
-                    if(i < num_rows -1 && j > 0) if( b == 0 && c == 0 && !listCell[i+1][j-1].isRevealed()){
+                    if (i < num_rows - 1 && j > 0) if (b == 0 && c == 0 && !listCell[i + 1][j - 1].isRevealed()) {
                         JPanel corner = new JPanel();
-                        corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(0, CELL_SIZE - 3,3,3 );
+                        corner.setBackground(new Color(141, 173, 65));
+                        corner.setBounds(0, CELL_SIZE - 3, 3, 3);
                         lbCell[i][j].add(corner);
                     }
-                    if(i > 0 && j < num_columns -1 ) if( a == 0 && d == 0 && !listCell[i-1][j+1].isRevealed()){
+                    if (i > 0 && j < num_columns - 1) if (a == 0 && d == 0 && !listCell[i - 1][j + 1].isRevealed()) {
                         JPanel corner = new JPanel();
-                        corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(CELL_SIZE-3, 0,3,3 );
+                        corner.setBackground(new Color(141, 173, 65));
+                        corner.setBounds(CELL_SIZE - 3, 0, 3, 3);
                         lbCell[i][j].add(corner);
                     }
-                    if(i< num_rows -1  && j < num_columns -1 ) if(c == 0 && d == 0 && !listCell[i+1][j+1].isRevealed()){
-                        JPanel corner = new JPanel();
-                        corner.setBackground(new Color(141,173,65));
-                        corner.setBounds(CELL_SIZE -3,CELL_SIZE - 3,3,3);
-                        lbCell[i][j].add(corner);
-                    }
-                    if((i + j) % 2 == 0) lbCell[i][j].setBackground(new Color(210,184,154));
-                    else lbCell[i][j].setBackground(new Color(223,194,161));
+                    if (i < num_rows - 1 && j < num_columns - 1)
+                        if (c == 0 && d == 0 && !listCell[i + 1][j + 1].isRevealed()) {
+                            JPanel corner = new JPanel();
+                            corner.setBackground(new Color(141, 173, 65));
+                            corner.setBounds(CELL_SIZE - 3, CELL_SIZE - 3, 3, 3);
+                            lbCell[i][j].add(corner);
+                        }
+                    if ((i + j) % 2 == 0) lbCell[i][j].setBackground(new Color(210, 184, 154));
+                    else lbCell[i][j].setBackground(new Color(223, 194, 161));
 
 
                 }
             }
         }
     }
-    public void target(Component c){
+
+    public void target(Component c) {
 //        c.setBackground(BACKGROUND);
         c.setForeground(FOREGROUND);
-        c.setBackground(new Color(195,223,129));
+        c.setBackground(new Color(195, 223, 129));
     }
-    public void unTarget(Component c){
+
+    public void unTarget(Component c) {
 //        c.setBackground(FOREGROUND);
         c.setForeground(BACKGROUND);
     }
 
     public void mark(int x, int y) {
-        lbCell[x][y].setBackground(new Color(195,223,129));
+        lbCell[x][y].setBackground(new Color(195, 223, 129));
     }
 
     private class Label extends JLabel {
