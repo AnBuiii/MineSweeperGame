@@ -1,4 +1,6 @@
-package Models;
+package DesignPattern.GameTemplate;
+
+import Models.TriangleCell;
 
 public class MineTriangleGrid extends MineGrid {
 

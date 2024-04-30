@@ -1,36 +1,38 @@
 package Models;
 
+
 import java.awt.*;
 
 public class TriangleShapeItem {
     private final Shape triangleShape;
-    private final Point a;
-    private final Point b;
-    private final Point c;
+    private final GridPoint a;
+    private final GridPoint b;
+    private final GridPoint c;
 
     public boolean isMouseMoved = false;
 
-    public TriangleShapeItem(Point a, Point b, Point c){
+    public TriangleShapeItem(GridPoint a, GridPoint b, GridPoint c) {
         this.a = a;
         this.b = b;
         this.c = c;
         triangleShape = createTriangleShape();
 
+
     }
 
-    public Shape getTriangleShape(){
+    public Shape getTriangleShape() {
         return triangleShape;
     }
 
-    public Point getA() {
+    public GridPoint getA() {
         return a;
     }
 
-    public Point getB() {
+    public GridPoint getB() {
         return b;
     }
 
-    public Point getC() {
+    public GridPoint getC() {
         return c;
     }
 
@@ -40,4 +42,7 @@ public class TriangleShapeItem {
         return new Polygon(x, y, x.length);
     }
 
+    void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+    }
 }

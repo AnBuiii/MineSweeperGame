@@ -1,18 +1,17 @@
 package DesignPattern.GameState;
 
-import Controller.MineSweeperGame;
-import Models.Cell;
+import Controller.MineSweeperTemplate;
 import Models.History;
 
 public class ReviewState extends State {
     private int reviewStep;
 
-    public ReviewState(MineSweeperGame game) {
+    public ReviewState(MineSweeperTemplate game) {
         super(game);
         game.statusPanel.reviewMode();
         game.mineGrid.unRevealAllCells();
-        game.mineGridPanel.updateGrid();
-        game.mineGridPanel.mark(game.playHistory.get(reviewStep).x, game.playHistory.get(reviewStep).y);
+        game.mineGridPanelTemplate.updateGrid();
+        game.mineGridPanelTemplate.mark(game.playHistory.get(reviewStep).x, game.playHistory.get(reviewStep).y);
     }
 
     @Override
@@ -40,14 +39,14 @@ public class ReviewState extends State {
         }
         reviewStep++;
         if (reviewStep != game.playHistory.size())
-            game.mineGridPanel.mark(game.playHistory.get(reviewStep).x, game.playHistory.get(reviewStep).y);
+            game.mineGridPanelTemplate.mark(game.playHistory.get(reviewStep).x, game.playHistory.get(reviewStep).y);
     }
 
     @Override
     public void reviewPrevious() {
         if (reviewStep == 0) return;
         game.mineGrid.unRevealAllCells();
-        game.mineGridPanel.updateGrid();
+        game.mineGridPanelTemplate.updateGrid();
         reviewStep--;
 
         for (int i = 0; i < reviewStep; i++) {
@@ -70,11 +69,11 @@ public class ReviewState extends State {
     private void revealMove(int x, int y) {
         game.mineGrid.reveal(x, y);
         System.out.println(x + " " + y);
-        game.mineGridPanel.updateGrid();
+        game.mineGridPanelTemplate.updateGrid();
     }
 
     private void flagMove(int x, int y) {
         game.mineGrid.flag(x, y);
-        game.mineGridPanel.updateGrid();
+        game.mineGridPanelTemplate.updateGrid();
     }
 }

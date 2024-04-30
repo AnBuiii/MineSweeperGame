@@ -1,9 +1,9 @@
 package Models;
 
 public class TriangleCell extends Cell {
-    private boolean isUp;
+    private final boolean isUp;
 
-    TriangleCell(boolean isUp) {
+    public TriangleCell(boolean isUp) {
         super();
         this.isUp = isUp;
     }

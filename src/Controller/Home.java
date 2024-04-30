@@ -281,8 +281,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     }
 
-    public void savingData(MineTriangleSweeperGame game) {
-        if (!game.isFinished()) return;
+    public void savingData(MineSweeperTemplate game) {
         game.killClock();
         System.out.println("saving...");
         if (player == null) {
@@ -322,37 +321,37 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         this.disable();
     }
 
-    public void savingData(MineSweeperGame game) {
-
-        if (!game.isFinished()) return;
-        game.killClock();
-        System.out.println("saving...");
-        if (player == null) {
-            player = new Player();
-        }
-        player.totalGames[game.gameMode]++;
-        player.totalBomb[game.gameMode] += game.num_bombs;
-        player.totalTime[game.gameMode] += game.getTime();
-        if (player.shortestFinishTime[game.gameMode] == 0) player.shortestFinishTime[game.gameMode] = game.getTime();
-        else if (game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])) {
-            player.shortestFinishTime[game.gameMode] = game.getTime();
-        }
-
-        if (game.isVictory()) player.totalVictoryGame[game.gameMode]++;
-        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode] / (float) player.totalGames[game.gameMode];
-
-        try {
-            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
-            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
-            ojOut.writeObject(player);
-            ojOut.close();
-            fileOut.close();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-    }
+//    public void savingData(MineSweeperGame game) {
+//
+//        if (!game.isFinished()) return;
+//        game.killClock();
+//        System.out.println("saving...");
+//        if (player == null) {
+//            player = new Player();
+//        }
+//        player.totalGames[game.gameMode]++;
+//        player.totalBomb[game.gameMode] += game.num_bombs;
+//        player.totalTime[game.gameMode] += game.getTime();
+//        if (player.shortestFinishTime[game.gameMode] == 0) player.shortestFinishTime[game.gameMode] = game.getTime();
+//        else if (game.isVictory() && (game.getTime() < player.shortestFinishTime[game.gameMode])) {
+//            player.shortestFinishTime[game.gameMode] = game.getTime();
+//        }
+//
+//        if (game.isVictory()) player.totalVictoryGame[game.gameMode]++;
+//        player.performance[game.gameMode] = (float) player.totalVictoryGame[game.gameMode] / (float) player.totalGames[game.gameMode];
+//
+//        try {
+//            FileOutputStream fileOut = new FileOutputStream("PlayerRecord.txt");
+//            ObjectOutputStream ojOut = new ObjectOutputStream(fileOut);
+//            ojOut.writeObject(player);
+//            ojOut.close();
+//            fileOut.close();
+//
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//    }
 
     public void closeMusic() {
         musicGame.closeMusic();

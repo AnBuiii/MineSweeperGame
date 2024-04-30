@@ -1,11 +1,12 @@
 package DesignPattern.GameState;
 
 import Controller.MineSweeperGame;
+import Controller.MineSweeperTemplate;
 
 public abstract class State {
-    MineSweeperGame game;
+    MineSweeperTemplate game;
 
-    State(MineSweeperGame game) {
+    State(MineSweeperTemplate game) {
         this.game = game;
     }
 

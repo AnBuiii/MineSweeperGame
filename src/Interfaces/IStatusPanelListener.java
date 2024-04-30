@@ -4,12 +4,9 @@ import DesignPattern.GameState.State;
 
 public interface IStatusPanelListener {
     void back();
-    void hint();
-    void restart();
 
-    void reviewNext();
-
-    void reviewPrevious();
+    // return isHint
+    void setHint();
 
     void reGame();
 

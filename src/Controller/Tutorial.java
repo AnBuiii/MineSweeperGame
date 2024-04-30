@@ -8,18 +8,16 @@ import javax.swing.*;
 import java.awt.geom.RoundRectangle2D;
 
 public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
-    public static int WIDTH = 500;
-    public static int HEIGHT = 500;
     public Home home;
-    //Player player;
+
     private TutorialPanel tutorialPanel;
-    Tutorial (){
-        //this.player = player;
+
+    Tutorial() {
         init();
         addView();
         addEvent();
-
     }
+
     @Override
     public void init() {
         setSize(WIDTH, HEIGHT);
@@ -35,7 +33,7 @@ public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
     @Override
     public void addView() {
         tutorialPanel = new TutorialPanel();
-        tutorialPanel.setBounds(0,0,WIDTH,HEIGHT);
+        tutorialPanel.setBounds(0, 0, WIDTH, HEIGHT);
         tutorialPanel.addListener(this);
         add(tutorialPanel);
 
@@ -53,7 +51,8 @@ public class Tutorial extends JFrame implements IPanel, ITutorialPanelListener {
         home.setVisible(true);
 
     }
-    public void setHome(Home home){
+
+    public void setHome(Home home) {
         this.home = home;
         tutorialPanel.addEventButtonListener(home.getEventSoundButton());
     }

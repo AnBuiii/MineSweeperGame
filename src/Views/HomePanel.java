@@ -17,8 +17,6 @@ import static Views.custom.Theme.*;
 
 public class HomePanel extends JPanel implements IPanel {
     public static final String TITLE = BOMB + "MINESWEEPER";
-    public static int WINDOW_WIDTH = 400;
-    public static int WINDOW_HEIGHT = 600;
 
     public static class setting_bound{
         static int x = 330;
@@ -81,12 +79,9 @@ public class HomePanel extends JPanel implements IPanel {
     private boolean isSettingClicked;
 
     public HomePanel(){
-
         init();
         addView();
         addEvent();
-
-
     }
 
     @Override
@@ -185,7 +180,6 @@ public class HomePanel extends JPanel implements IPanel {
         add(statisticbtn);
         add(tutorialbtn);
         add(bombArt,BorderLayout.CENTER);
-
     }
 
 

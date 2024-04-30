@@ -36,4 +36,7 @@ public class Theme {
     public final static int CELL_SIZE = 40;
     public final static int STATUS_PANEL_HEIGHT = 60;
     public final static String BACK_ARROW = "\u21BA";
+
+    public final static int WIDTH = 500;
+    public final static int HEIGHT = 500;
 }

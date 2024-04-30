@@ -5,17 +5,12 @@ import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.ITutorialPanelListener;
 
-import javax.imageio.ImageIO;
-import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import javax.swing.JScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import static Views.custom.Theme.*;
 
@@ -52,11 +47,6 @@ public class TutorialPanel extends JPanel implements IPanel {
     }
 
     public void addView(){
-        /*createJLabelView(tutorialLb, "Minesweeper rules are very simple. " +
-                "\nThe board is divided into cells, with mines randomly distributed. " +
-                "\nTo win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it. " +
-                "\nUsing this information, you can determine cells that are safe, and cells that contain mines. " +
-                "\nCells suspected of being mines can be marked with a flag using the right mouse button.",JLabel.CENTER);*/
         String textTutorial ="Some terms:" +
                 "\nFlag: Put a flag in a zone when you have confirmed that there is a mine. " +
                 "\nHint: When you use hint, if you open a square which is mine, you will not lose. But you just can use the 3 times." +
@@ -68,12 +58,7 @@ public class TutorialPanel extends JPanel implements IPanel {
                 "\nThe three difficulty levels are Beginner (8x8 or 9x9 with 10 mines), Intermediate (16x16 with 40 mines) and Expert (30x16 with 99 mines). " +
                 "\nThe game ends when all safe squares have been opened. A counter shows the number of mines without flags, and a clock shows your time. ";
 
-        /*createTextAreaView(tutorialTa, "Minesweeper rules are very simple. " +
-                "The board is divided into cells, with mines randomly distributed. " +
-                "To win, you need to open all the cells. The number on a cell shows the number of mines adjacent to it. " +
-                "Using this information, you can determine cells that are safe, and cells that contain mines. " +
-                "Cells suspected of being mines can be marked with a flag using the right mouse button.",JTextArea.CENTER_ALIGNMENT);*/
-        createTextAreaView(tutorialTa, textTutorial, JTextArea.CENTER_ALIGNMENT);
+        createTextAreaView(tutorialTa, textTutorial);
 
         windowName.setText("TUTORIAL");
         windowName.setFont(new Font("VNI", Font.PLAIN, 30));
@@ -89,7 +74,7 @@ public class TutorialPanel extends JPanel implements IPanel {
 
         add(backBtn);
         add(windowName);
-        //displayPn.setBounds(20,80, Tutorial.WIDTH - 2*20,Tutorial.HEIGHT - 80 - 20);
+
         displayPn.setBounds(20,50, Tutorial.WIDTH - 2*20 ,Tutorial.HEIGHT - 60 - 20);
         displayPn.setBackground(FOREGROUND);
         displayPn.setForeground(BACKGROUND);
@@ -127,17 +112,8 @@ public class TutorialPanel extends JPanel implements IPanel {
     public void addEventButtonListener(ISoundEventButton eventButton){
         this.eventButton = eventButton;
     }
-    private void createJLabelView(JLabel jLabel, String text, int alignment){
-        Font font = new Font("VNI", Font.PLAIN, 20);
-        jLabel.setText(text);
-        jLabel.setFont(font);
-        jLabel.setHorizontalAlignment(alignment);
-        jLabel.setVerticalAlignment(JLabel.CENTER);
-        jLabel.setOpaque(true);
-        jLabel.setBackground(FOREGROUND);
-        jLabel.setForeground(BACKGROUND);
-    }
-    private void createTextAreaView(JTextArea jTextArea, String text, float alignment){
+
+    private void createTextAreaView(JTextArea jTextArea, String text){
         Font font = new Font("VNI", Font.PLAIN, 16);
         jTextArea.setText(text);
         jTextArea.setFont(font);

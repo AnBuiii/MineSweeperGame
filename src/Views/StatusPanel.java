@@ -2,6 +2,10 @@ package Views;
 
 
 import Controller.MineSweeperGame;
+import Controller.MineSweeperTemplate;
+import DesignPattern.GameState.FinishState;
+import DesignPattern.GameState.HintState;
+import DesignPattern.GameState.State;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
 import Interfaces.IStatusPanelListener;
@@ -17,16 +21,12 @@ import java.lang.Thread;
 import static Views.custom.Theme.*;
 
 public class StatusPanel extends JPanel implements IPanel {
-    private JLabel lbNumCellUnrevealed;
-    private JLabel lbNotify;
-    private JButton btnRestart;
     private JLabel backBtn;
     private JLabel clockLb;
-    private static JLabel timeLb;
+    private JLabel timeLb;
     private JLabel flagLb;
     private JLabel numFlagLb;
     private JLabel hintBtn;
-    private boolean hintMode;
 
     private GridBagConstraints gbc;
 
@@ -45,20 +45,19 @@ public class StatusPanel extends JPanel implements IPanel {
     public static int min;
     public static boolean stopClock;
     public int numFlag;
-    public static Clock clock;
-    private boolean gameFinish;
+    public Clock clock;
+    private final MineSweeperTemplate game;
 
-    public StatusPanel(int numFlag) {
+    public StatusPanel(int numFlag, MineSweeperTemplate game) {
         this.numFlag = numFlag;
         init();
         addView();
         addEvent();
-        hintMode = false;
         stopClock = false;
         sec = 0;
         min = 0;
         hour = 0;
-        gameFinish = false;
+        this.game = game;
     }
 
     public int getTime() {
@@ -84,11 +83,10 @@ public class StatusPanel extends JPanel implements IPanel {
     public void finishGame() {
         hintBtn.setText(BACK_ARROW);
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 30));
-        gameFinish = true;
         clock.stop();
     }
 
-    public static class Clock extends Thread implements Serializable {
+    public class Clock extends Thread implements Serializable {
         public Clock() {
         }
 
@@ -104,7 +102,7 @@ public class StatusPanel extends JPanel implements IPanel {
                         hour += 1;
                         min = 1;
                     }
-                    String S = String.valueOf(+hour + ":" + min + ":" + sec);
+                    String S = hour + ":" + min + ":" + sec;
                     timeLb.setText(S);
                 }
                 try {
@@ -112,7 +110,7 @@ public class StatusPanel extends JPanel implements IPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            } while (!MineSweeperGame.isFinish);
+            } while (!game.isFinished());
         }
 
     }
@@ -123,15 +121,11 @@ public class StatusPanel extends JPanel implements IPanel {
         setBackground(BACKGROUND);
         backBtn = new JLabel(BACK);
         flagLb = new JLabel(FLAG);
-        //numFlagLb = new JLabel("00");
         numFlagLb = new JLabel(String.valueOf(numFlag));
         clockLb = new JLabel(CLOCK);
         timeLb = new JLabel();
         clock = new Clock();
         clock.start();
-        if (MineSweeperGame.isFinish) {
-            clock.stop();
-        }
         hintBtn = new JLabel(HINT);
         gbc = new GridBagConstraints();
     }
@@ -145,6 +139,7 @@ public class StatusPanel extends JPanel implements IPanel {
         //flagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         flagLb.setFont(new Font("VNI", Font.PLAIN, 25));
+
         flagLb.setForeground(Color.RED);
 
         //numFlagLb.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -162,7 +157,6 @@ public class StatusPanel extends JPanel implements IPanel {
         //hintBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         hintBtn.setFont(new Font("VNI", Font.PLAIN, 25));
-
 
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.CENTER;
@@ -237,13 +231,18 @@ public class StatusPanel extends JPanel implements IPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                if (!gameFinish) {
-                    listener.hint();
-                    hintMode = !hintMode;
-                    if (hintMode) hintBtn.setForeground(new Color(255, 255, 0));
-                    else hintBtn.setForeground(Color.BLACK);
-                } else {
+                State state = listener.getGameState();
+                if (state instanceof FinishState) {
                     listener.reGame();
+                    return;
+                }
+
+                listener.setHint();
+
+                if (listener.getGameState() instanceof HintState) {
+                    hintBtn.setForeground(new Color(255, 255, 0));
+                } else {
+                    hintBtn.setForeground(Color.BLACK);
                 }
             }
 
@@ -257,7 +256,10 @@ public class StatusPanel extends JPanel implements IPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                if (!hintMode) unTarget(hintBtn);
+                if (listener.getGameState() instanceof HintState) {
+                    return;
+                }
+                unTarget(hintBtn);
             }
         });
 
@@ -265,28 +267,10 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void addListener(IStatusPanelListener event) {
         listener = event;
-
     }
 
     public void addEventButtonListener(ISoundEventButton eventButton) {
         this.eventButton = eventButton;
-    }
-
-    public void updateStatus(int numSquareUnrevealed) {
-        /*lbNumCellUnrevealed.setText("Số ô chưa mở: " + numSquareUnrevealed);
-        if (numSquareUnrevealed == MineGrid.num_mines) {
-            lbNotify.setText("THẮNG");
-            lbNotify.setForeground(Color.blue);
-       } else if (numSquareUnrevealed == 0) {
-            lbNotify.setText("THUA");
-            lbNotify.setForeground(Color.red);
-       }*/
-        /*if (num_mines< numSquareUnrevealed)
-        {
-            JPanel panel = new JPanel();
-            JOptionPane.showMessageDialog(panel, "Error");
-        }*/
-
     }
 
     public void reviewMode() {
@@ -353,10 +337,6 @@ public class StatusPanel extends JPanel implements IPanel {
 
     public void setParentFrame(JFrame jFrame) {
         this.parentFrame = jFrame;
-    }
-
-    public void load() {
-        addEvent();
     }
 
 }

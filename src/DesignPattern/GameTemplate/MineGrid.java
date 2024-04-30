@@ -1,4 +1,7 @@
-package Models;
+package DesignPattern.GameTemplate;
+
+import Models.Cell;
+import Models.Reveal;
 
 import java.util.Random;
 
@@ -8,7 +11,7 @@ public class MineGrid {
     protected final int num_mines;
     protected final Cell[][] cells;
     private final Random rand;
-    public int numCellPlayed;
+    private int numCellPlayed;
     protected int numFlag;
 
     public MineGrid(int numRows, int numColumns, int numMines) {
@@ -72,11 +75,6 @@ public class MineGrid {
             }
         }
 
-    }
-
-
-    int getNumCellPlayed() {
-        return numCellPlayed;
     }
 
     public int getNumFlag() {
@@ -179,7 +177,13 @@ public class MineGrid {
     }
 
     public boolean revealHint(int x, int y) {
-        return false;
+        Cell cell = cells[x][y];
+        if (cell.isRevealed()) {
+            return false;
+        }
+        cell.setRevealed(true);
+        if (!cells[x][y].isMine()) numCellPlayed++;
+        return true;
     }
 
     public Cell[][] getCells() {
