@@ -1,9 +1,13 @@
 package Views;
 
 import Interfaces.IGamePlayListener;
+import Interfaces.IPanel;
 import Models.Cell;
 import Models.GridPoint;
+import Models.MineLabel;
 import Models.TriangleShapeItem;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,6 +37,11 @@ public class MineTriangleGridPanel extends MineGridPanelTemplate {
     @Override
     public void updateGrid() {
         this.cells = listener.getListCell();
+        for (TriangleShapeItem[] triangleShapeItems : this.triangleShape) {
+            for (TriangleShapeItem triangleShapeItem : triangleShapeItems) {
+                triangleShapeItem.isMouseMoved = false;
+            }
+        }
         repaint();
     }
 
@@ -141,7 +150,6 @@ public class MineTriangleGridPanel extends MineGridPanelTemplate {
                         } else if (triangleShape[i][j].isMouseMoved) {
                             g2d.setColor(new Color(195, 223, 129));
                             g2d.fill(triangleShape[i][j].getTriangleShape());
-
                         }
                     }
                 }
@@ -206,6 +214,12 @@ public class MineTriangleGridPanel extends MineGridPanelTemplate {
 
     public void addListener(IGamePlayListener event) {
         listener = event;
+    }
+
+
+    public void mark(int x, int y) {
+        triangleShape[x][y].isMouseMoved = true;
+        repaint();
     }
 
 }

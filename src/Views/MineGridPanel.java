@@ -13,6 +13,8 @@ import static Views.custom.Theme.*;
 import static Views.custom.Theme.CELL_SIZE;
 
 public class MineGridPanel extends MineGridPanelTemplate {
+    protected MineLabel[][] lbCell;
+
     public MineGridPanel(int rows, int columns) {
         super(rows, columns);
     }
@@ -22,6 +24,10 @@ public class MineGridPanel extends MineGridPanelTemplate {
         listener = event;
     }
 
+    @Override
+    public void mark(int x, int y) {
+        lbCell[x][y].setBackground(new Color(195, 223, 129));
+    }
 
     @Override
     public void init() {
