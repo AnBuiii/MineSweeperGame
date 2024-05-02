@@ -16,8 +16,6 @@ public class TriangleShapeItem {
         this.b = b;
         this.c = c;
         triangleShape = createTriangleShape();
-
-
     }
 
     public Shape getTriangleShape() {

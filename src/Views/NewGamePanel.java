@@ -27,18 +27,18 @@ public class NewGamePanel extends JPanel implements IPanel {
     ISoundEventButton eventButton;
     JPanel contentPn;
 
-    public NewGamePanel(){
+    public NewGamePanel() {
         init();
         addView();
         addEvent();
     }
+
     @Override
     public void init() {
 //        setLayout(new GridLayout(4,2));
 //        setBorder(new RoundedBorder(10));
 
         setLayout(null);
-
 
 
         beginnerLb = new JLabel();
@@ -53,7 +53,7 @@ public class NewGamePanel extends JPanel implements IPanel {
         triangleInfoLb = new JLabel();
         contentPn = new JPanel();
 
-        contentPn.setLayout(new GridLayout(5,2));
+        contentPn.setLayout(new GridLayout(5, 2));
         contentPn.setBorder(new RoundedBorder(10));
 
     }
@@ -138,28 +138,32 @@ public class NewGamePanel extends JPanel implements IPanel {
         contentPn.add(triangleInfoLb);
         contentPn.add(customLb);
         contentPn.add(customInfoLb);
-        contentPn.setBounds(0,0, 300, 150);
+        contentPn.setBounds(0, 0, 300, 150);
         contentPn.setBackground(Theme.FOREGROUND);
         contentPn.setForeground(Theme.BACKGROUND);
         add(contentPn);
 
     }
-    public JPanel getContentPn(){
+
+    public JPanel getContentPn() {
         return contentPn;
     }
+
     @Override
     public void addEvent() {
-        
+
         beginnerLb.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 eventButton.playSoundHoverButton();
                 target(beginnerLb);
                 target(beginnerInfoLb);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(beginnerLb);
                 unTarget(beginnerInfoLb);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -177,10 +181,12 @@ public class NewGamePanel extends JPanel implements IPanel {
                 target(intermediateLb);
                 target(intermediateInfoLb);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(intermediateLb);
                 unTarget(intermediateInfoLb);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -196,10 +202,12 @@ public class NewGamePanel extends JPanel implements IPanel {
                 target(expertLb);
                 target(expertInfoLb);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(expertLb);
                 unTarget(expertInfoLb);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -215,10 +223,12 @@ public class NewGamePanel extends JPanel implements IPanel {
                 target(customLb);
                 target(customInfoLb);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(customLb);
                 unTarget(customInfoLb);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -233,33 +243,39 @@ public class NewGamePanel extends JPanel implements IPanel {
                 target(triangleLb);
                 target(triangleInfoLb);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 unTarget(triangleLb);
                 unTarget(triangleInfoLb);
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 eventButton.playSoundClickButton();
-                listener.startTriangleGame();
+                listener.startGame(GameDifficulty.TRIANGLE);
             }
         });
         triangleInfoLb.addMouseListener(triangleLb.getMouseListeners()[0]);
 
 
     }
-    public void addListener(IStartGameListener event){
+
+    public void addListener(IStartGameListener event) {
         listener = event;
     }
-    public void addEventButtonListener(ISoundEventButton eventButton){
+
+    public void addEventButtonListener(ISoundEventButton eventButton) {
         this.eventButton = eventButton;
     }
-    public void target(Component c){
-        c.setBackground(new Color(192,188,185));
-        c.setForeground(new Color(104,159,57));
+
+    public void target(Component c) {
+        c.setBackground(new Color(192, 188, 185));
+        c.setForeground(new Color(104, 159, 57));
     }
-    public void unTarget(Component c){
-        c.setBackground(new Color(239,235,232));
-        c.setForeground(new Color(104,159,57));
+
+    public void unTarget(Component c) {
+        c.setBackground(new Color(239, 235, 232));
+        c.setForeground(new Color(104, 159, 57));
     }
 }

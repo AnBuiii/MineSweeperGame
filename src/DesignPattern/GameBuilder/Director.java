@@ -1,26 +1,7 @@
 package DesignPattern.GameBuilder;
 
-import Models.GameDifficulty;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Objects;
-
-// switch (gameMode) {
-//        case 1:
-//        home.startGame(GameDifficulty.BEGINNER);
-//                break;
-//                        case 2:
-//                        home.startGame(GameDifficulty.INTERMEDIATE);
-//                break;
-//                        case 3:
-//                        home.startGame(GameDifficulty.EXPERT);
-//                break;
-//                        case 0:
-//                        System.out.println("?");
-//                home.startCustomGame(num_rows, num_columns, num_bombs);
-//                break;
-//                        }
+import Views.MineGridPanel;
+import Views.MineTriangleGridPanel;
 
 public class Director {
 
@@ -44,6 +25,13 @@ public class Director {
         builder.setMines(99);
         builder.setGameMode(3);
         // 16, 30, 99
+    }
+
+    public void constructTriangleGame(GameBuilder builder) {
+        builder.setRow(16);
+        builder.setColumn(31);
+        builder.setMines(45);
+        builder.setGameMode(4);
     }
 
     public void constructCustomLevel(GameBuilder builder) {

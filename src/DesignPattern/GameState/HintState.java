@@ -1,10 +1,10 @@
 package DesignPattern.GameState;
 
-import Controller.MineSweeperTemplate;
+import Controller.MineSweeperGame;
 import Models.History;
 
 public class HintState extends State {
-    public HintState(MineSweeperTemplate game) {
+    public HintState(MineSweeperGame game) {
         super(game);
     }
 
@@ -19,7 +19,7 @@ public class HintState extends State {
         if (success) {
             game.statusPanel.setNumFlag(game.mineGrid.getNumFlag());
             game.playHistory.add(new History(x, y, 3));
-            game.mineGridPanelTemplate.updateGrid();
+            game.mineGridPanel.updateGrid();
             if (game.isVictory()) {
                 game.updateState(new FinishState(game));
             }

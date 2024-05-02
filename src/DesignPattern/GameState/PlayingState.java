@@ -1,11 +1,11 @@
 package DesignPattern.GameState;
 
-import Controller.MineSweeperTemplate;
+import Controller.MineSweeperGame;
 import Models.History;
 import Models.Reveal;
 
 public class PlayingState extends State {
-    public PlayingState(MineSweeperTemplate game) {
+    public PlayingState(MineSweeperGame game) {
         super(game);
     }
 
@@ -15,7 +15,7 @@ public class PlayingState extends State {
         if (success) {
             game.statusPanel.setNumFlag(game.mineGrid.getNumFlag());
             game.playHistory.add(new History(x, y, 3));
-            game.mineGridPanelTemplate.updateGrid();
+            game.mineGridPanel.updateGrid();
         }
     }
 
@@ -25,7 +25,7 @@ public class PlayingState extends State {
         switch (check) {
             case SUCCESS:
                 game.playHistory.add(new History(x, y, 1));
-                game.mineGridPanelTemplate.updateGrid();
+                game.mineGridPanel.updateGrid();
                 if (game.isVictory()) {
                     game.updateState(new FinishState(game));
                 }

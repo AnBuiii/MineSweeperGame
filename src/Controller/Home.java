@@ -1,7 +1,6 @@
 package Controller;
 
 import DesignPattern.GameBuilder.Director;
-import DesignPattern.GameBuilder.GameBuilder;
 import DesignPattern.GameBuilder.MineSweeperGameBuilder;
 import Interfaces.*;
 import Models.GameDifficulty;
@@ -30,7 +29,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     private HomePanel homePanel;
     private NewGamePanel newGameMenu;
     private MineSweeperGame mineSweeperGame;
-    private MineTriangleSweeperGame mineTriangleSweeperGame;
     private Player player;
 
     private JPanel opacity;
@@ -58,19 +56,19 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), ARCW_FORM, ARCH_FORM));
 
 
-        try {
-            FileInputStream fileIn = new FileInputStream("oldGame.txt");
-            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
-            MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
-
-            mineSweeperGame = new MineSweeperGame(obj);
-            mineSweeperGame.setHome(this);
-            mineSweeperGame.dispose();
-            ojIn.close();
-            fileIn.close();
-        } catch (Exception ex) {
-            mineSweeperGame = null;
-        }
+//        try {
+//            FileInputStream fileIn = new FileInputStream("oldGame.txt");
+//            ObjectInputStream ojIn = new ObjectInputStream(fileIn);
+//            MineSweeperGame obj = (MineSweeperGame) ojIn.readObject();
+//
+//            mineSweeperGame = new MineSweeperGame(obj);
+//            mineSweeperGame.setHome(this);
+//            mineSweeperGame.dispose();
+//            ojIn.close();
+//            fileIn.close();
+//        } catch (Exception ex) {
+//            mineSweeperGame = null;
+//        }
 
         try {
             FileInputStream fileIn = new FileInputStream("PlayerRecord.txt");
@@ -155,12 +153,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
     public void continueGame() {
         setVisible(false);
         playInGameMusic();
-        if (mineTriangleSweeperGame != null) {
-            mineTriangleSweeperGame.setVisible(true);
-            mineTriangleSweeperGame.startClock();
-
-        }
-        ;
         if (mineSweeperGame != null) {
             mineSweeperGame.setVisible(true);
             mineSweeperGame.startClock();
@@ -177,13 +169,8 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public boolean isGameFinish() {
-
-
         if (mineSweeperGame != null) {
             return mineSweeperGame.isFinished();
-        }
-        if (mineTriangleSweeperGame != null) {
-            return mineTriangleSweeperGame.isFinished();
         }
         return true;
     }
@@ -216,26 +203,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         this.setVisible(false);
     }
 
-    @Override
-    public void startTriangleGame() {
-        if (mineSweeperGame != null) {
-            mineSweeperGame.dispose();
-            mineSweeperGame.killClock();
-            mineSweeperGame = null;
-        }
-        if (mineTriangleSweeperGame != null) {
-            mineTriangleSweeperGame.dispose();
-            mineTriangleSweeperGame.killClock();
-        }
-        mineTriangleSweeperGame = new MineTriangleSweeperGame(16, 31, 45); // nhớ nhập số cột là số lẻ mới vẽ đúng được
-
-        reDrawHome();
-        this.setVisible(false);
-        mineTriangleSweeperGame.setHome(this);
-        mineTriangleSweeperGame.setVisible(true);
-        playInGameMusic();
-    }
-
 
     @Override
     public NewGamePanel getNewGameMenu() {
@@ -244,12 +211,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void startGame(GameDifficulty gameDifficulty) {
-        if (mineTriangleSweeperGame != null) {
-            mineTriangleSweeperGame.dispose();
-            mineTriangleSweeperGame.killClock();
-            mineTriangleSweeperGame = null;
-
-        }
         if (mineSweeperGame != null) {
             mineSweeperGame.dispose();
             mineSweeperGame.killClock();
@@ -267,9 +228,12 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             case EXPERT:
                 director.constructExperienceLevel(builder);
                 break;
-            default:
-//                director.constructExperienceLevel(builder);
+            case TRIANGLE:
+                director.constructTriangleGame(builder);
                 break;
+//            default:
+//                director.constructExperienceLevel(builder);
+//                break;
         }
         mineSweeperGame = builder.build();
 
@@ -281,7 +245,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     }
 
-    public void savingData(MineSweeperTemplate game) {
+    public void savingData(MineSweeperGame game) {
         game.killClock();
         System.out.println("saving...");
         if (player == null) {
@@ -318,7 +282,7 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         CustomGamePanel customGamePanel = new CustomGamePanel();
         customGamePanel.setVisible(true);
         customGamePanel.addListener(this);
-        this.disable();
+        this.setEnabled(false);
     }
 
 //    public void savingData(MineSweeperGame game) {
@@ -409,27 +373,22 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
 
     @Override
     public void closeCustomPanel() {
-        enable();
+        this.setEnabled(true);
         requestFocus();
     }
 
     @Override
     public void startCustomGame(int rows, int columns, int mines) {
-        if (mineTriangleSweeperGame != null) {
-            mineTriangleSweeperGame.dispose();
-            mineTriangleSweeperGame.killClock();
-            mineTriangleSweeperGame = null;
-        }
         if (mineSweeperGame != null) {
             mineSweeperGame.dispose();
             mineSweeperGame.killClock();
         }
-        mineSweeperGame = new MineSweeperGame(rows, columns, mines, 0);
-        reDrawHome();
-        this.setVisible(false);
-        mineSweeperGame.setHome(this);
-        mineSweeperGame.setVisible(true);
-        playInGameMusic();
+//        mineSweeperGame = new MineSweeperGame(rows, columns, mines, 0);
+//        reDrawHome();
+//        this.setVisible(false);
+//        mineSweeperGame.setHome(this);
+//        mineSweeperGame.setVisible(true);
+//        playInGameMusic();
     }
 
     public void deletePlayer() {

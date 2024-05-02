@@ -1,10 +1,9 @@
 package DesignPattern.GameState;
 
 import Controller.MineSweeperGame;
-import Controller.MineSweeperTemplate;
 
 public class FinishState extends State {
-    FinishState(MineSweeperTemplate game) {
+    FinishState(MineSweeperGame game) {
         super(game);
         game.finishingGame();
     }

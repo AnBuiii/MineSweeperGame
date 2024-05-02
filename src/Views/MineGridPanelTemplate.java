@@ -1,19 +1,17 @@
 package Views;
 
-import Interfaces.IGamePlayListener;
 import Controller.MineSweeperGame;
+import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;
-import Models.MineLabel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class MineGridPanelTemplate extends JPanel implements IPanel {
     protected int num_rows;
     protected int num_columns;
     protected IGamePlayListener listener; //
-    private MineSweeperGame game;
+//    private MineSweeperGame game;
 
 
     private ISoundEventButton eventButton;

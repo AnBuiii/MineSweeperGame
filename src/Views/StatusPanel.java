@@ -2,7 +2,6 @@ package Views;
 
 
 import Controller.MineSweeperGame;
-import Controller.MineSweeperTemplate;
 import DesignPattern.GameState.FinishState;
 import DesignPattern.GameState.HintState;
 import DesignPattern.GameState.State;
@@ -46,9 +45,9 @@ public class StatusPanel extends JPanel implements IPanel {
     public static boolean stopClock;
     public int numFlag;
     public Clock clock;
-    private final MineSweeperTemplate game;
+    private final MineSweeperGame game;
 
-    public StatusPanel(int numFlag, MineSweeperTemplate game) {
+    public StatusPanel(int numFlag, MineSweeperGame game) {
         this.numFlag = numFlag;
         init();
         addView();

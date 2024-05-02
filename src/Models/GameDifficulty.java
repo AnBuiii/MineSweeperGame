@@ -1,5 +1,5 @@
 package Models;
 
 public enum GameDifficulty {
-    BEGINNER , INTERMEDIATE, EXPERT, CUSTOM,
+    BEGINNER, INTERMEDIATE, EXPERT, CUSTOM, TRIANGLE
 }
