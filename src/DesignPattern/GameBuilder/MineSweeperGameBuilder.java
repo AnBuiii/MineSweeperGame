@@ -2,6 +2,7 @@ package DesignPattern.GameBuilder;
 
 import Controller.MineSweeperGame;
 import DesignPattern.GameTemplate.MineGrid;
+import DesignPattern.GameTemplate.MineRectangleGrid;
 import DesignPattern.GameTemplate.MineTriangleGrid;
 import Views.MineGridPanel;
 import Views.MineGridPanelTemplate;
@@ -41,7 +42,7 @@ public class MineSweeperGameBuilder implements GameBuilder {
             mineGrid = new MineTriangleGrid(row, column, mines);
         } else {
             mineGridPanel = new MineGridPanel(row, column);
-            mineGrid = new MineGrid(row, column, mines);
+            mineGrid = new MineRectangleGrid(row, column, mines);
         }
 
         return new MineSweeperGame(row, column, mines, gameMode, mineGridPanel, mineGrid);
