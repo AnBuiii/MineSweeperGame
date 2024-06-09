@@ -216,25 +216,10 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
             mineSweeperGame.killClock();
             mineSweeperGame = null;
         }
-        director = new Director();
+
+        director = new Director(gameDifficulty);
         MineSweeperGameBuilder builder = new MineSweeperGameBuilder();
-        switch (gameDifficulty) {
-            case BEGINNER:
-                director.constructBeginnerLevel(builder);
-                break;
-            case INTERMEDIATE:
-                director.constructIntermediateLevel(builder);
-                break;
-            case EXPERT:
-                director.constructExperienceLevel(builder);
-                break;
-            case TRIANGLE:
-                director.constructTriangleGame(builder);
-                break;
-//            default:
-//                director.constructExperienceLevel(builder);
-//                break;
-        }
+        director.constructGame(builder);
         mineSweeperGame = builder.build();
 
         reDrawHome();
@@ -242,7 +227,6 @@ public class Home extends JFrame implements IPanel, IHomeListener, IStartGameLis
         mineSweeperGame.setHome(this);
         mineSweeperGame.setVisible(true);
         playInGameMusic();
-
     }
 
     public void savingData(MineSweeperGame game) {
