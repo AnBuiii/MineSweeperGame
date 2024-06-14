@@ -3,6 +3,7 @@ package Controller;
 
 import DesignPattern.GameState.*;
 import DesignPattern.GameTemplate.MineGrid;
+import DesignPattern.GameTemplate.MineGridPanelTemplate;
 import Interfaces.IFinishGameListener;
 import Interfaces.IGamePlayListener;
 import Interfaces.IStatusPanelListener;

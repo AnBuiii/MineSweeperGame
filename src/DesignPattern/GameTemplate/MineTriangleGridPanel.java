@@ -1,13 +1,10 @@
-package Views;
+package DesignPattern.GameTemplate;
 
 import Interfaces.IGamePlayListener;
-import Interfaces.IPanel;
 import Models.Cell;
 import Models.GridPoint;
-import Models.MineLabel;
 import Models.TriangleShapeItem;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

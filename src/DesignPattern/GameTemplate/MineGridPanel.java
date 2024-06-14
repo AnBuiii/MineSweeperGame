@@ -1,4 +1,4 @@
-package Views;
+package DesignPattern.GameTemplate;
 
 import Interfaces.IGamePlayListener;
 import Models.Cell;

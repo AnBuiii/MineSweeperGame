@@ -1,6 +1,5 @@
-package Views;
+package DesignPattern.GameTemplate;
 
-import Controller.MineSweeperGame;
 import Interfaces.IGamePlayListener;
 import Interfaces.IPanel;
 import Interfaces.ISoundEventButton;

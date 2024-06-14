@@ -4,9 +4,9 @@ import Controller.MineSweeperGame;
 import DesignPattern.GameTemplate.MineGrid;
 import DesignPattern.GameTemplate.MineRectangleGrid;
 import DesignPattern.GameTemplate.MineTriangleGrid;
-import Views.MineGridPanel;
-import Views.MineGridPanelTemplate;
-import Views.MineTriangleGridPanel;
+import DesignPattern.GameTemplate.MineGridPanel;
+import DesignPattern.GameTemplate.MineGridPanelTemplate;
+import DesignPattern.GameTemplate.MineTriangleGridPanel;
 
 public class MineSweeperGameBuilder implements GameBuilder {
     private int column;
